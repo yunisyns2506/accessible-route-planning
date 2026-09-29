@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+env/
+
+# 3DGS ve Büyük Veriler (Kesinlikle Git'e atılmamalı)
+*.ply
+*.spz
+*.mp4
+*.mov
+*.jpg
+*.png
+data/raw/
+models/checkpoints/
+
+# Unity
+unity/AccessibleRouteVR/Library/
+unity/AccessibleRouteVR/Temp/
+unity/AccessibleRouteVR/Obj/
+unity/AccessibleRouteVR/Build/
+unity/AccessibleRouteVR/Builds/
+unity/AccessibleRouteVR/Logs/
+unity/AccessibleRouteVR/UserSettings/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.user
