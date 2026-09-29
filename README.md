@@ -8,9 +8,9 @@ Bu proje, Bursa Uludağ Üniversitesi Bilgisayar Mühendisliği Tasarım Dersi k
 
 \## Proje Ekibi
 
-\* Yunis Teymurlu - 3B Görü ve Yapay Zeka Geliştiricisi
+\* Yunis Teymurlu
 
-\* Sabri Duruk - Algoritma, Graf Modelleme ve VR Geliştiricisi
+\* Sabri Duruk
 
 \* Danışman: Öğr. Gör. Koray AKİ
 
