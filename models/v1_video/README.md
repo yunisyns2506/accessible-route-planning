@@ -18,14 +18,15 @@
 
 ---
 
-## 3. Örnek Renderlar
-`renders/` altındaki görüntüler, modelin yalnızca çekilen açılardan geçerli olduğunu, serbest açılarda geometrinin bulunmadığını göstermektedir:
-* `renders/test_render_0.png` - Çalışma masası açısı
-* `renders/test_render_50.png` - Koridor açısı
-* `renders/test_render_100.png` - Yatak açısı
-* `renders/test_render_150.png` - Kapı çıkışı açısı
+## 3. Dosyalar ve Örnek Renderlar
+* `splat.ply` (176 MB): Video tabanlı ilk denemenin 3DGS model dosyası (Git LFS).
+* `renders/` altındaki görüntüler, modelin yalnızca çekilen açılardan geçerli olduğunu, serbest açılarda geometrinin bulunmadığını göstermektedir:
+  * `renders/test_render_0.png` - Çalışma masası açısı
+  * `renders/test_render_50.png` - Koridor açısı
+  * `renders/test_render_100.png` - Yatak açısı
+  * `renders/test_render_150.png` - Kapı çıkışı açısı
 
 ---
 
 ## 4. Alınan Karar
-Bu model geometrik çökme nedeniyle elenmiş; gerçek adımlama (baseline) ve 0.5x ultra geniş açılı fotoğraflarla **Versiyon 2** üretilmiştir.
+Bu model geometrik çökme nedeniyle elenmiş; gerçek adımlama (baseline) ve 0.5x ultra geniş açılı fotoğraflarla **Versiyon 2** ve **Versiyon 3** üretilmiştir.

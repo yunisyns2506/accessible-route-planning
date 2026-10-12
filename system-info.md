@@ -6,7 +6,7 @@ Bu doküman, projenin geliştirildiği donanım, işletim sistemi, sürücüler,
 
 ## 1. Donanım Özellikleri
 
-### Birincil Geliştirme İstasyonu (Windows - Model Eğitimi):
+### Geliştirme İstasyonu (Windows - Model Eğitimi):
 * **İşletim Sistemi:** Windows 11 Pro 64-bit
 * **İşlemci (CPU):** AMD Ryzen / Intel Core (x86_64)
 * **Ekran Kartı (GPU):** NVIDIA GeForce RTX 2060
@@ -14,12 +14,6 @@ Bu doküman, projenin geliştirildiği donanım, işletim sistemi, sürücüler,
   * **CUDA Compute Capability:** 7.5 (Turing)
 * **Sistem Belleği (RAM):** 16 GB DDR4
 * **Depolama:** NVMe M.2 SSD
-
-### İkincil Geliştirme İstasyonu (macOS - Unity & Simülasyon):
-* **İşletim Sistemi:** macOS 14+ (Sonoma / Sequoia)
-* **Mimari:** Apple Silicon (ARM64 - M1 / M2 / M3 / M4)
-* **Grafik API:** Apple Metal (Metal 3)
-* **İşlev:** Unity Editor sahne entegrasyonu, tekerlekli sandalye First-Person simülasyonu ve A* rota planlama algoritmalarının yürütülmesi.
 
 ---
 
@@ -36,7 +30,7 @@ Bu doküman, projenin geliştirildiği donanım, işletim sistemi, sürücüler,
 | **COLMAP** | 3.9.1 CUDA | Yapılandırılmış SfM (Structure-from-Motion) |
 | **FFmpeg** | 6.1+ / 7.0+ | Video işleme ve kare çıkarımı |
 | **Git & Git LFS** | Git 2.44+ / LFS 3.6.0 | Büyük model dosyaları (`.ply`) için |
-| **Unity** | 2022.3 LTS (URP) | Simülasyon ve görselleştirme ortamı |
+| **Unity** | 6000.1.17f1 (URP) | Simülasyon ve görselleştirme ortamı |
 
 ---
 

@@ -36,21 +36,11 @@ pyyaml>=6.0
 
 ---
 
-## 3. Unity ve Görselleştirme Bağımlılıkları
+## 3. Görselleştirme ve Simülasyon Bağımlılıkları
 
-* **Unity Editor:** 2022.3 LTS (URP)
+* **Unity Editor:** `6000.1.17f1` (URP)
 * **UnityGaussianSplatting:**
   * *Geliştirici:* Aras Pranckevicius (`aras-p`)
   * *Depo:* [https://github.com/aras-p/UnityGaussianSplatting](https://github.com/aras-p/UnityGaussianSplatting)
-  * *İşlev:* 3D Gaussian Splatting modellerini (`.ply`) Unity URP içinde gerçek zamanlı GPU rasterizasyonu ile render eder.
+  * *İşlev:* 3D Gaussian Splatting modellerini (`.ply`) Unity içinde gerçek zamanlı GPU rasterizasyonu ile render eder.
   * *Lisans:* MIT
-* **XR Interaction Toolkit (İsteğe Bağlı VR):**
-  * *İşlev:* PCVR ve Meta Quest sanal gözlük etkileşimleri.
-
----
-
-## 4. Semantik Analiz ve Rota Bağımlılıkları (Faz A4)
-
-* **Grounding DINO:** Metin istemleriyle açık kelime dağarcıklı nesne tespiti (kapı, merdiven, engel).
-* **Segment Anything Model 2 (SAM 2):** Tespit edilen nesnelerin piksel düzeyinde maskelenmesi.
-* **NetworkX:** Topolojik erişilebilirlik grafı ve A* rota optimizasyonu.

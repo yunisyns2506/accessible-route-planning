@@ -1,17 +1,15 @@
 # Sistem Kurulum Basamakları (Setup Guide)
 
-Bu rehber, projenin hem **Windows (GPU Eğitim)** hem de **macOS (Unity & Görüntüleme)** ortamlarında sıfırdan nasıl kurulacağını adım adım anlatır.
+Bu rehber, projenin 3D Gaussian Splatting (COLMAP + Nerfstudio Splatfacto) eğitim ortamının sıfırdan nasıl kurulacağını adım adım anlatır.
 
 ---
 
 ## 1. Donanım ve İşletim Sistemi Gereksinimleri
 
-| Bileşen | Windows Geliştirme (Eğitim) | macOS Geliştirme (Görüntüleme/Simülasyon) |
-| :--- | :--- | :--- |
-| **İşletim Sistemi** | Windows 10/11 (64-bit) | macOS Ventura veya daha yeni (Apple Silicon) |
-| **GPU / Hızlandırıcı** | NVIDIA RTX 2060 (min 6GB VRAM) | Apple M1/M2/M3/M4 (Metal API) |
-| **CUDA Sürümü** | CUDA 11.8 / 12.1 | Desteklenmez (Metal Shader kullanılır) |
-| **Ana Görev** | COLMAP SfM, Nerfstudio 3DGS Eğitimi | Unity Simülasyonu, A* Rota Planlama |
+* **İşletim Sistemi:** Windows 10/11 (64-bit)
+* **GPU / Hızlandırıcı:** NVIDIA RTX 2060 (6GB VRAM)
+* **CUDA Sürümü:** CUDA 11.8
+* **Ana Görev:** COLMAP SfM, Nerfstudio Splatfacto 3DGS Eğitimi
 
 ---
 
@@ -50,21 +48,7 @@ pip install pillow-heif trimesh opencv-python
 
 ---
 
-## 3. macOS Üzerinde Kurulum (Unity & Görüntüleme)
-
-1. **Unity Hub ve Unity Editor:**
-   * Unity 2022.3 LTS sürümünü kurun.
-   * Universal Render Pipeline (URP) şablonunu seçin.
-2. **UnityGaussianSplatting:**
-   * Package Manager -> `Add package from git URL`:
-     `https://github.com/aras-p/UnityGaussianSplatting.git`
-3. **Modelin Yüklenmesi:**
-   * `models/v2_fotograf/splat.ply` dosyasını Unity `Assets` klasörüne sürükleyin.
-   * Sağ tıklayıp `Create -> Gaussian Splat Asset` seçeneğini çalıştırın.
-
----
-
-## 4. Model Eğitme ve Dışa Aktarma Komutları
+## 3. Model Eğitme ve Dışa Aktarma Komutları
 
 ### Veri Seti Ön İşleme (COLMAP):
 ```bash

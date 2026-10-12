@@ -27,5 +27,5 @@
 ---
 
 ## 3. Dosyalar
-* `splat.ply` (94.5 MB): Unity ve SuperSplat görüntüleyicileri için eğitilmiş nihai Gaussian Splatting dosyası (Git LFS).
+* `splat.ply` (94.5 MB): SuperSplat ve 3B görüntüleyiciler için eğitilmiş Gaussian Splatting dosyası (Git LFS).
 * `renders/`: Modelden render edilmiş iç mekan kamera görünümleri ve gerçek görüntülerle karşılaştırmaları (`photo_render_*.png`, `photo_gt_*.png`).
