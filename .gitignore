@@ -108,3 +108,38 @@ InitTestScene*.unity*
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
 .DS_Store
+
+# =====================================================================
+# Heavy Data & Machine Learning Checkpoints (Exclude from Git)
+# =====================================================================
+# Raw capture datasets and frame dumps (stored locally or on Drive)
+data/
+yeni_fotograflar/
+exports/
+exports-photos/
+*.mov
+*.MOV
+*.mp4
+*.bat
+
+# Intermediate training checkpoints and logs
+outputs/
+outputs-photos/
+outputs-photos-test/
+*.ckpt
+
+# Python / Environment
+__pycache__/
+*.py[cod]
+*$py.class
+*.env
+.venv
+env/
+venv/
+ENV/
+
+# Temporary scratch & system logs
+scratch/
+*.log
+*.tmp
+temp/
