@@ -1,0 +1,10 @@
+kosu,yontem,degisen_ayar,iterasyon,psnr_db,ssim,lpips,sure_dk,tepe_vram_mib,gaussian,ply_mib
+G1_varsayilan,splatfacto,(varsayilan),15000,27.218,0.9091,0.1759,8.91,2289,551246,130.4
+G2_antialiased,splatfacto,--pipeline.model.rasterize-mode antialiased,15000,27.376,0.9111,0.1697,9.46,2299,565603,133.8
+G2_antialiased_30k,splatfacto,--pipeline.model.rasterize-mode antialiased,30000,28.053,0.9142,0.1525,23.44,4141,566064,
+G3_scalereg,splatfacto,--pipeline.model.use-scale-regularization True --pipeline.model.max-gauss-ratio 5.0,15000,27.144,0.9084,0.1838,11.16,2470,534193,126.3
+G4_camopt,splatfacto,--pipeline.model.camera-optimizer.mode SO3xR3,15000,22.521,0.7794,0.2119,14.03,2673,540495,127.8
+G5_big,splatfacto-big,(varsayilan),15000,26.553,0.9031,0.1757,17.82,4285,1289932,305.0
+G5_big_30k,splatfacto-big,(varsayilan),30000,27.505,0.9082,0.1503,40.41,4889,1303990,
+G6_tamcozunurluk,splatfacto,nerfstudio-data --downscale-factor 1,15000,26.87,0.9053,0.2705,21.6,4749,673386,159.3
+G7_nerfacto,nerfacto,--logging.local-writer.max-log-size 0,15000,22.48,0.7874,0.326,11.77,4459,,

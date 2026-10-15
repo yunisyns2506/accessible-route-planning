@@ -1,0 +1,21 @@
+{
+  "run": "G3_scalereg",
+  "method": "splatfacto",
+  "data": "data/sinif-01/sfm_exhaustive",
+  "iterations": 15000,
+  "extra_flags": [
+    "--pipeline.model.use-scale-regularization",
+    "True",
+    "--pipeline.model.max-gauss-ratio",
+    "5.0"
+  ],
+  "elapsed_minutes": 11.16,
+  "peak_vram_mib": 2470,
+  "vram_samples": 133,
+  "return_code": 0,
+  "psnr": 27.144,
+  "ssim": 0.9084,
+  "lpips": 0.1838,
+  "fps": 44.72,
+  "num_rays_per_sec": 23116418.0
+}

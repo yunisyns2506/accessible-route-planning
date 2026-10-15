@@ -1,0 +1,19 @@
+{
+  "run": "G4_camopt",
+  "method": "splatfacto",
+  "data": "data/sinif-01/sfm_exhaustive",
+  "iterations": 15000,
+  "extra_flags": [
+    "--pipeline.model.camera-optimizer.mode",
+    "SO3xR3"
+  ],
+  "elapsed_minutes": 14.03,
+  "peak_vram_mib": 2673,
+  "vram_samples": 167,
+  "return_code": 0,
+  "psnr": 22.521,
+  "ssim": 0.7794,
+  "lpips": 0.2119,
+  "fps": 43.33,
+  "num_rays_per_sec": 22398494.0
+}

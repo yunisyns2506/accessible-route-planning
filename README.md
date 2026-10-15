@@ -1,66 +1,80 @@
 # 3DGS ve VR/Simülasyon Destekli Erişilebilir Rota Planlama Sistemi
 
-[![Python 3.10](https://img.shields.io/badge/Python-3.10-blue.svg)](https://www.python.org/)
-[![PyTorch 2.1.2](https://img.shields.io/badge/PyTorch-2.1.2%2Bcu118-red.svg)](https://pytorch.org/)
-[![Nerfstudio 1.0.3](https://img.shields.io/badge/Nerfstudio-Splatfacto-orange.svg)](https://docs.nerf.studio/)
+**Bursa Uludağ Üniversitesi Bilgisayar Mühendisliği — Tasarım Projesi**
+Sabri Duruk · Yunis Teymurlu · Danışman: Öğr. Gör. Koray AKİ
 
-Bu proje, **Bursa Uludağ Üniversitesi Bilgisayar Mühendisliği Bölümü Tasarım Dersi** kapsamında geliştirilmekte olan; iç mekanların **3D Gaussian Splatting (3DGS)** ile foto-gerçekçi dijital ikizlerini üreten ve tekerlekli sandalye kullanan bireyler için erişilebilir rota planlayan simülasyon sistemidir.
-
----
-
-## Proje Ekibi ve Danışman
-* **Sabri Duruk**
-* **Yunis Teymurlu**
-* **Danışman:** Öğr. Gör. Koray AKİ
+İç mekânların **3D Gaussian Splatting** ile dijital ikizlerini üreten ve
+tekerlekli sandalye kullanan bireyler için erişilebilir rota planlayan
+simülasyon sistemi.
 
 ---
 
-## Depo ve Klasör Mimarisi
+## Durum — Hafta 3
 
-Somut çalışmalar bağımsız klasörler halinde düzenlenmiştir:
+**A1 (mekân modelleme) devam ediyor.** Üretim hattı (çekim → COLMAP → Splatfacto
+→ PLY) doğrulandı; metrik ölçek ve Unity aktarımı (A2) bekliyor.
+
+Bu hafta D207 dersliğinde aynı veri üzerinde **10 koşu** karşılaştırıldı:
+
+**→ [Hafta 3 Raporu](docs/raporlar/hafta-03_raporu.md)**
+
+### Eşleştirme stratejisi (349 kare)
+
+| Strateji | Süre | Kaydolan | COLMAP modeli |
+| :--- | ---: | ---: | ---: |
+| `sequential` | 6,6 dk | 149 (%42,7) | 4 parça |
+| **`exhaustive`** | 13,9 dk | **331 (%94,8)** | 1 bütün |
+| `vocab_tree` | 16,1 dk | 331 (%94,8) | 1 bütün |
+
+### Eğitim (331 kare, 15.000 iterasyon, 33 kare test)
+
+| Koşu | PSNR | SSIM | LPIPS | Süre | VRAM |
+| :--- | ---: | ---: | ---: | ---: | ---: |
+| varsayılan | 27,22 | 0,9091 | 0,1759 | 8,9 dk | 2.289 MB |
+| **+ antialiased** | **27,38** | **0,9111** | **0,1697** | 9,5 dk | 2.299 MB |
+| + ölçek düzenleme | 27,14 | 0,9084 | 0,1838 | 11,2 dk | 2.470 MB |
+| + kamera pozu opt. | 22,52 | 0,7794 | 0,2119 | 14,0 dk | 2.673 MB |
+| `splatfacto-big` | 26,55 | 0,9031 | 0,1757 | 17,8 dk | 4.285 MB |
+| tam çözünürlük | 26,87 | 0,9053 | 0,2705 | 21,6 dk | 4.749 MB |
+| `nerfacto` (NeRF) | 22,48 | 0,7874 | 0,3260 | 11,8 dk | 4.459 MB |
+
+---
+
+## Yapı
+
+Sürümlenen klasörler:
 
 ```text
-├── models/                                # Üretilen 3D Gaussian Splatting Modelleri
-│   ├── v1_video/                          # Deney 1: İlk video denemesi (Sıfır paralaks analizi ve renderlar)
-│   │   ├── README.md                      # Deney özeti
-│   │   ├── splat.ply                      # 176 MB'lık 3DGS modeli (Git LFS)
-│   │   └── renders/                       # Çıkarılan kamera renderları
-│   ├── v2_fotograf/                       # Deney 2: 63 fotoğraflı oda modeli (28.92 dB PSNR)
-│   │   ├── README.md                      # Model başarı metrikleri
-│   │   ├── splat.ply                      # 94.5 MB'lık 3DGS modeli (Git LFS)
-│   │   └── renders/                       # Modelden alınan kamera renderları
-│   └── v3_512_fotograf/                   # Deney 3: 512 fotoğraflı yoğun oda modeli (Scale-Reg + SO3xR3)
-│       ├── README.md                      # Optimizasyon ve metrik detayları
-│       ├── splat.ply                      # 114 MB'lık 3DGS modeli (Git LFS)
-│       └── renders/                       # Modelden alınan kamera renderları
-├── setup/                                 # Kurulum Adımları ve Yardımcı Araçlar
-│   ├── README.md                          # Adım adım kurulum kılavuzu
-│   ├── kurulum_notlari.md                 # Çözülen CUB ve encoding sistem yamaları
-│   ├── convert_heic.py                    # HEIC -> JPG dönüştürücü
-│   ├── export_ply.py                      # PLY dışa aktarıcı
-│   └── render_eval.py                     # PSNR değerlendirme scripti
-├── system-info.md                         # Donanım ve CUDA sürüm bilgisi
-└── dependencies.md                        # Kullanılan kütüphaneler
+docs/raporlar/      Raporlar (.md ve .docx)
+docs/figures/       Rapor şekilleri
+experiments/        Koşu kayıtları: ayarlar, metrikler, yeniden üretim adımları
+models/             Üretilen 3DGS modelleri (Git LFS)
+environment/        Donanım, sürümler ve lisanslar
+scripts/            Koşu ve ölçüm betikleri
+setup/              Kurulum ve çözülen derleyici hataları
 ```
 
----
+Yerel çalışma klasörleri (boyut nedeniyle sürümlenmez):
 
-## Yapılan Çalışmaların Karşılaştırması
+```text
+data/<veri-kümesi>/             ham kareler ve COLMAP çıktıları        11 GB
+runs/<veri-kümesi>/<koşu>/      eğitim çıktıları ve kontrol noktaları   5,4 GB
+exports/<veri-kümesi>/<koşu>/   dışa aktarılan splat.ply                1,4 GB
+```
 
-| Parametre | Deney 1 (Video) | Deney 2 (79 Fotoğraf) | Deney 3 (512 Fotoğraf - Yoğun) |
-| :--- | :--- | :--- | :--- |
-| **Eşleşen Kamera Sayısı** | 229 kare (sıfır öteleme) | 63 / 79 fotoğraf | **476 / 512 fotoğraf (%93)** |
-| **3B Nirengi Noktası** | 245 nokta (çökük geometri) | 18.499 nokta | **75.678 nokta (4.1x artış)** |
-| **Gaussian Sayısı** | 710.509 adet (iğneler) | 381.108 adet | **696.207 adet (Scale-Reg + Antialiased)** |
-| **SH Derecesi & Optimizasyon** | SH 3 / Varsayılan | SH 3 / Varsayılan | **SH 2 / SO3xR3 Kamera Opt. / uint8 Cache** |
-| **Model Boyutu** | 176 MB | 94.5 MB | **114 MB** |
+Veri kümesi adları: `oda-01_video`, `oda-01_79foto`, `oda-01_512foto`,
+`sinif-01`. Koşu adları `experiments/` altındaki kayıtlarla birebir aynıdır
+(örn. `runs/sinif-01/G2_antialiased_30k/`).
 
----
+Eğitim hattı CUDA destekli GPU gerektirir ve tek bilgisayarda (RTX 2060 6 GB)
+kuruludur. Kurulum: [`setup/README.md`](setup/README.md) ·
+Çözülen derleyici hataları: [`setup/kurulum_notlari.md`](setup/kurulum_notlari.md)
 
-## Hızlı Başlangıç
+## Koşuyu tekrarlamak
 
-### Modelleri İncelemek İçin:
-1. [PlayCanvas SuperSplat](https://playcanvas.com/supersplat/editor) adresini açın.
-2. İncelemek istediğiniz modelin `.ply` dosyasını (`models/v1_video/splat.ply`, `models/v2_fotograf/splat.ply` veya `models/v3_512_fotograf/splat.ply`) tarayıcıya sürükleyin.
+Adım adım komutlar:
+[`experiments/hafta-03_sinif-01/notes.md`](experiments/hafta-03_sinif-01/notes.md)
 
-
+> `scripts/fix_transforms.py` **zorunlu** adımdır: nerfstudio `transforms.json`
+> dosyasını daima `colmap/sparse/0`'dan üretir, ancak COLMAP sahneyi
+> parçaladığında en büyük model orada olmayabilir.

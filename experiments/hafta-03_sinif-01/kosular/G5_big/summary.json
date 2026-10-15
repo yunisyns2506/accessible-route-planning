@@ -1,0 +1,16 @@
+{
+  "run": "G5_big",
+  "method": "splatfacto-big",
+  "data": "data/sinif-01/sfm_exhaustive",
+  "iterations": 15000,
+  "extra_flags": [],
+  "elapsed_minutes": 17.82,
+  "peak_vram_mib": 4285,
+  "vram_samples": 212,
+  "return_code": 0,
+  "psnr": 26.553,
+  "ssim": 0.9031,
+  "lpips": 0.1757,
+  "fps": 33.64,
+  "num_rays_per_sec": 17390622.0
+}

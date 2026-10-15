@@ -1,0 +1,16 @@
+{
+  "run": "G1_varsayilan",
+  "method": "splatfacto",
+  "data": "data/sinif-01/sfm_exhaustive",
+  "iterations": 15000,
+  "extra_flags": [],
+  "elapsed_minutes": 8.91,
+  "peak_vram_mib": 2289,
+  "vram_samples": 106,
+  "return_code": 0,
+  "psnr": 27.218,
+  "ssim": 0.9091,
+  "lpips": 0.1759,
+  "fps": 41.92,
+  "num_rays_per_sec": 21669896.0
+}

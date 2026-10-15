@@ -61,3 +61,57 @@ Gaussian Splatting eğitimi varsayılan ayarlarda tüm kareleri GPU belleğine (
 Eğitim komutuna şu optimize bayraklar eklenmiştir:
 * `--pipeline.datamanager.cache-images cpu`: Görüntü tensörlerini sistem RAM'inde tutar, sadece o iterasyonda rasterize edilecek kareyi GPU'ya aktarır. VRAM kullanımını 6 GB altında tutar.
 * `--pipeline.model.cull-alpha-thresh 0.1`: Opaklığı 0.1'in altına düşen gereksiz Gaussian'ları agresif biçimde temizler, böylece toplam Gaussian sayısı dengelenir.
+
+---
+
+## 4. tiny-cuda-nn Derlemesi (MSVC 14.44 + CUDA 11.8)
+
+### Hata Tanımı:
+`nerfacto` ve `instant-ngp` yöntemleri hash kodlaması için `tiny-cuda-nn`
+kütüphanesini kullanır. Kurulu değilse nerfstudio yavaş PyTorch yedek yoluna
+döner. Kaynaktan derleme iki ayrı hatayla durmaktadır:
+
+```text
+yvals_core.h(902): error: static assertion failed with
+  "error STL1002: Unexpected compiler version, expected CUDA 12.4 or newer."
+
+error C1128: bölüm sayısı nesne dosyası biçimi sınırını aştı: /bigobj ile derleyin
+```
+
+### Kök Neden:
+1. **STL1002:** Visual Studio Build Tools 14.44'ün standart kütüphane başlıkları
+   CUDA 12.4 veya üstünü şart koşar; projede CUDA 11.8 kullanılmaktadır. Reddeden,
+   derleyicinin kendisi değil MSVC standart kütüphanesidir.
+2. **C1128:** `tiny-cuda-nn` şablon yoğunluğu nedeniyle varsayılan COFF nesne
+   dosyası bölüm sınırını aşmaktadır.
+
+### Kalıcı Çözüm:
+Derleme, `cl.exe`'nin her çağrısına bayrak ekleyen `CL` ortam değişkeniyle
+yapılandırılır (tam betik: `scripts/install_tcnn.bat`):
+
+```bat
+call "...\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
+set "TCNN_CUDA_ARCHITECTURES=75"
+set "TORCH_CUDA_ARCH_LIST=7.5"
+set "CUDA_HOME=C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v11.8"
+set "DISTUTILS_USE_SDK=1"
+set "CL=/D_ALLOW_COMPILER_AND_STL_VERSION_MISMATCH /bigobj"
+python -m pip install --no-build-isolation ^
+  "git+https://github.com/NVlabs/tiny-cuda-nn/#subdirectory=bindings/torch"
+```
+
+`_ALLOW_COMPILER_AND_STL_VERSION_MISMATCH`, Microsoft'un kendi sağladığı kaçış
+makrosudur ve STL1002 static_assert kontrolünü devre dışı bırakır.
+`TCNN_CUDA_ARCHITECTURES=75`, RTX 2060'ın Turing mimarisine (compute capability
+7.5) karşılık gelir.
+
+### Ölçülen Etki (sinif-01, 331 kare, nerfacto):
+
+| | tiny-cuda-nn yok | tiny-cuda-nn var |
+| :--- | ---: | ---: |
+| Adım süresi | 1.470 ms | **48 ms** |
+| Tepe VRAM | 5.916 MB | **4.201 MB** |
+| 15.000 iterasyon | 6 sa 7 dk (tahmini) | **~12 dk** |
+
+Hızlanma yaklaşık **30 kattır**. Kütüphane kurulmadan NeRF tabanlı yöntemlerle
+yapılan süre karşılaştırmaları geçerli sayılmamalıdır.

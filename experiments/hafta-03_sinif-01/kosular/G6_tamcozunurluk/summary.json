@@ -1,0 +1,20 @@
+{
+  "run": "G6_tamcozunurluk",
+  "method": "splatfacto",
+  "data": "data/sinif-01/sfm_exhaustive",
+  "iterations": 15000,
+  "extra_flags": [
+    "nerfstudio-data",
+    "--downscale-factor",
+    "1"
+  ],
+  "elapsed_minutes": 21.6,
+  "peak_vram_mib": 4749,
+  "vram_samples": 257,
+  "return_code": 0,
+  "psnr": 26.87,
+  "ssim": 0.9053,
+  "lpips": 0.2705,
+  "fps": 14.54,
+  "num_rays_per_sec": 30101534.0
+}

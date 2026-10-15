@@ -1,0 +1,19 @@
+{
+  "run": "G7_nerfacto",
+  "method": "nerfacto",
+  "data": "data/sinif-01/sfm_exhaustive",
+  "iterations": 15000,
+  "extra_flags": [
+    "--logging.local-writer.max-log-size",
+    "0"
+  ],
+  "elapsed_minutes": 11.77,
+  "peak_vram_mib": 4459,
+  "vram_samples": 140,
+  "return_code": 0,
+  "psnr": 22.48,
+  "ssim": 0.7874,
+  "lpips": 0.326,
+  "fps": 0.64,
+  "num_rays_per_sec": 334356.96875
+}

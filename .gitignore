@@ -112,23 +112,17 @@ InitTestScene*.unity*
 # =====================================================================
 # Heavy Data & Machine Learning Checkpoints (Exclude from Git)
 # =====================================================================
-# Raw capture datasets and frame dumps (stored locally or on Drive)
+# Yerel calisma klasorleri (boyut nedeniyle surumlenmez)
+#   data/     ham kareler ve COLMAP ciktilari
+#   runs/     egitim ciktilari ve kontrol noktalari
+#   exports/  disa aktarilan PLY modelleri (models/ altindakiler LFS ile surumlenir)
 data/
-yeni_fotograflar/
+runs/
 exports/
-exports-photos/
-exports-run3/
+yeni_fotograflar/
 *.mov
 *.MOV
 *.mp4
-*.bat
-
-# Intermediate training checkpoints and logs
-outputs/
-outputs-photos/
-outputs-photos-test/
-outputs-run3/
-outputs-run3-test/
 *.ckpt
 
 # Python / Environment
@@ -146,3 +140,11 @@ scratch/
 *.log
 *.tmp
 temp/
+
+# Çalıştırma betikleri scripts/ altında SÜRÜMLENİR (yeniden üretilebilirlik için).
+# Kök dizindeki tek kullanımlık .bat kopyaları hariç tutulur:
+/*.bat
+!scripts/*.bat
+
+# Ham .docx rapor kaynakları (PDF'ler sürümlenir)
+~$*.docx

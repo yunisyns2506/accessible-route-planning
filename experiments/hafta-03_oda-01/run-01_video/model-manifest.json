@@ -1,0 +1,12 @@
+{
+  "run_id": "run-01_video",
+  "room_id": "oda-01",
+  "week": 3,
+  "model_file": "models/oda-01_v1_video/splat.ply",
+  "size_bytes": 176207825,
+  "sha256": "38708aab681ce7545632e0c19695f109535b1dac31285806177cecb6d383b11b",
+  "nerfstudio_config": "runs/oda-01_video/processed/splatfacto/2026-10-12_003307/config.yml",
+  "dataset": "data/oda-01_video/processed",
+  "coordinate_frame": "SfM (metrik olcek belirlenmedi)",
+  "unit": "arbitrary"
+}

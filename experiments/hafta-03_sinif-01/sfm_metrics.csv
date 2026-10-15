@@ -1,0 +1,4 @@
+kosu,eslestirme,sure_dk,girdi_kare,kaydolan,kayit_orani,model_sayisi,nokta3d,iz_uzunlugu,yeniden_izdusum_px
+sfm_sequential,sequential,6.57,349,149,0.427,4,26296,4.59,0.66
+sfm_exhaustive,exhaustive,13.86,349,331,0.948,2,65185,4.88,0.718
+sfm_vocabtree,vocab_tree,16.07,349,331,0.948,2,66725,4.94,0.697

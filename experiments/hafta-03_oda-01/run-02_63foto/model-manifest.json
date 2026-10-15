@@ -1,0 +1,12 @@
+{
+  "run_id": "run-02_63foto",
+  "room_id": "oda-01",
+  "week": 3,
+  "model_file": "models/oda-01_v2_fotograf/splat.ply",
+  "size_bytes": 94516377,
+  "sha256": "7fabd186e0696ce0293e9a21dca3ab206465549cb641e96341784fadfa376715",
+  "nerfstudio_config": "runs/oda-01_79foto/processed/splatfacto/2026-10-12_144911/config.yml",
+  "dataset": "data/oda-01_79foto/processed",
+  "coordinate_frame": "SfM (metrik olcek belirlenmedi)",
+  "unit": "arbitrary"
+}

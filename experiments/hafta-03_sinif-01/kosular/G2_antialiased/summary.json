@@ -1,0 +1,19 @@
+{
+  "run": "G2_antialiased",
+  "method": "splatfacto",
+  "data": "data/sinif-01/sfm_exhaustive",
+  "iterations": 15000,
+  "extra_flags": [
+    "--pipeline.model.rasterize-mode",
+    "antialiased"
+  ],
+  "elapsed_minutes": 9.46,
+  "peak_vram_mib": 2299,
+  "vram_samples": 113,
+  "return_code": 0,
+  "psnr": 27.376,
+  "ssim": 0.9111,
+  "lpips": 0.1697,
+  "fps": 41.24,
+  "num_rays_per_sec": 21318160.0
+}
