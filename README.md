@@ -12,11 +12,23 @@ simülasyon sistemi.
 ## Durum — Hafta 3
 
 **A1 (mekân modelleme) devam ediyor.** Üretim hattı (çekim → COLMAP → Splatfacto
-→ PLY) doğrulandı; metrik ölçek ve Unity aktarımı (A2) bekliyor.
+→ PLY) doğrulandı; metrik ölçek bekliyor. **A2 (Unity aktarımı) kısmen yapıldı:**
+bulut ve hazır hizmet modelleri Unity'de görüntülendi, yerel modeller henüz
+aktarılmadı ve kare süresi (p50/p95) ölçülmedi.
 
 Bu hafta D207 dersliğinde aynı veri üzerinde **10 koşu** karşılaştırıldı:
 
 **→ [Hafta 3 Raporu](docs/raporlar/hafta-03_raporu.md)**
+
+### Teslim edilen raporlar
+
+| Rapor | Dosya |
+| :--- | :--- |
+| Literatür Araştırması (27 yayın) | [`01_literatur_arastirmasi.docx`](docs/raporlar/01_literatur_arastirmasi.docx) |
+| Benzer Çalışmaların Karşılaştırılması | [`02_benzer_calismalarin_karsilastirilmasi.docx`](docs/raporlar/02_benzer_calismalarin_karsilastirilmasi.docx) |
+| Yazılım Altyapısı ve Araç Seçimi | [`03_yazilim_altyapisi_ve_arac_secimi.docx`](docs/raporlar/03_yazilim_altyapisi_ve_arac_secimi.docx) |
+| Sistem Tasarımı ve Uygulama Planı | [`04_sistem_tasarimi_ve_uygulama_plani.docx`](docs/raporlar/04_sistem_tasarimi_ve_uygulama_plani.docx) |
+| Hafta 3 — Üretim hattı ve yöntem karşılaştırması | [`hafta-03_raporu.docx`](docs/raporlar/hafta-03_raporu.docx) |
 
 ### Eşleştirme stratejisi (349 kare)
 
@@ -45,7 +57,7 @@ Bu hafta D207 dersliğinde aynı veri üzerinde **10 koşu** karşılaştırıld
 Sürümlenen klasörler:
 
 ```text
-docs/raporlar/      Raporlar (.md ve .docx)
+docs/raporlar/      Teslim raporları (.docx) ve haftalık rapor kaynağı (.md)
 docs/figures/       Rapor şekilleri
 experiments/        Koşu kayıtları: ayarlar, metrikler, yeniden üretim adımları
 models/             Üretilen 3DGS modelleri (Git LFS)
