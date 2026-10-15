@@ -65,5 +65,5 @@ python scripts/render_compare.py runs/sinif-01/*
 
 ## Çıktıların yeri
 
-Eğitim çıktıları (`runs/sinif-01/`) ve PLY dosyaları (`exports/sinif-01/`) boyutları
-nedeniyle sürümlenmez; ayar ve metrik kayıtları bu klasörde tutulur.
+Eğitim çıktıları (`runs/sinif-01/`) boyutu nedeniyle sürümlenmez; ayar ve metrik
+kayıtları bu klasörde, üretilen `.ply` modelleri `models/` altında tutulur.

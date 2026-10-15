@@ -113,12 +113,11 @@ InitTestScene*.unity*
 # Heavy Data & Machine Learning Checkpoints (Exclude from Git)
 # =====================================================================
 # Yerel calisma klasorleri (boyut nedeniyle surumlenmez)
-#   data/     ham kareler ve COLMAP ciktilari
-#   runs/     egitim ciktilari ve kontrol noktalari
-#   exports/  disa aktarilan PLY modelleri (models/ altindakiler LFS ile surumlenir)
+#   data/  ham kareler ve COLMAP ciktilari
+#   runs/  egitim ciktilari ve kontrol noktalari
+# PLY modelleri models/ altinda Git LFS ile surumlenir.
 data/
 runs/
-exports/
 yeni_fotograflar/
 *.mov
 *.MOV

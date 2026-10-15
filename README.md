@@ -57,10 +57,11 @@ setup/              Kurulum ve çözülen derleyici hataları
 Yerel çalışma klasörleri (boyut nedeniyle sürümlenmez):
 
 ```text
-data/<veri-kümesi>/             ham kareler ve COLMAP çıktıları        11 GB
-runs/<veri-kümesi>/<koşu>/      eğitim çıktıları ve kontrol noktaları   5,4 GB
-exports/<veri-kümesi>/<koşu>/   dışa aktarılan splat.ply                1,4 GB
+data/<veri-kümesi>/        ham kareler ve COLMAP çıktıları        11 GB
+runs/<veri-kümesi>/<koşu>/ eğitim çıktıları ve kontrol noktaları   5,4 GB
 ```
+
+Üretilen `.ply` modelleri `models/` altında Git LFS ile sürümlenir.
 
 Veri kümesi adları: `oda-01_video`, `oda-01_79foto`, `oda-01_512foto`,
 `sinif-01`. Koşu adları `experiments/` altındaki kayıtlarla birebir aynıdır

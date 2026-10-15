@@ -338,10 +338,11 @@ Koşu kayıtları (ayarlar, metrikler, yeniden üretim adımları):
 Yerel çalışma klasörleri (boyut nedeniyle sürümlenmez):
 
 ```text
-data/<veri-kümesi>/             ham kareler ve COLMAP çıktıları
-runs/<veri-kümesi>/<koşu>/      eğitim çıktıları ve kontrol noktaları
-exports/<veri-kümesi>/<koşu>/   dışa aktarılan splat.ply
+data/<veri-kümesi>/        ham kareler ve COLMAP çıktıları
+runs/<veri-kümesi>/<koşu>/ eğitim çıktıları ve kontrol noktaları
 ```
+
+Üretilen `.ply` modelleri `models/` altında Git LFS ile sürümlenir.
 
 ### Kaynaklar
 
