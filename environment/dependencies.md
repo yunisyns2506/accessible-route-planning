@@ -10,7 +10,8 @@ Kurulum yalnızca eğitim istasyonunda yapılmıştır (donanım:
 
 ## Kurulu ve çalıştırılmış
 
-Hafta 3'teki 10 koşuda fiilen kullanılan sürümler.
+Hafta 3 ve hafta 4 koşularında fiilen kullanılan sürümler. COLMAP 4.2.1 kurulumu:
+[`setup/colmap4_kurulum.md`](../setup/colmap4_kurulum.md)
 
 | Bileşen | Sürüm | İşlev | Lisans |
 | :--- | :--- | :--- | :--- |
@@ -19,7 +20,15 @@ Hafta 3'teki 10 koşuda fiilen kullanılan sürümler.
 | Nerfstudio | 1.0.3 | Veri hazırlama, Splatfacto, `ns-eval` | Apache-2.0 |
 | gsplat | 0.1.4 | Gaussian rasterizasyon çekirdeği (yerel yamalı) | Apache-2.0 |
 | tiny-cuda-nn | kaynak (SM 75) | NeRF hash kodlaması | BSD-3-Clause |
-| COLMAP | 3.9.1 CUDA | SIFT, eşleştirme, SfM | BSD-3-Clause |
+| COLMAP | 3.9.1 CUDA | SIFT, eşleştirme, SfM (hafta 3) | BSD-3-Clause |
+| COLMAP | 4.2.1 CUDA | SIFT / ALIKED / LoMa, LightGlue, global ve hierarchical SfM (hafta 4) | BSD-3-Clause |
+| ONNX Runtime | 1.30.0 (COLMAP 4.2.1 ile gelir) | ALIKED, LightGlue, LoMa çıkarımı | MIT |
+| CUDA 12 çalışma kütüphaneleri | cuBLAS 12.9, cudart 12.9, cuFFT 11.4 | ONNX Runtime CUDA sağlayıcısı (ayrı klasör) | NVIDIA EULA |
+| cuDNN | 9.10.2 | ONNX Runtime evrişimleri (9.27 Turing'de çalışmadı) | NVIDIA SLA |
+| ALIKED / LightGlue ONNX | COLMAP 3.13.0 sürüm dosyaları | Öğrenme tabanlı çıkarıcı / eşleştirici | BSD-3-Clause / Apache-2.0 |
+| LoMa ONNX | COLMAP 4.2.1 varsayılan modelleri | Öğrenme tabanlı çıkarıcı + eşleştirici | kaynak deposuna bakınız |
+| psutil | 7.2.2 | Koşu sırasında tepe RAM ölçümü | BSD-3-Clause |
+| pycolmap | 4.2.1 (ayrı klasör, `tools\pycolmap-4.2.1`) | LoMa için 256 boyutlu sözlük ağacı denemesi | BSD-3-Clause |
 | FFmpeg | 6.1+ | Videodan kare çıkarma | LGPL / GPL |
 | OpenCV | 4.8+ | Kare netliği ölçümü, görsel üretimi | Apache-2.0 |
 | pillow-heif | 0.14+ | HEIC → JPG (oda-01 fotoğrafları) | LGPL |

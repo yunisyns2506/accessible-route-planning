@@ -1,0 +1,65 @@
+{
+  "run": "aliked_exhaustive_incremental",
+  "max_image_size": 1000,
+  "registered_images": 346,
+  "undistort": {
+    "return_code": 0,
+    "elapsed_min": 0.07,
+    "peak_ram_mib": 129,
+    "peak_vram_mib": 381,
+    "vram_base_mib": 381,
+    "net_vram_mib": 0,
+    "samples": 2
+  },
+  "patch_match": {
+    "return_code": 0,
+    "elapsed_min": 90.92,
+    "peak_ram_mib": 3544,
+    "peak_vram_mib": 777,
+    "vram_base_mib": 381,
+    "net_vram_mib": 396,
+    "samples": 2640
+  },
+  "fusion": {
+    "return_code": 0,
+    "elapsed_min": 0.92,
+    "peak_ram_mib": 4160,
+    "peak_vram_mib": 398,
+    "vram_base_mib": 398,
+    "net_vram_mib": 0,
+    "samples": 26
+  },
+  "poisson": {
+    "return_code": 0,
+    "elapsed_min": 2.14,
+    "peak_ram_mib": 4119,
+    "peak_vram_mib": 400,
+    "vram_base_mib": 398,
+    "net_vram_mib": 2,
+    "samples": 62,
+    "mesh": {
+      "vertices": 5167696,
+      "faces": 10095474,
+      "size_mib": 247.7
+    }
+  },
+  "delaunay": {
+    "return_code": 0,
+    "elapsed_min": 2.28,
+    "peak_ram_mib": 1988,
+    "peak_vram_mib": 396,
+    "vram_base_mib": 396,
+    "net_vram_mib": 0,
+    "samples": 65,
+    "mesh": {
+      "vertices": 295022,
+      "faces": 592940,
+      "size_mib": 10.7
+    }
+  },
+  "fused": {
+    "vertices": 1840944,
+    "size_mib": 47.4
+  },
+  "total_min": 96.33
+}

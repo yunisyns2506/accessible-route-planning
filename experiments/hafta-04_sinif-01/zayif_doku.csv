@@ -1,0 +1,4 @@
+cikarici,kp_zayif,kp_normal,kp_dokusuz_bolgede_pct_zayif,komsu_eslesme_zayif,komsu_eslesme_normal,komsu_eslesme_oran_pct,modele_giris_zayif_pct,modele_giris_normal_pct,3b_gozlem_zayif,3b_gozlem_normal,3b_gozlem_dokusuz_bolgede_zayif,psnr_zayif_test,psnr_normal_test,n_zayif_test
+sift,3513,8154,4.2,170,658,26,82.2,96.7,296,1165,4.5,30.43,28.03,3
+aliked,1379,2011,9.7,504,908,56,97.8,99.3,729,1422,21.8,16.36,19.46,5
+loma,2048,2048,27.3,627,913,69,100.0,100.0,1056,1541,149.5,28.45,27.7,5

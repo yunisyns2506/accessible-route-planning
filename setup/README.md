@@ -34,6 +34,8 @@ pip install torch==2.1.2 torchvision==0.16.2 --index-url https://download.pytorc
 ### Adım 2.3: COLMAP ve FFmpeg Kurulumu
 1. **COLMAP 3.9+ CUDA:** İndirip `C:\Users\<user>\tools\colmap` klasörüne açın ve Sistem PATH ortam değişkenine ekleyin.
 2. **FFmpeg:** `C:\Users\<user>\tools\ffmpeg` yoluna ekleyin.
+3. **COLMAP 4.2.1 (hafta 4):** ALIKED, LightGlue, LoMa ve global/hierarchical SfM için
+   ayrı klasöre kurulur, PATH'e eklenmez: [`colmap4_kurulum.md`](colmap4_kurulum.md)
 
 ### Adım 2.4: Nerfstudio ve gsplat Kurulumu
 ```bash

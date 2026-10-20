@@ -19,6 +19,7 @@ from docx.shared import Inches, Pt, RGBColor
 INLINE = re.compile(r"(\*\*.+?\*\*|`[^`]+`|\*[^*]+\*)")
 IMAGE = re.compile(r"^!\[(?P<alt>.*?)\]\((?P<src>[^)]+)\)\s*$")
 MAX_IMG_WIDTH = Inches(6.0)
+MAX_IMG_HEIGHT = Inches(3.4)
 
 
 def add_runs(paragraph, text: str) -> None:
@@ -73,7 +74,14 @@ def add_image(doc: Document, src: Path, caption: str, base: Path) -> None:
     if not path.exists():
         doc.add_paragraph(f"[Gorsel bulunamadi: {src}]")
         return
-    doc.add_picture(str(path), width=MAX_IMG_WIDTH)
+    # Genislik 6 inc; dik/kare gorseller sayfayi kaplamasin diye yukseklik sinirli
+    from PIL import Image
+    with Image.open(path) as im:
+        aspect = im.height / im.width
+    if MAX_IMG_WIDTH * aspect > MAX_IMG_HEIGHT:
+        doc.add_picture(str(path), height=MAX_IMG_HEIGHT)
+    else:
+        doc.add_picture(str(path), width=MAX_IMG_WIDTH)
     doc.paragraphs[-1].alignment = WD_ALIGN_PARAGRAPH.CENTER
     if caption:
         cap = doc.add_paragraph()

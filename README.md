@@ -9,16 +9,27 @@ simülasyon sistemi.
 
 ---
 
-## Durum — Hafta 3
+## Durum — Hafta 4
 
-**A1 (mekân modelleme) devam ediyor.** Üretim hattı (çekim → COLMAP → Splatfacto
-→ PLY) doğrulandı; metrik ölçek bekliyor. **A2 (Unity aktarımı) kısmen yapıldı:**
-bulut ve hazır hizmet modelleri Unity'de görüntülendi, yerel modeller henüz
-aktarılmadı ve kare süresi (p50/p95) ölçülmedi.
+**A1 (mekân modelleme) devam ediyor.** COLMAP'in tüm yöntem ailesi aynı veri
+(D207, 349 kare) ve aynı donanımda karşılaştırıldı: **3 özellik çıkarıcı × 5
+eşleştirme × 3 SfM yöntemi = 39 SfM koşusu, 16 3DGS eğitimi (30k), 3 dense
+rekonstrüksiyon.** LoMa'nın sözlük ağacı gerektiren 3 stratejisi koşulamadı
+(gerekçe raporda). Sonuçlar çok katlı bina için yöntem seçimine bağlandı.
 
-Bu hafta D207 dersliğinde aynı veri üzerinde **10 koşu** karşılaştırıldı:
+**→ [Hafta 4 Raporu](docs/raporlar/hafta-04_raporu.md)** · [Hafta 3 Raporu](docs/raporlar/hafta-03_raporu.md)
 
-**→ [Hafta 3 Raporu](docs/raporlar/hafta-03_raporu.md)**
+### Öne çıkanlar
+
+| Bulgu | Sonuç |
+| :--- | :--- |
+| Kalite ölçütü | Kayıt oranı yanıltıcı; **doğru pozlanan kare oranı** 3DGS kalitesini belirliyor |
+| SIFT | exhaustive + incremental en iyi (PSNR 28,26) ama 5.000 karede eşleştirme ~128 sa |
+| ALIKED + LightGlue | Tekrar eden mekânda yanlış eşleşme → oda katlanıyor (doğru pozlanan kare %44, PSNR 19) |
+| **LoMa** | **sequential + incremental = exhaustive kalitesi** (27,64 / 27,81), eşleştirme 19× ucuz; çıkarma 18 sn/kare |
+| Zayıf dokulu yüzey | SIFT dokusuz karelerin %18'ini kaybediyor; ALIKED %2, LoMa hiç kaybetmiyor |
+| Global mapper | Tüm koşularda kopuk kameralar; aykırı kamera filtresi zorunlu |
+| Dense | 1,7–1,9 M nokta, kat planı görünümü elde edildi; ölçüm katmanı dense olmalı |
 
 ### Teslim edilen raporlar
 
@@ -29,26 +40,67 @@ Bu hafta D207 dersliğinde aynı veri üzerinde **10 koşu** karşılaştırıld
 | Yazılım Altyapısı ve Araç Seçimi | [`03_yazilim_altyapisi_ve_arac_secimi.docx`](docs/raporlar/03_yazilim_altyapisi_ve_arac_secimi.docx) |
 | Sistem Tasarımı ve Uygulama Planı | [`04_sistem_tasarimi_ve_uygulama_plani.docx`](docs/raporlar/04_sistem_tasarimi_ve_uygulama_plani.docx) |
 | Hafta 3 — Üretim hattı ve yöntem karşılaştırması | [`hafta-03_raporu.docx`](docs/raporlar/hafta-03_raporu.docx) |
+| Hafta 4 — COLMAP yöntemleri ve bina ölçeği önerileri | [`hafta-04_raporu.docx`](docs/raporlar/hafta-04_raporu.docx) |
 
-### Eşleştirme stratejisi (349 kare)
+---
 
-| Strateji | Süre | Kaydolan | COLMAP modeli |
-| :--- | ---: | ---: | ---: |
-| `sequential` | 6,6 dk | 149 (%42,7) | 4 parça |
-| **`exhaustive`** | 13,9 dk | **331 (%94,8)** | 1 bütün |
-| `vocab_tree` | 16,1 dk | 331 (%94,8) | 1 bütün |
+## Yapılacaklar
 
-### Eğitim (331 kare, 15.000 iterasyon, 33 kare test)
+### Hafta 3 sonrası görüşme maddeleri
 
-| Koşu | PSNR | SSIM | LPIPS | Süre | VRAM |
-| :--- | ---: | ---: | ---: | ---: | ---: |
-| varsayılan | 27,22 | 0,9091 | 0,1759 | 8,9 dk | 2.289 MB |
-| **+ antialiased** | **27,38** | **0,9111** | **0,1697** | 9,5 dk | 2.299 MB |
-| + ölçek düzenleme | 27,14 | 0,9084 | 0,1838 | 11,2 dk | 2.470 MB |
-| + kamera pozu opt. | 22,52 | 0,7794 | 0,2119 | 14,0 dk | 2.673 MB |
-| `splatfacto-big` | 26,55 | 0,9031 | 0,1757 | 17,8 dk | 4.285 MB |
-| tam çözünürlük | 26,87 | 0,9053 | 0,2705 | 21,6 dk | 4.749 MB |
-| `nerfacto` (NeRF) | 22,48 | 0,7874 | 0,3260 | 11,8 dk | 4.459 MB |
+✅ yapıldı · ⏳ sonraki aşama · ❌ yapılmadı
+
+| Madde | Durum | Nerede |
+| :--- | :---: | :--- |
+| Bütün raporlar GitHub'da | ✅ | [`docs/raporlar/`](docs/raporlar/) |
+| Sistem bilgisi (system info) | ✅ | [`environment/system-info.md`](environment/system-info.md) |
+| Her 3DGS sürümünü hafta hafta kaydetmek | ✅ | [`models/`](models/) (`sinif-01_h04_*`) |
+| Sistemin kurulum basamakları | ✅ | [`setup/README.md`](setup/README.md), [`setup/colmap4_kurulum.md`](setup/colmap4_kurulum.md) |
+| Her şey ayrı klasörde | ✅ | Yapı bölümü |
+| Algoritmaların ayrıntılı anlatımı (COLMAP nasıl çalışır, özellik çıkarma, yöntemlerin maliyeti) | ✅ | Hafta 4 raporu, bölüm 2 ve 4.8 |
+| SIFT / ALIKED / LoMa aynı veri setinde karşılaştırma | ✅ | Rapor 4.1–4.4 (LoMa'da sözlük ağacı gerektiren 3 strateji koşulamadı) |
+| ALIKED + LightGlue (öğrenme tabanlı eşleştirme) | ✅ | Rapor 4.1–4.4 |
+| Zayıf dokulu yüzeylerde ALIKED | ✅ | Rapor 4.6 |
+| Görüntü eşleştirme yöntemleri | ✅ | exhaustive, sequential, sequential + loop, vocab_tree; spatial uygulanamadı (GPS yok) |
+| SfM'in üç yöntemi | ✅ | incremental, global, hierarchical |
+| Yoğun geometri: PatchMatch, stereo fusion, meshing | ✅ | Rapor 4.7 |
+| SIFT + sequential + incremental | ✅ | Rapor 4.2 |
+| SIFT + exhaustive + incremental | ✅ | Rapor 4.2 |
+| SIFT + sequential + global | ✅ | Rapor 4.2 |
+| Minimum sistem gereksinimleri | ✅ | Rapor 4.8 |
+
+**Ölçütler**
+
+| Ölçüt | Durum | Nerede |
+| :--- | :---: | :--- |
+| Başarıyla pozlanan görüntü oranı | ✅ | Rapor 4.1–4.2 (doğru pozlanan kare) |
+| Sahnenin oluşturulabilen kısmı (%) | ✅ | Rapor 4.1–4.2 (modele giren kare) |
+| 3B noktaların 2B izdüşüm hatası | ✅ | Rapor 4.2 |
+| Geometrik tutarlılık | ✅ | Rapor 3, 4.1–4.3 (referansa hizalama) |
+| Seyrek 3B nokta sayısı (sparse point count) | ✅ | Rapor 4.2 |
+| İz uzunluğu (track length) | ✅ | Rapor 4.2 |
+| İşlem süresi | ✅ | Rapor 4.8 |
+| Bellek tüketimi | ✅ | Rapor 4.8 |
+| Referans ölçüden sapma | ❌ | Derslikte şerit metreyle ölçü gerekiyor |
+| VR performansı | ⏳ | Sonraki aşama |
+
+### Hafta 4 — COLMAP yöntem karşılaştırması
+
+- [x] COLMAP 4.2.1 + ONNX modelleri + CUDA 12 / cuDNN 9.10 kurulumu ([`setup/colmap4_kurulum.md`](setup/colmap4_kurulum.md))
+- [x] Ölçüm betikleri (`scripts/hafta04/`): süre, tepe RAM / VRAM, model istatistikleri, kare kare test metrikleri
+- [x] SIFT bloğu: 15 SfM + 6 3DGS + dense
+- [x] ALIKED + LightGlue bloğu: 15 SfM + 6 3DGS + dense
+- [x] LoMa bloğu: 6 SfM + 4 3DGS + dense (sözlük ağacı gerektiren 9 SfM / 2 3DGS N/A: COLMAP aracı 256 boyutu desteklemiyor, pycolmap ile kurulum süre sınırını aştı)
+- [x] Karşılaştırma tabloları ve görseller ([`experiments/hafta-04_sinif-01/`](experiments/hafta-04_sinif-01/), `docs/figures/hafta-04/`)
+- [x] Hafta 4 raporu: yöntemlerin çalışma biçimi, maliyeti, gereksinimleri, sonuçlar, bina önerileri
+- [x] Haftalık 3DGS modellerinin `models/` altına kaydı (`sinif-01_h04_*`)
+
+### Açık işler
+
+- [ ] Referans ölçüden sapma: derslikte şerit metreyle en az 3 ölçü
+- [ ] Bina pilotu: bir katın bölümünde ~1.000 kare ile SIFT + vocab_tree ve LoMa + sequential karşılaştırması (rapor 7.4)
+- [ ] Unity sürümünün `environment/system-info.md`'ye işlenmesi; yerel modellerin Unity aktarımı (A2)
+- [ ] VR performans ölçümü (sonraki aşama)
 
 ---
 
@@ -77,7 +129,8 @@ runs/<veri-kümesi>/<koşu>/ eğitim çıktıları ve kontrol noktaları   5,4 G
 
 Veri kümesi adları: `oda-01_video`, `oda-01_79foto`, `oda-01_512foto`,
 `sinif-01`. Koşu adları `experiments/` altındaki kayıtlarla birebir aynıdır
-(örn. `runs/sinif-01/G2_antialiased_30k/`).
+(örn. `runs/sinif-01/G2_antialiased_30k/`, hafta 4 için
+`runs/sinif-01/hafta-04/loma_sequential_incremental/`).
 
 Eğitim hattı CUDA destekli GPU gerektirir ve tek bilgisayarda (RTX 2060 6 GB)
 kuruludur. Kurulum: [`setup/README.md`](setup/README.md) ·
@@ -86,7 +139,8 @@ kuruludur. Kurulum: [`setup/README.md`](setup/README.md) ·
 ## Koşuyu tekrarlamak
 
 Adım adım komutlar:
-[`experiments/hafta-03_sinif-01/notes.md`](experiments/hafta-03_sinif-01/notes.md)
+[hafta 3](experiments/hafta-03_sinif-01/notes.md) ·
+[hafta 4](experiments/hafta-04_sinif-01/notes.md) (COLMAP 4.2.1, `scripts/hafta04/`)
 
 > `scripts/fix_transforms.py` **zorunlu** adımdır: nerfstudio `transforms.json`
 > dosyasını daima `colmap/sparse/0`'dan üretir, ancak COLMAP sahneyi

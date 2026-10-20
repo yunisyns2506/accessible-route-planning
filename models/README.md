@@ -77,3 +77,23 @@ olmasına karşın geometri gerçek konumundan ötelenmiştir.
 
 > Hiçbir modelde metrik ölçek kurulmamıştır; bu dosyalardan kapı açıklığı veya
 > geçiş genişliği gibi metrik değerler çıkarılamaz.
+
+
+---
+
+# Hafta 4 Modelleri (sinif-01, COLMAP yöntem karşılaştırması)
+
+Her özellik çıkarıcının en iyi SfM çıktısıyla eğitilen 3DGS modeli. Düz
+`splatfacto`, 30.000 iterasyon, COLMAP 4.2.1. Ölçümler her 10. kareden oluşan
+sabit test listesinde alınmıştır. Ayrıntı:
+[`docs/raporlar/hafta-04_raporu.md`](../docs/raporlar/hafta-04_raporu.md)
+
+| Model | SfM | PSNR | SSIM | LPIPS | Gaussian | Boyut |
+| :--- | :--- | ---: | ---: | ---: | ---: | ---: |
+| `sinif-01_h04_sift_exhaustive_incremental` | SIFT + exhaustive + incremental | **28,26** | 0,914 | **0,150** | 560.704 | 133 MB |
+| `sinif-01_h04_loma_sequential_incremental` | LoMa + sequential + incremental | 27,64 | 0,903 | 0,175 | 577.619 | 137 MB |
+| `sinif-01_h04_aliked_sequential_loop_incremental` | ALIKED + LightGlue + sequential + loop + incremental | 25,11 | 0,868 | 0,244 | 570.151 | 135 MB |
+
+Gaussian sayıları dışa aktarmada düşük opaklıklı Gaussian'lar atıldıktan
+sonraki değerlerdir. Bu modeller hafta 3 modelleriyle (COLMAP 3.9.1, farklı test
+bölmesi) sayısal olarak karşılaştırılamaz.
