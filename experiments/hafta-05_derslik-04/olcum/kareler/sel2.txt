@@ -1,0 +1,1 @@
+[0:v]select='eq(n\,4564)+eq(n\,4707)+eq(n\,12633)+eq(n\,8456)+eq(n\,17206)+eq(n\,9059)+eq(n\,11709)',scale=1920:1080:flags=lanczos[c]

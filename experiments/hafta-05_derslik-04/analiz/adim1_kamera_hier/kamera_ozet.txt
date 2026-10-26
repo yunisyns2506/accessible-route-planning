@@ -1,0 +1,6 @@
+kamera: 999, şüpheli: 9
+yeniden izdüşüm hatası (px): medyan 2.17, %95 3.00, en yüksek 5.08
+gözlem sayısı: medyan 1383, en düşük 142
+yörünge sıçraması: en yüksek 2.8 kat (medyan adım = 1)
+inc-hier konum farkı (salon uzunluğunun %'si): medyan 0.07, %95 0.15, en yüksek 0.94
+nedenlere göre: reproj 1, az_gozlem 9, sicrama 0, yontem_farki 0

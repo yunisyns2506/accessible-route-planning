@@ -1,0 +1,212 @@
+<title>Derslik 3DGS Rehberi</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,600&display=swap">
+<style>
+/* Düzen: tek sütun teknik rehber; solda ince bölüm etiketi, sağda içerik. Tablolar ve kod kendi kaydırma kutusunda. */
+:root {
+  --bg: #f6f7f5; --surface: #ffffff; --fg: #1d2420; --muted: #5d6862; --line: #d9dfda;
+  --accent: #1f6f5c; --accent-soft: #e2efea; --warn: #9a5b12; --warn-soft: #f6ecdc; --code-bg: #eef1ee;
+  --display: "Fraunces", Georgia, serif; --body: "IBM Plex Sans", system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #121614; --surface: #1a201d; --fg: #e3e9e5; --muted: #9aa6a0; --line: #2c3530;
+  --accent: #6cc3a8; --accent-soft: #1d3029; --warn: #e0a65a; --warn-soft: #33281a; --code-bg: #1f2622; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #121614; --surface: #1a201d; --fg: #e3e9e5; --muted: #9aa6a0; --line: #2c3530;
+  --accent: #6cc3a8; --accent-soft: #1d3029; --warn: #e0a65a; --warn-soft: #33281a; --code-bg: #1f2622; color-scheme: dark }
+body { background: var(--bg); color: var(--fg); font: 16px/1.6 var(--body); }
+.wrap { max-width: 860px; margin: 0 auto; padding-block: 40px 80px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+header { border-bottom: 1px solid var(--line); padding-bottom: 24px; margin-bottom: 8px; }
+.eyebrow { font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+h1 { font: 600 clamp(28px, 5vw, 40px)/1.15 var(--display); margin: 12px 0 10px; text-wrap: balance; }
+h2 { font: 600 22px/1.3 var(--display); margin: 0 0 12px; text-wrap: balance; }
+h3 { font: 600 16px/1.4 var(--body); margin: 20px 0 6px; }
+.lead { color: var(--muted); max-width: 65ch; margin: 0; }
+section { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 24px; padding-block: 32px; border-bottom: 1px solid var(--line); }
+section > .num { font: 500 12px/1.6 var(--mono); color: var(--muted); padding-top: 6px; }
+section > div { min-width: 0; }
+@media (max-width: 640px) { section { grid-template-columns: minmax(0, 1fr); gap: 4px; } }
+p, li { max-width: 68ch; }
+ul, ol { padding-left: 20px; margin: 8px 0; display: grid; gap: 4px; }
+code { font: 14px var(--mono); background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+pre { font: 13px/1.55 var(--mono); background: var(--code-bg); border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; overflow-x: auto; margin: 10px 0; }
+pre code { background: none; padding: 0; }
+.tbl { overflow-x: auto; margin: 12px 0; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-weight: 600; color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; background: var(--code-bg); }
+tr:last-child td { border-bottom: none; }
+td.n { font-variant-numeric: tabular-nums; white-space: nowrap; }
+.pick td:first-child { font-weight: 600; color: var(--accent); }
+.note { border-left: 3px solid var(--warn); background: var(--warn-soft); padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 14px 0; }
+.note strong { color: var(--warn); }
+.key { border-left: 3px solid var(--accent); background: var(--accent-soft); padding: 12px 16px; border-radius: 0 6px 6px 0; margin: 14px 0; }
+.mermaid { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 12px; overflow-x: auto; }
+.pending { color: var(--muted); font-style: italic; }
+footer { color: var(--muted); font-size: 13px; padding-top: 24px; }
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">Hafta 5 · Erişilebilir rota planlama · A1 mekân modelleme</div>
+  <h1>Bir dersliği videodan 3DGS modeline çevirmek</h1>
+  <p class="lead">Rektörlük binasındaki dersliğin (4K, ~10 dk video) nasıl modellendiğinin adım adım tarifi. Aynı yöntemleri başka bir sınıfın videosuna uygulamak için gereken her şey burada: çekim, kare seçimi, Colab ortamı, kullanılan COLMAP ve 3DGS ayarları, sonuçlar ve karşılaştığımız hatalar.</p>
+</header>
+
+<section>
+  <div class="num">Özet</div>
+  <div>
+    <div class="key"><strong>Önerilen hat:</strong> 1000 kare (1920×1080) → <strong>LoMa + sequential (döngü tespitli) + incremental</strong> SfM → splatfacto 3DGS. Bu derslikte 1000 karenin 1000'i tek modelde doğru konumlandı; test karelerinde 25,2 dB PSNR. L4 GPU'da SfM ~1 sa 45 dk, 3DGS ~30 dk sürdü.</div>
+    <pre class="mermaid">flowchart LR
+  V[4K video ~10 dk] --> A[Kare analizi<br/>netlik + hareket]
+  A --> K[1000 kare seçimi<br/>her 10. kare test]
+  K --> F[LoMa özellik çıkarma]
+  F --> T[LoMa sözlük ağacı]
+  T --> M[Sequential + döngü<br/>eşleştirme]
+  M --> S[Incremental SfM<br/>kamera pozları]
+  S --> G[3DGS splatfacto<br/>900 eğitim karesi]
+  G --> E[Test: PSNR / SSIM / LPIPS]
+  G --> P[.ply → Unity / VR]</pre>
+  </div>
+</section>
+
+<section>
+  <div class="num">01 · Çekim</div>
+  <div>
+    <h2>Çekim ve ölçüm</h2>
+    <ul>
+      <li><strong>Ayar:</strong> 4K, 30 fps, yatay, geniş açı. Bizim videomuz 10 dk 19 sn, 18.560 kare.</li>
+      <li><strong>Yürüme hızı:</strong> normal yürüyüş sorun değil (kareler arası kayma 1080p'de ~3 piksel). Asıl bulanıklık <strong>hızlı dönüşlerde</strong> oluşuyor; dönüşleri yavaş yap.</li>
+      <li><strong>Rota:</strong> önce duvar boyunca odanın çevresini dolaş, sonra sıraların arasından geç, sonunda <strong>başladığın yere dön</strong> (döngü kapanışı). Kapıdan girip kapıdan çık; kapı eşiği iki taraftan da görünsün.</li>
+      <li><strong>Tekrar eden yapı:</strong> aynı sandalyeler ve pencereler eşleştiriciyi yanıltabiliyor. Kapı numarası, pano, kürsü gibi ayırt edici öğeleri kadraja al.</li>
+      <li><strong>Dokusuz yüzey:</strong> beyaz duvar ve tavana uzun süre bakma; LoMa bunları SIFT'ten iyi tolere ediyor, ama 3DGS'de leke bırakıyor.</li>
+      <li><strong>Ölçü:</strong> şerit metreyle en az 8 ölçü al (kapı genişliği, pencere, dersliğin eni ve boyu vb.). Her ölçünün başlangıç ve bitiş noktasını fotoğrafla. 3'ü ölçek kalibrasyonu, 5'i bağımsız doğrulama için kullanılacak. Telefonla alınan yaklaşık ölçüler doğrulamaya yetmiyor.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="num">02 · Kareler</div>
+  <div>
+    <h2>Kare seçimi</h2>
+    <p>Videodaki her kare için netlik (Laplace varyansı), hareket (optik akış) ve parlaklık ölçülür; sonra video 1000 eşit pencereye bölünüp her pencereden hızlı dönüşe denk gelmeyen en net kare alınır.</p>
+    <pre><code># 1) Kare kare analiz (yerelde, ~5 dk; grafik ve küçük resim paftası üretir)
+python scripts/hafta05/video_analiz.py &lt;video.MOV&gt; experiments/&lt;kayit&gt;/video_analiz
+python scripts/hafta05/video_rapor.py  &lt;video.MOV&gt; experiments/&lt;kayit&gt;/video_analiz
+
+# 2) 1000 kare seç (0,6 sn pencere, hareket &lt; 15 px/kare, en keskin; her 10.'su test)
+python scripts/hafta05/kare_secimi.py experiments/&lt;kayit&gt;/video_analiz 1000
+# çıktı: secilen_kareler_1000.csv  → frame sütunu frame_list.txt olur</code></pre>
+    <ul>
+      <li>Netliğin düştüğü yerlerin çoğu bulanıklık değil, dokusuz duvara bakılan anlardır; grafikte parlaklık artarken netlik düşüyorsa sebep budur.</li>
+      <li><strong>Test kareleri:</strong> seçilen her 10. kare (0010, 0020 … 1000; 100 kare). Bunlar SfM'e girer ama 3DGS eğitimine girmez; kalite bu görülmemiş karelerde ölçülür.</li>
+      <li>Kareler Colab'da 4K videodan ffmpeg ile çıkarılır: SfM ve karşılaştırma için 1920×1080, son model için 2560×1440.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="num">03 · Ortam</div>
+  <div>
+    <h2>Colab ortamı</h2>
+    <p>Colab Pro, <strong>L4 GPU</strong> (24 GB VRAM, 12 çekirdek, 52 GB RAM), saatte ~1,5 hesaplama birimi. Her şey <code>colab_kurulum_kuyruk.sh</code> betiğiyle kendi kendine kurulup çalışıyor.</p>
+    <h3>COLMAP 4.2.1 (kaynaktan derleme)</h3>
+    <p>pip'teki <code>pycolmap-cuda12</code> ONNX desteği olmadan geliyor ve LoMa'da çöküyor. Bu yüzden COLMAP CUDA + ONNX ile derleniyor (~10 dk). Üç düzeltme gerekiyor:</p>
+    <ol>
+      <li><code>mkdir -p /usr/include/opencv4</code>: OpenImageIO paketi var olmayan bir klasörü istiyor.</li>
+      <li><code>-DOPENGL_ENABLED=OFF</code> ve libGLdispatch'i bağlayıcıya açıkça vermek; arayüzsüz derlemede OpenGL bağlama hatası çıkıyor.</li>
+      <li><code>src/colmap/exe/vocab_tree.cc</code>: <code>VisualIndex::Create()</code> → <code>VisualIndex::Create(descriptors.data.cols())</code>. Komut tanımlayıcı boyutunu sabit 128 alıyordu; bu satır olmadan LoMa (256 boyut) için sözlük ağacı kurulamıyor ve döngü tespiti yapılamıyor.</li>
+    </ol>
+    <p>Derlenmiş COLMAP bizim Drive'ımızda yedekli (<code>hafta5_derslik4/kurulum/colmap_4.2.1_l4.tgz</code>); paylaşırsak derleme adımı atlanır.</p>
+    <h3>3DGS ortamı</h3>
+    <p>Colab Python 3.13 kullanıyor, nerfstudio bunu desteklemiyor. Ayrı bir sanal ortam: Python 3.11, torch 2.4.1 (CUDA 12.4), nerfstudio 1.1.5, gsplat 1.4.0, ninja. Colab <code>UV_SYSTEM_PYTHON=true</code> ile geldiği için <code>uv pip install --python /content/ns/bin/python …</code> şeklinde ortam açıkça verilmeli.</p>
+    <div class="note"><strong>Colab gece işi kapatır.</strong> Arka plandaki bir süreç Colab'ı meşgul göstermez; tarayıcı kapanınca makine bir süre sonra silinir. Kuyruğu iş bitene kadar <em>çalışır kalan bir hücreden</em> başlat ve bilgisayarı ile Colab sekmesini açık tut. Ayrıca makine en fazla 24 saat yaşar; sonuçları her adımdan sonra Drive'a kopyala.</div>
+  </div>
+</section>
+
+<section>
+  <div class="num">04 · SfM</div>
+  <div>
+    <h2>Yöntemler ve sonuçlar</h2>
+    <p>Hafta 4'te 3 çıkarıcı × 5 eşleştirme × 3 SfM yöntemi küçük bir derslikte karşılaştırılmıştı. Bu hafta en iyi seçenekler 1000 karelik büyük salonda denendi. Süreler L4 GPU'da ölçüldü.</p>
+    <div class="tbl"><table>
+      <thead><tr><th>Yöntem</th><th>Modele giren kare</th><th>3DGS PSNR (dB)</th><th>SfM süresi</th><th>Not</th></tr></thead>
+      <tbody>
+        <tr class="pick"><td>LoMa + sequential + döngü + incremental</td><td class="n">1000 / 1000</td><td class="n">25,23</td><td class="n">1 sa 42 dk</td><td>Önerilen. Tek model, katlanma yok, döngü kapandı.</td></tr>
+        <tr><td>LoMa + sequential + döngü + hierarchical (leaf 250)</td><td class="n">999 / 1000</td><td class="n">24,35</td><td class="n">1 sa 10 dk</td><td>SfM 3,5 kat hızlı ama parçaların birleştiği yerde kayma; portrede ve sandalyelerde çift görüntü.</td></tr>
+        <tr><td>SIFT + exhaustive + incremental</td><td class="n pending">sürüyor</td><td class="n pending">sürüyor</td><td class="n">~5–6 sa</td><td>Kalite üst sınırı; eşleştirme karesel büyüyor (~500 bin çift).</td></tr>
+      </tbody>
+    </table></div>
+    <p>Elenenler: ALIKED + LightGlue (hafta 4'te tekrar eden derslikte odayı kendi üstüne katladı), global SfM (kopuk kameralar), LoMa + exhaustive (L4'te ~10 sa; hafta 4'te sequential ile aynı kaliteyi verdi).</p>
+    <h3>Önerilen yöntemin komutları</h3>
+<pre><code>C=/content/colmap/bin/colmap
+# 1) LoMa özellik çıkarma (~15 dk; modeller ilk kullanımda iner)
+$C feature_extractor --database_path db.db --image_path frames_1080 \
+  --ImageReader.single_camera 1 --ImageReader.camera_model OPENCV \
+  --FeatureExtraction.type LOMA_B --default_random_seed 1
+
+# 2) Bu çekimin LoMa tanımlayıcılarından sözlük ağacı (yamalı komut, ~27 dk)
+$C vocab_tree_builder --database_path db.db --vocab_tree_path loma_tree.bin \
+  --num_visual_words 8192 --max_num_descriptors 400000
+
+# 3) Sequential + döngü tespiti (her 10 karede 50 aday, ~16 dk)
+$C sequential_matcher --database_path db.db --FeatureMatching.type LOMA_B \
+  --SequentialMatching.loop_detection 1 --SequentialMatching.vocab_tree_path loma_tree.bin \
+  --SequentialMatching.loop_detection_period 10 --SequentialMatching.loop_detection_num_images 50
+
+# 4) Incremental SfM (~44 dk)
+$C mapper --database_path db.db --image_path frames_1080 --output_path sparse --default_random_seed 1</code></pre>
+    <p>ONNX Runtime CUDA 12 kütüphanelerini ister: <code>pip install nvidia-cublas-cu12 nvidia-cudnn-cu12 nvidia-cufft-cu12 nvidia-cuda-runtime-cu12 nvidia-curand-cu12</code> ve bunların <code>lib</code> klasörleri <code>LD_LIBRARY_PATH</code>'e eklenmeli (betik bunu kendisi yapıyor).</p>
+  </div>
+</section>
+
+<section>
+  <div class="num">05 · 3DGS</div>
+  <div>
+    <h2>3DGS eğitimi ve değerlendirme</h2>
+    <ul>
+      <li><strong>Veri:</strong> SfM'in en büyük modeli nerfstudio biçimine çevrilir. Sahneden kopuk kameralar (en yakın 3 kameraya uzaklığı medyanın 10 katını aşan) ayıklanır; tek bir kopuk kamera bütün modeli bozabiliyor.</li>
+      <li><strong>Karşılaştırma ayarı:</strong> splatfacto varsayılanları, 30.000 iterasyon, tam 1920×1080 (<code>--downscale-factor 1</code>), kareler CPU önbelleğinde. Bir model ~30 dk, ~3 GB VRAM, ~20 GB RAM.</li>
+      <li><strong>Son model:</strong> en iyi yöntem <code>splatfacto-big</code> ile 2560×1440'ta eğitiliyor; RAM'e sığması için <code>--pipeline.datamanager.cache-images-type uint8</code>. 8 bit önbellek sonucu değiştirmiyor, çünkü kareler zaten 8 bitlik JPEG.</li>
+      <li><strong>Ölçüm:</strong> 100 test karesinde PSNR / SSIM / LPIPS, kare kare kaydedilir. Ayrıca her aşamada süre, tepe RAM ve VRAM.</li>
+    </ul>
+    <pre><code>/content/ns/bin/python colab_gs.py loma sequential_loop incremental                      # 1080p karşılaştırma
+/content/ns/bin/python colab_gs.py loma sequential_loop incremental --res 1440 --method splatfacto-big   # son model</code></pre>
+    <div class="note"><strong>4K ile eğitme.</strong> 900 tane 4K kare belleğe yüklenirken L4 makinesinin 52 GB RAM'i doldu ve Colab makineyi sildi. 1440p + uint8 önbellek güvenli; betikte ayrıca RAM 5 GB'ın altına inerse eğitimi durduran bir bekçi var.</div>
+    <h3>PSNR'ı nasıl okumalı</h3>
+    <p>Hafta 4'teki küçük derslikte ~28 dB alınmıştı; bu salonda 25,2 dB. Fark çözünürlükten gelmiyor (aynı model yarım çözünürlükte 25,5 dB). Asıl sebep salonun büyük ve ayrıntılı olması (yüzlerce ince sandalye ayağı), aynı Gaussian bütçesinin bu alana yetmemesi ve telefonun pozlamayı kendiliğinden değiştirmesi. PSNR farklı sahneler arasında doğrudan karşılaştırılmaz; aynı sahnede yöntemleri karşılaştırmak için kullanılır.</p>
+  </div>
+</section>
+
+<section>
+  <div class="num">06 · Uygulama</div>
+  <div>
+    <h2>Kendi sınıfına uygulamak</h2>
+    <ol>
+      <li>Videoyu Drive'a yükle; <code>colab_kurulum_kuyruk.sh</code> içindeki <code>VIDEO=</code> yolunu ve <code>D=</code> çıktı klasörünü kendi klasörlerinle değiştir.</li>
+      <li>Kare analizi ve seçimini yap, <code>frame_list.txt</code>'i (seçilen kare numaraları, satır başına bir) betiklerin yanına koy.</li>
+      <li>Colab'da çalışma zamanını <strong>L4 GPU</strong> yap, Drive'ı bağla, betikleri <code>/content/work/</code>'e kopyala.</li>
+      <li>Kuyruğu çalışır kalan bir hücreden başlat. Bizdeki kuyruk sırası: kurulum → SIFT exhaustive (sen istersen atlayabilirsin) → son model. LoMa adımları için <code>python colab_sfm.py A</code>, ardından iki <code>colab_gs.py</code> çağrısı.</li>
+      <li>Toplam süre (LoMa yolu): kurulum ~30 dk + SfM ~1 sa 45 dk + 3DGS ~30 dk + son model ~2 sa. Yaklaşık 10–15 hesaplama birimi.</li>
+    </ol>
+    <p>Dosyalar: depoda <code>scripts/hafta05/</code> (<code>video_analiz.py</code>, <code>video_rapor.py</code>, <code>kare_secimi.py</code>, <code>colab_sfm.py</code>, <code>colab_gs.py</code>, <code>colab_kurulum_kuyruk.sh</code>); kayıtlar <code>experiments/hafta-05_derslik-04/</code>. Aynı betiklerin kopyası Drive'da <code>hafta5_derslik4/betikler/</code>.</p>
+  </div>
+</section>
+
+<section>
+  <div class="num">07 · Sırada</div>
+  <div>
+    <h2>Henüz yapılmayanlar</h2>
+    <ul>
+      <li>SIFT exhaustive sonucunun karşılaştırmaya eklenmesi ve 1440p son model.</li>
+      <li>Şerit metre ölçüleriyle ölçek kalibrasyonu, kapı genişliği gibi ölçülerin doğrulanması, geometrik hata analizi.</li>
+      <li>Kamera konumunun hatalı olduğu bölgelerin ve eksik geometrinin işaretlenmesi.</li>
+      <li>.ply modelinin Unity'ye aktarılıp VR'da test edilmesi.</li>
+    </ul>
+  </div>
+</section>
+
+<footer>Hazırlayan: Sabri Duruk · Proje: Engelli Bireyler İçin Akıllı Erişilebilir Rota Planlama · 24 Ekim 2026</footer>
+</div>

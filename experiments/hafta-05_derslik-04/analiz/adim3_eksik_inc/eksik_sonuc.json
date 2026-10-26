@@ -1,0 +1,29 @@
+{
+  "hucre_salon_uzunlugu_orani": 0.025,
+  "katmanlar": {
+    "zemin ve oturaklar": {
+      "nokta": 119199,
+      "salon_ici_bos_hucre_yuzde": 0.0,
+      "cevre_bos_hucre_yuzde": 28.8,
+      "salon_ici_az_gorus_hucre_yuzde (<5 kamera, dolu hücreler)": 0.5,
+      "medyan_gorus": 60.0,
+      "medyan_iz": 3.0
+    },
+    "orta (duvarlar, kapı, pencere)": {
+      "nokta": 33895,
+      "salon_ici_bos_hucre_yuzde": 3.2,
+      "cevre_bos_hucre_yuzde": 22.5,
+      "salon_ici_az_gorus_hucre_yuzde (<5 kamera, dolu hücreler)": 11.3,
+      "medyan_gorus": 18.0,
+      "medyan_iz": 2.0
+    },
+    "tavan": {
+      "nokta": 54204,
+      "salon_ici_bos_hucre_yuzde": 0.1,
+      "cevre_bos_hucre_yuzde": 25.1,
+      "salon_ici_az_gorus_hucre_yuzde (<5 kamera, dolu hücreler)": 0.3,
+      "medyan_gorus": 90.0,
+      "medyan_iz": 3.0
+    }
+  }
+}

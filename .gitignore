@@ -147,3 +147,8 @@ temp/
 
 # Ham .docx rapor kaynakları (PDF'ler sürümlenir)
 ~$*.docx
+
+# Hafta 5: büyük model ve SfM dosyaları Drive'da (hafta5_derslik4/) tutulur, Git'e girmez
+experiments/hafta-05_derslik-04/unity/*.ply
+experiments/hafta-05_derslik-04/sfm/
+.mcp.json

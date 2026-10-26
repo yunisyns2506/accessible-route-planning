@@ -1,0 +1,50 @@
+{
+  "paralellik_uzun_duvarlar_derece": 7.249844331760618,
+  "paralellik_kisa_duvarlar_derece": 2.232134239451314,
+  "diklik_sapmasi_derece": {
+    "sol kısa duvar – alt uzun duvar": 7.638958755033457,
+    "sol kısa duvar – üst uzun duvar": 0.9857096396705174,
+    "sağ kısa duvar – alt uzun duvar": 6.945391672186119,
+    "sağ kısa duvar – üst uzun duvar": 0.19060211456806542
+  },
+  "duvarlar": {
+    "sol kısa duvar": {
+      "nokta": 493,
+      "aday": 564,
+      "kapsam_yuzde": 37.1,
+      "rms_yuzde": 0.218,
+      "kayma_yuzde": 0.207,
+      "duseylik_sapma_derece": 1.17
+    },
+    "sağ kısa duvar": {
+      "nokta": 78,
+      "aday": 173,
+      "kapsam_yuzde": 65.2,
+      "rms_yuzde": 0.31,
+      "kayma_yuzde": 0.117,
+      "duseylik_sapma_derece": 0.94
+    },
+    "alt uzun duvar": {
+      "nokta": 853,
+      "aday": 1488,
+      "kapsam_yuzde": 24.9,
+      "rms_yuzde": 0.297,
+      "kayma_yuzde": 0.425,
+      "duseylik_sapma_derece": 1.06
+    },
+    "üst uzun duvar": {
+      "nokta": 1625,
+      "aday": 3062,
+      "kapsam_yuzde": 92.8,
+      "rms_yuzde": 0.317,
+      "kayma_yuzde": 0.675,
+      "duseylik_sapma_derece": 1.69
+    }
+  },
+  "zemin_egilme_yuzde": {
+    "uzun": 0.065,
+    "kısa": 0.035
+  },
+  "zemin_rms_yuzde": 0.097,
+  "en_boy_orani": 0.6314019524623001
+}

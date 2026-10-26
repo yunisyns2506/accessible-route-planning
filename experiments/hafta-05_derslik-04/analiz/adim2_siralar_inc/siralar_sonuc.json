@@ -1,0 +1,42 @@
+{
+  "zemin_tavan_ayrimi": "katmanlar kamera yüksekliğine göre bulundu",
+  "sandalye_siralari": {
+    "cizgi_sayisi": 4,
+    "duzluk_yuzde_medyan": 1.117,
+    "duzluk_yuzde_en_kotu": 5.635,
+    "paralellik_derece_en_buyuk": 0.81,
+    "kapsam_yuzde_medyan": 89.0
+  },
+  "tavan_uzun_yon": {
+    "cizgi_sayisi": 1,
+    "duzluk_yuzde_medyan": 0.366,
+    "duzluk_yuzde_en_kotu": 0.366,
+    "paralellik_derece_en_buyuk": 0.0,
+    "kapsam_yuzde_medyan": 103.2
+  },
+  "tavan_kisa_yon": {
+    "cizgi_sayisi": 9,
+    "duzluk_yuzde_medyan": 0.325,
+    "duzluk_yuzde_en_kotu": 0.482,
+    "paralellik_derece_en_buyuk": 0.75,
+    "kapsam_yuzde_medyan": 70.0
+  },
+  "sira_araliklari": [
+    {
+      "sol_uc": 21.23,
+      "sag_uc": 20.84,
+      "fark_yuzde_araligin": -1.87
+    },
+    {
+      "sol_uc": 11.79,
+      "sag_uc": 13.11,
+      "fark_yuzde_araligin": 10.62
+    },
+    {
+      "sol_uc": 12.97,
+      "sag_uc": 12.1,
+      "fark_yuzde_araligin": -6.95
+    }
+  ],
+  "tavan_diklik_sapmasi_derece": 0.49
+}
