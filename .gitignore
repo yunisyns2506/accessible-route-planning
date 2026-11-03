@@ -152,3 +152,9 @@ temp/
 experiments/hafta-05_derslik-04/unity/*.ply
 experiments/hafta-05_derslik-04/sfm/
 .mcp.json
+
+# Yerel tutulan notlar ve rapor kaynağı (PDF ve .md sürümlenir)
+docs/hafta5_devir_notu.md
+docs/hafta5_rehber.html
+docs/hafta5_gorusme_kilavuzu.*
+docs/raporlar/hafta-05_raporu.html
