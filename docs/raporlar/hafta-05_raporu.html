@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Hafta 5 Raporu</title>
+<style>
+  @page { size: A4; margin: 16mm 15mm 16mm 15mm; }
+  :root { --ink:#1d2433; --muted:#5b6475; --line:#d9dde5; --accent:#c4621d; --soft:#f5f6f8; }
+  body { font-family: "Segoe UI", "Calibri", Arial, sans-serif; color: var(--ink); font-size: 10.2pt; line-height: 1.45; margin: 0; background: #fff; }
+  h1 { font-size: 22pt; margin: 0 0 4mm; line-height: 1.15; }
+  h2 { font-size: 14pt; margin: 7mm 0 2.5mm; padding-bottom: 1.2mm; border-bottom: 1.5px solid var(--accent); break-after: avoid; }
+  h3 { font-size: 11pt; margin: 4mm 0 1.5mm; break-after: avoid; }
+  p { margin: 1.6mm 0; }
+  .lead { font-weight: 600; }
+  table { border-collapse: collapse; width: 100%; margin: 2.5mm 0 1mm; font-size: 9pt; }
+  tr { break-inside: avoid; } thead, tr:first-child { break-after: avoid; }
+  th, td { border: 1px solid var(--line); padding: 1.2mm 1.8mm; text-align: left; vertical-align: top; }
+  th { background: var(--soft); font-weight: 600; }
+  td.n, th.n { text-align: right; white-space: nowrap; }
+  tr.best td { background: #fdf1e7; }
+  .cap { color: var(--muted); font-size: 8.6pt; margin: 0.5mm 0 3mm; }
+  figure { margin: 3mm 0; break-inside: avoid; }
+  figure img { width: 100%; display: block; border: 1px solid var(--line); }
+  figcaption { color: var(--muted); font-size: 8.6pt; margin-top: 1mm; }
+  .box { background: var(--soft); border-left: 3px solid var(--accent); padding: 2mm 3mm; margin: 3mm 0; break-inside: avoid; }
+  .box b:first-child { display: block; margin-bottom: 0.8mm; }
+  .kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3mm; margin: 4mm 0; }
+  .kpi { border: 1px solid var(--line); padding: 2.5mm; }
+  .kpi .v { font-size: 16pt; font-weight: 700; color: var(--accent); }
+  .kpi .t { font-size: 8.4pt; color: var(--muted); }
+  .cover { height: 255mm; display: flex; flex-direction: column; justify-content: space-between; break-after: page; }
+  .cover .meta { font-size: 9.5pt; color: var(--muted); line-height: 1.7; }
+  .cover .meta b { color: var(--ink); text-transform: uppercase; font-size: 8pt; letter-spacing: .05em; display: block; }
+  .cover .tag { color: var(--accent); font-weight: 700; letter-spacing: .06em; font-size: 9pt; }
+  .cover .sub { font-size: 12pt; color: var(--muted); }
+  .page { break-before: page; }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 4mm; align-items: start; }
+  code { font-family: Consolas, monospace; font-size: 8.8pt; background: var(--soft); padding: 0 1mm; }
+  pre { font-family: Consolas, monospace; font-size: 8.4pt; background: var(--soft); padding: 2mm 3mm; white-space: pre-wrap; break-inside: avoid; }
+  ul { margin: 1.5mm 0 1.5mm 5mm; padding: 0; } li { margin: 0.6mm 0; }
+  .todo { background: #fff3c4; }
+  svg text { font-family: "Segoe UI", Arial, sans-serif; }
+</style>
+</head>
+<body>
+
+<section class="cover">
+  <div>
+    <div class="meta"><b>Proje</b>Engelli Bireyler İçin Akıllı Erişilebilir Rota Planlama</div>
+    <div class="meta" style="margin-top:3mm"><b>Hazırlayanlar</b>Sabri Duruk · Yunis Teymurlu</div>
+    <div class="meta" style="margin-top:3mm"><b>Danışman</b>Öğr. Gör. Koray AKİ</div>
+  </div>
+  <div><h1>Hafta 5 Raporu</h1></div>
+  <div class="meta">Bursa Uludağ Üniversitesi · Rektörlük Derslik 4</div>
+</section>
+
+<h2>1 Özet</h2>
+<p class="lead">Rektörlük Derslik 4, telefonla çekilen 4K videodan metre ölçekli bir 3DGS modeline ve tam çözünürlükte bir dense nokta bulutuna çevrildi. Önerilen hat LoMa + sequential + loop + incremental 1000 karenin hepsini tek modelde yerleştirdi ve test karelerinde en yüksek kaliteyi verdi (25,23 dB).</p>
+<div class="kpis">
+  <div class="kpi"><div class="v">1000 / 1000</div><div class="t">LoMa incremental ile modele giren kare</div></div>
+  <div class="kpi"><div class="v">25,23 dB</div><div class="t">3DGS PSNR, 100 görülmemiş test karesinde (1080p)</div></div>
+  <div class="kpi"><div class="v">207,2 cm</div><div class="t">model birimi başına gerçek uzunluk (3 ölçüyle)</div></div>
+  <div class="kpi"><div class="v">11,9 M</div><div class="t">dense nokta, 1920×1080, geometrik tutarlılıkla</div></div>
+</div>
+<table>
+<tr><th>Konu</th><th>Sonuç</th><th>Bölüm</th></tr>
+<tr><td>Girdiden çıktıya sistem mimarisi</td><td>Video → kare seçimi → COLMAP SfM → 3DGS + dense → ölçek → Unity → VR</td><td>2</td></tr>
+<tr><td>Test karelerinin SfM ve 3DGS'teki rolü</td><td>Her 10. kare (100 kare) SfM'e girer, 3DGS eğitimine girmez; kalite yalnız bu karelerde ölçülür</td><td>3</td></tr>
+<tr><td>Yöntem karşılaştırması</td><td>LoMa incremental en doğru ve en kaliteli; hierarchical %31 hızlı ama 0,88 dB düşük; SIFT exhaustive 8 sa sürdü, 19 kare kaybetti</td><td>4, 5</td></tr>
+<tr><td>Eğitime giremeyen kare</td><td>LoMa incremental 0 · LoMa hierarchical 1 · SIFT exhaustive 20</td><td>6</td></tr>
+<tr><td>Çözünürlük</td><td>1440p, 1080p'ye göre +0,4 dB ama 2,7× süre ve 3× Gaussian; 4K'nın getirisi yok</td><td>7</td></tr>
+<tr><td>Beyaz duvar lekeleri</td><td>Kaynağı otomatik pozlama; pozlama düzeltmesi (H2) temizledi</td><td>8</td></tr>
+<tr><td>Hatalı kamera bölgeleri</td><td>1000 kameradan 6'sı şüpheli, hepsi az gözlemli; model bozulmuyor</td><td>9</td></tr>
+<tr><td>Dense rekonstrüksiyon</td><td>11,9 M nokta, 72,8 M üçgenli yüzey; tam çözünürlükte 9 sa 45 dk (L4). Bina ölçeğinde 1400–1600 piksel önerilir</td><td>10</td></tr>
+<tr><td>Eksik ve yanlış geometri</td><td>Dense'te zemin, oturaklar ve tavan neredeyse tam dolu (boş hücre ≤%0,8); duvar yüzeylerinin %36–60'ında nokta var, boşluklar pencere, kapı ve yansıyan yüzeylerde. Katlanma ya da çift duvar yok</td><td>11</td></tr>
+<tr><td>Duvarlar arasında kayma</td><td>Kayma yok: dense'te duvarlar birbirine 0,3°'den az sapmayla paralel ve dik, düşeylik ≤0,5°, zemin eğilmesi ≤1,2 cm. Seyrek modeldeki 7° az noktadan kaynaklanıyordu</td><td>12</td></tr>
+<tr><td>Gerçek ölçek ve doğrulama</td><td>Ölçekli; doğrulamada tüm ölçüler kısa (kanatlar ~%2, kapı toplamı ve platform %6–7), RMS 5,2 cm; kaynak kalibrasyon ölçüleri</td><td>13</td></tr>
+<tr><td>Kapı genişliği güvenilirliği</td><td>Göreli olarak evet (tekrar farkı 1–2 cm), mutlak ±%6; "tek kanat 80 cm'den dar" kararı sağlam</td><td>13</td></tr>
+<tr><td>Unity ve VR</td><td>Unity'ye aktarıldı; çekilmeyen açılarda splat dağınıklığı var, VR testi ertelendi</td><td>14</td></tr>
+<tr><td>Çalıştırılabilir yapılandırma</td><td><code>colmap_yapilandirma.sh</code>: bütün ayarlar tek dosyada, tek komut</td><td>15</td></tr>
+</table>
+
+<h2>2 Sistem mimarisi</h2>
+<p>Girdi bir telefon videosu ve şerit metre ölçüleri; çıktı metre ölçeğinde, Unity'de gezilebilen bir 3DGS modeli ve ölçüm için dense nokta bulutu. Hattın merkezinde COLMAP SfM var: 3DGS eğitimi, dense ve ölçek kalibrasyonu onun bulduğu kamera pozlarını kullanıyor.</p>
+<figure>
+<svg viewBox="0 0 900 262" width="100%" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="o" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 z" fill="#5b6475"/></marker></defs>
+  <style>.b{fill:#fff;stroke:#9aa3b2;stroke-width:1.2}.k{fill:#fdf1e7;stroke:#c4621d;stroke-width:1.6}.d{fill:#f5f6f8;stroke:#9aa3b2;stroke-dasharray:4 3}.t{font-size:12px;font-weight:600;fill:#1d2433}.s{font-size:10px;fill:#5b6475}.a{stroke:#5b6475;stroke-width:1.3;fill:none;marker-end:url(#o)}</style>
+  <rect class="b" x="10" y="20" width="150" height="62" rx="6"/><text class="t" x="20" y="40">1 · Girdi</text><text class="s" x="20" y="56">Telefon videosu, 4K yatay</text><text class="s" x="20" y="70">+ şerit metre ölçüleri</text>
+  <rect class="b" x="190" y="20" width="150" height="62" rx="6"/><text class="t" x="200" y="40">2 · Kare seçimi</text><text class="s" x="200" y="56">1000 net kare</text><text class="s" x="200" y="70">her 10. kare test (100)</text>
+  <rect class="k" x="370" y="20" width="170" height="62" rx="6"/><text class="t" x="380" y="40">3 · COLMAP SfM</text><text class="s" x="380" y="56">LoMa + seq + loop + inc</text><text class="s" x="380" y="70">→ kamera pozları</text>
+  <rect class="b" x="575" y="20" width="150" height="62" rx="6"/><text class="t" x="585" y="40">4a · 3DGS eğitimi</text><text class="s" x="585" y="56">splatfacto, 900 kare</text><text class="s" x="585" y="70">+ pozlama düzeltmesi</text>
+  <rect class="b" x="575" y="105" width="150" height="62" rx="6"/><text class="t" x="585" y="125">4b · Dense</text><text class="s" x="585" y="141">PatchMatch + fusion</text><text class="s" x="585" y="155">ölçüm katmanı</text>
+  <rect class="b" x="745" y="20" width="145" height="62" rx="6"/><text class="t" x="755" y="40">5 · Değerlendirme</text><text class="s" x="755" y="56">PSNR / SSIM / LPIPS</text><text class="s" x="755" y="70">kamera, geometri, duvar</text>
+  <rect class="b" x="745" y="105" width="145" height="62" rx="6"/><text class="t" x="755" y="125">6 · Ölçek, hizalama</text><text class="s" x="755" y="141">207,2 cm / birim</text><text class="s" x="755" y="155">zemin y = 0, Y yukarı</text>
+  <rect class="b" x="575" y="190" width="150" height="62" rx="6"/><text class="t" x="585" y="210">7 · Unity</text><text class="s" x="585" y="226">UnityGaussianSplatting</text><text class="s" x="585" y="240">çarpışma, FPS kontrol</text>
+  <rect class="d" x="370" y="190" width="170" height="62" rx="6"/><text class="t" x="380" y="210">8 · VR testi</text><text class="s" x="380" y="226">PC'ye bağlı gözlük</text><text class="s" x="380" y="240">planlandı (bölüm 14)</text>
+  <rect class="d" x="10" y="190" width="330" height="62" rx="6"/><text class="t" x="20" y="210">Projenin diğer modülleri (kapsam dışı)</text><text class="s" x="20" y="228">Semantik algılama · Erişilebilirlik grafiği · Rota planlama</text>
+  <path class="a" d="M160,51 H188"/><path class="a" d="M340,51 H368"/><path class="a" d="M540,51 H573"/><path class="a" d="M540,60 Q560,136 573,136"/><path class="a" d="M725,51 H743"/><path class="a" d="M725,136 H743"/><path class="a" d="M85,82 V178 H765 V169"/><text class="s" x="300" y="174">şerit metre ölçüleri</text><path class="a" d="M817,167 Q817,221 727,221"/><path class="a" d="M575,221 H542"/>
+</svg>
+<figcaption>Şekil 1. Sistem mimarisi. Turuncu kutu önerilen SfM hattı; kesikli kutular henüz yapılmamış ya da bu raporun kapsamı dışındaki adımlar.</figcaption>
+</figure>
+<table>
+<tr><th>Adım</th><th>Araç / betik</th><th>Çıktı</th></tr>
+<tr><td>1 · Girdi</td><td>Telefon (4K, 30 fps, yatay), şerit metre</td><td>Video, ölçü listesi, uç nokta fotoğrafları</td></tr>
+<tr><td>2 · Kare seçimi</td><td><code>video_analiz.py</code>, <code>kare_secimi.py</code></td><td>1000 kare 1920×1080 (100'ü test)</td></tr>
+<tr><td>3 · COLMAP SfM</td><td>COLMAP 4.2.1 (CUDA + ONNX, yamalı), <code>colab_sfm.py</code></td><td>Kamera pozları + seyrek nokta bulutu</td></tr>
+<tr><td>4a · 3DGS</td><td>nerfstudio 1.1.5 splatfacto, gsplat 1.4, <code>colab_gs.py</code></td><td>Gaussian modeli (.ply)</td></tr>
+<tr><td>4b · Dense</td><td>pycolmap-cuda12 4.2.1, <code>colab_dense.py</code></td><td>Dense nokta bulutu, Poisson yüzeyi</td></tr>
+<tr><td>5 · Değerlendirme</td><td><code>colab_gs.py</code>, <code>analiz_kamera.py</code>, <code>analiz_eksik.py</code>, <code>analiz_duvar.py</code>, <code>analiz_dense.py</code></td><td>Kalite ölçütleri, hata haritaları</td></tr>
+<tr><td>6 · Ölçek</td><td><code>olcek_ucgenle.py</code>, <code>unity_ply.py</code></td><td>Metre ölçekli, zemini y = 0 olan .ply</td></tr>
+<tr><td>7 · Unity</td><td>UnityGaussianSplatting (aras-p), <code>DerslikCarpisma.cs</code>, <code>FPSKontrol.cs</code></td><td>Gezilebilir sahne</td></tr>
+</table>
+<p class="cap">Tablo 1. Adımların araçları ve çıktıları. Hesaplama Colab Pro'da L4 GPU (24 GB VRAM, 52 GB RAM) ile yapıldı; yalnız 4K model A100'de eğitildi.</p>
+
+<h2>3 Veri: çekim, kare seçimi, test kareleri</h2>
+<p>10 dk 19 sn'lik 4K yatay videodan (18.560 kare) 1000 net kare seçildi. Video 1000 eşit pencereye (0,6 sn) bölündü; her pencereden, hareketi kare başına 15 pikselin altında kalan en net kare (Laplace varyansı) alındı, hızlı dönüşler atıldı. Kareler SfM, dense ve karşılaştırma için 1920×1080, son model için 2560×1440 boyutunda çıkarıldı.</p>
+<table>
+<tr><th>Aşama</th><th>Test kareleri ne yapıyor?</th><th>Neden</th></tr>
+<tr><td>SfM (COLMAP)</td><td>Diğer karelerle birlikte özellik çıkarma, eşleştirme ve harita kurmaya girer</td><td>3DGS'in bu kareyi çizebilmesi için kameranın konumu bilinmeli; poz yalnız SfM'den gelir</td></tr>
+<tr><td>3DGS eğitimi</td><td>Eğitimden çıkarılır: 900 eğitim / 100 test</td><td>Model bu kareleri hiç görmez, ezberleyemez</td></tr>
+<tr><td>Değerlendirme</td><td>Model her test karesinin pozundan bir görüntü çizer, gerçek fotoğrafla karşılaştırılır</td><td>Yeni bir bakış açısının ne kadar doğru üretildiğini ölçer</td></tr>
+</table>
+<p class="cap">Tablo 2. Test kareleri bütün yöntemlerde aynı 100 kare. Test kareleri de çekim yolu üzerinde olduğu için, ölçütler yoldan uzak bakış açılarındaki kaliteyi göstermez (bölüm 14).</p>
+<figure><img src="../figures/hafta-05/pdf_kaynak/s05_0_X61.jpg" style="width:78%;margin:auto"><figcaption>Şekil 2. Test kareleri 0250, 0500, 0750: solda gerçek fotoğraf, sağda LoMa incremental modelinin aynı pozdan çizdiği görüntü. Kürsü, kapı ve sıralar doğru; beyaz duvarda gri lekeler var (bölüm 8).</figcaption></figure>
+
+<h2>4 Üç yöntemin SfM sonuçları</h2>
+<p class="lead">LoMa + sequential + loop + incremental 1000 karenin hepsini 1 sa 42 dk'da tek modelde birleştirdi. Hierarchical aynı eşleştirmeyle SfM aşamasını 3,6 kat hızlı bitirdi ama izdüşüm hatası %55 yüksek. SIFT exhaustive 499.500 çifti karşılaştırmak için yaklaşık 7 saat harcadı ve yine de 19 kare kaybetti.</p>
+<table>
+<tr><th>Aşama</th><th>LoMa + seq + loop + incremental</th><th>LoMa + seq + loop + hierarchical</th><th>SIFT exhaustive + incremental</th></tr>
+<tr><td>Özellik çıkarma</td><td colspan="2">15,0 dk · VRAM 12,4 GB · RAM 2,3 GB (ortak)</td><td>0,6 dk · VRAM 1,8 GB · RAM 0,3 GB</td></tr>
+<tr><td>Kare başına anahtar nokta</td><td colspan="2">2.048</td><td>5.890</td></tr>
+<tr><td>Sözlük ağacı (döngü tespiti)</td><td colspan="2">26,6 dk · RAM 1,6 GB (ortak)</td><td>—</td></tr>
+<tr><td>Eşleştirme</td><td colspan="2">15,8 dk · VRAM 0,7 GB · RAM 2,1 GB (ortak)</td><td>~7 sa · VRAM 1,3 GB · RAM 0,5 GB</td></tr>
+<tr><td>Eşleştirilen / doğrulanan çift</td><td colspan="2">12.945 / 11.344</td><td>499.500 / 105.521</td></tr>
+<tr><td>SfM (mapper)</td><td>44,2 dk · RAM 2,2 GB</td><td>12,4 dk · RAM 3,1 GB</td><td>62,3 dk · RAM 2,2 GB</td></tr>
+<tr><td><b>Toplam süre</b></td><td><b>1 sa 42 dk</b></td><td><b>1 sa 10 dk</b></td><td><b>~8 sa</b></td></tr>
+</table>
+<p class="cap">Tablo 3. Aşama aşama süre ve tepe bellek, L4 GPU. LoMa'nın ilk üç aşaması iki SfM yöntemi için bir kez koşuldu. SIFT eşleştirmesi Colab kesintisi nedeniyle iki oturumda tamamlandı.</p>
+<table>
+<tr><th>SfM sonucu</th><th class="n">LoMa incremental</th><th class="n">LoMa hierarchical</th><th class="n">SIFT exhaustive</th></tr>
+<tr><td>Modele giren kare</td><td class="n">1000</td><td class="n">999</td><td class="n">981</td></tr>
+<tr><td>Model sayısı</td><td class="n">1</td><td class="n">1</td><td class="n">1</td></tr>
+<tr><td>Seyrek 3B nokta</td><td class="n">246.479</td><td class="n">242.427</td><td class="n">217.043</td></tr>
+<tr><td>Ortalama iz uzunluğu (kare)</td><td class="n">5,75</td><td class="n">5,48</td><td class="n">4,75</td></tr>
+<tr><td>Ortalama yeniden izdüşüm hatası (px)</td><td class="n">1,32</td><td class="n">2,04</td><td class="n">0,95</td></tr>
+</table>
+<p class="cap">Tablo 4. SfM modellerinin ölçütleri (1000 girdi karesi).</p>
+<div class="box"><b>Düşük izdüşüm hatası tek başına iyi demek değil</b>SIFT'in izdüşüm hatası en düşük (0,95 px), ama 19 kareyi yerleştiremedi ve noktaları daha az karede görülüyor (iz uzunluğu 4,75). Hata yalnız modele girebilen kolay karelerden hesaplanıyor. LoMa daha çok ve daha zor kareyi bağladığı için hatası biraz yüksek.</div>
+
+<h2>5 Üç yöntemin 3DGS sonuçları</h2>
+<p class="lead">Aynı ayarlarla eğitilen üç modelden en kalitelisi LoMa incremental: 25,23 dB. SIFT 0,37 dB, hierarchical 0,88 dB geride. Üç eğitim de ~29 dakika sürdü ve 3 GB'ın altında VRAM kullandı.</p>
+<table>
+<tr><th>Yöntem</th><th class="n">Eğitim / test kare</th><th class="n">PSNR (dB)</th><th class="n">SSIM</th><th class="n">LPIPS</th><th class="n">Gaussian</th><th class="n">Eğitim (dk)</th><th class="n">VRAM (GB)</th><th class="n">RAM (GB)</th></tr>
+<tr class="best"><td>LoMa + seq + loop + incremental</td><td class="n">900 / 100</td><td class="n">25,23</td><td class="n">0,907</td><td class="n">0,200</td><td class="n">409 k</td><td class="n">29,5</td><td class="n">3,0</td><td class="n">19,4</td></tr>
+<tr><td>LoMa + seq + loop + hierarchical</td><td class="n">899 / 100</td><td class="n">24,35</td><td class="n">0,893</td><td class="n">0,215</td><td class="n">404 k</td><td class="n">29,0</td><td class="n">2,9</td><td class="n">19,3</td></tr>
+<tr><td>SIFT exhaustive + incremental</td><td class="n">881 / 99</td><td class="n">24,86</td><td class="n">0,902</td><td class="n">0,207</td><td class="n">404 k</td><td class="n">29,0</td><td class="n">2,8</td><td class="n">16,9</td></tr>
+</table>
+<p class="cap">Tablo 5. 1080p, splatfacto varsayılanları, 30.000 iterasyon, L4 GPU. Yüksek PSNR ve SSIM, düşük LPIPS iyidir.</p>
+<figure><img src="../figures/hafta-05/pdf_kaynak/s07_0_X75.jpg"><figcaption>Şekil 3. Aynı test kareleri. Soldan: gerçek fotoğraf, LoMa incremental, LoMa hierarchical. Hierarchical'da ön sandalyede çift görüntü ve portrede bulanıklık var: alt modellerin birleştiği yerde poz kaymış.</figcaption></figure>
+<div class="box"><b>Bina için önerilen hat</b>LoMa + sequential + loop + incremental. Hem en çok kareyi yerleştiriyor hem en iyi görüntüyü veriyor; eşleştirme süresi kare sayısıyla doğrusal büyüdüğü için bina ölçeğine uygun. SIFT exhaustive'in eşleştirme süresi kare sayısının karesiyle büyüyor.</div>
+
+<h2>6 Eğitime giremeyen kareler</h2>
+<p>LoMa incremental hiç kare kaybetmedi. SIFT exhaustive'de 20 kare (%2) 3DGS eğitimine giremedi: 19'unu SfM yerleştiremedi, 1'i kopuk kamera olarak ayıklandı.</p>
+<table>
+<tr><th>Yöntem</th><th class="n">SfM'e giren</th><th class="n">Yerleştirilemeyen</th><th class="n">Kopuk kamera</th><th class="n">3DGS'te kullanılan</th><th class="n">Eğitim</th><th class="n">Test</th></tr>
+<tr class="best"><td>LoMa + seq + loop + incremental</td><td class="n">1000</td><td class="n">0</td><td class="n">0</td><td class="n">1000</td><td class="n">900</td><td class="n">100</td></tr>
+<tr><td>LoMa + seq + loop + hierarchical</td><td class="n">1000</td><td class="n">1 (0496)</td><td class="n">0</td><td class="n">999</td><td class="n">899</td><td class="n">100</td></tr>
+<tr><td>SIFT exhaustive + incremental</td><td class="n">1000</td><td class="n">19</td><td class="n">1</td><td class="n">980</td><td class="n">881</td><td class="n">99</td></tr>
+</table>
+<p class="cap">Tablo 6. Kopuk kamera: en yakın 3 kameraya uzaklığı medyanın 10 katını aşan kamera; tek bir kopuk kamera bütün 3DGS modelini bozabildiği için eğitimden ayıklanır.</p>
+
+<h2>7 Çözünürlük: 1080p, 1440p (2K) ve 4K</h2>
+<p class="lead">1440p, 1080p'ye göre 0,4 dB kazandırdı ve ince ayrıntıyı (portre, yazı) keskinleştirdi; buna karşılık eğitim 2,7 kat, RAM 2,4 kat ve Gaussian sayısı 3 kat arttı. 4K, 1440p'yi geçemedi.</p>
+<table>
+<tr><th>Model</th><th class="n">PSNR (dB)</th><th class="n">SSIM</th><th class="n">LPIPS</th><th class="n">Gaussian</th><th class="n">.ply (MB)</th><th class="n">Eğitim (dk)</th><th class="n">VRAM (GB)</th><th class="n">RAM (GB)</th><th>GPU</th></tr>
+<tr><td>1080p splatfacto</td><td class="n">25,23</td><td class="n">0,907</td><td class="n">0,200</td><td class="n">409 k</td><td class="n">~100</td><td class="n">29,5</td><td class="n">3,0</td><td class="n">19,4</td><td>L4</td></tr>
+<tr class="best"><td>1440p splatfacto-big</td><td class="n">25,63</td><td class="n">0,912</td><td class="n">0,210</td><td class="n">1,25 M</td><td class="n">262</td><td class="n">79,5</td><td class="n">5,5</td><td class="n">45,8</td><td>L4</td></tr>
+<tr><td>4K splatfacto-big</td><td class="n">25,38</td><td class="n">0,930</td><td class="n">0,242</td><td class="n">1,30 M</td><td class="n">272</td><td class="n">41,6</td><td class="n">53,3</td><td class="n">49,6</td><td>A100</td></tr>
+</table>
+<p class="cap">Tablo 7. LoMa incremental pozları, aynı 100 test karesi; her model kendi çözünürlüğünde ölçüldü. 1080p modeli splatfacto, diğerleri splatfacto-big ile eğitildi; farkın bir kısmı bu ayardan gelir. 4K'nın ilk denemesi L4'te bellek taşmasıyla durdu (nerfstudio kareleri RAM'de ikinci kez kopyalıyordu); kopya kapatıldıktan sonra tepe RAM 49,6 GB oldu, L4'ün 52 GB'ına çok yakın olduğu için eğitim A100'de yapıldı.</p>
+<figure><img src="../figures/hafta-05/pdf_kaynak/s08_0_X78.jpg"><figcaption>Şekil 4. Duvar ve portre yakın kırpımı. Soldan: gerçek kare, 1080p splatfacto, 1440p splatfacto-big. Daha yüksek çözünürlük portreyi keskinleştiriyor, duvardaki lekeleri gidermiyor.</figcaption></figure>
+<div class="box"><b>Hangi çözünürlük?</b>4K mantıklı değil: Gaussian sayısı 1,25 M'dan 1,30 M'a çıktı, aynı bütçe 4K'nın ince ayrıntısını taşıyamıyor; LPIPS kötüleşti ve A100 gerekti. SfM, dense ve denemeler 1080p'de yapılmalı (hızlı, ucuz). Gösterilecek son model için 1440p + pozlama düzeltmesi öneriliyor; bina ölçeğinde VR'ın Gaussian bütçesi zorlarsa 1080p yeterli, kalite farkı küçük (0,4 dB).</div>
+
+<h2>8 Beyaz duvar iyileştirmesi</h2>
+<p class="lead">Taban modelde beyaz duvarlarda gri lekeler var. Kaynağı telefonun otomatik pozlaması: aynı duvar bir karede açık, başka karede grimsi kaydedildiği için model aradaki farkı duvarın önüne yarı saydam gri Gaussian'lar koyarak açıklıyor. Yalnız pozlama düzeltmesi (H2) bu lekeleri büyük ölçüde temizledi; kamera pozu ince ayarı (H) ve monoküler derinlik (DN) modeli bozdu.</p>
+<table>
+<tr><th>Koşu</th><th class="n">PSNR ham (dB)</th><th class="n">PSNR renk düzeltmeli (dB)</th><th class="n">LPIPS düzeltmeli</th><th class="n">Gaussian</th><th class="n">Eğitim (dk)</th><th>Görsel</th></tr>
+<tr><td>Taban (splatfacto)</td><td class="n">25,23</td><td class="n">25,68</td><td class="n">0,198</td><td class="n">409 k</td><td class="n">29,5</td><td>duvarda gri lekeler</td></tr>
+<tr><td>H: pozlama düzeltme + kamera pozu ince ayarı</td><td class="n">20,24</td><td class="n">21,48</td><td class="n">0,226</td><td class="n">373 k</td><td class="n">79,2</td><td>temiz ama kaymış</td></tr>
+<tr class="best"><td>H2: yalnız pozlama düzeltme (bilateral grid)</td><td class="n">23,16</td><td class="n">25,33</td><td class="n">0,191</td><td class="n">411 k</td><td class="n">78,3</td><td>temiz, hizalı · önerilen</td></tr>
+<tr><td>DN: DN-Splatter, monoküler derinlik</td><td class="n">23,19</td><td class="n">23,60</td><td class="n">0,246</td><td class="n">460 k</td><td class="n">228</td><td>lekeli, portre bozuk</td></tr>
+<tr><td>H2, 1440p splatfacto-big</td><td class="n">21,43</td><td class="n">25,29</td><td class="n">0,210</td><td class="n">1,16 M</td><td class="n">130,7</td><td>1080p H2 ile aynı yönde</td></tr>
+</table>
+<p class="cap">Tablo 8. Renk düzeltmeli ölçüt: her test karesinde çizilen görüntü ile gerçek kare arasındaki renk farkı giderildikten sonra hesaplanır; pozlama farkını ayırır, geometri ve keskinlik farkını ayırmaz. Hepsi 1080p (son satır 1440p), 30.000 iterasyon, L4 GPU.</p>
+<table>
+<tr><th>Koşu</th><th class="n">Eğitim (dk)</th><th class="n">Ek süre (dk)</th><th class="n">Colab birimi</th><th>Ek gereksinim</th></tr>
+<tr><td>Taban (splatfacto)</td><td class="n">29,5</td><td class="n">—</td><td class="n">0,8</td><td>—</td></tr>
+<tr class="best"><td>H2: pozlama düzeltme</td><td class="n">78,3</td><td class="n">+48,8</td><td class="n">2,0</td><td>Tek ayar; ek kurulum ve veri yok</td></tr>
+<tr><td>H: pozlama + kamera pozu ince ayarı</td><td class="n">79,2</td><td class="n">+49,7</td><td class="n">2,0</td><td>Tek ayar; sonucu kullanılamaz</td></tr>
+<tr><td>DN: DN-Splatter</td><td class="n">228</td><td class="n">+198,5</td><td class="n">5,9</td><td>Ayrı ortam (eski nerfstudio/gsplat), her kare için derinlik tahmini, ~25 GB RAM</td></tr>
+<tr><td>H2, 1440p splatfacto-big</td><td class="n">130,7</td><td class="n">+51,2 (1440p tabana göre)</td><td class="n">3,4</td><td>1440p kareler; ~46 GB RAM</td></tr>
+</table>
+<p class="cap">Tablo 9. İyileştirme koşularının maliyeti. Colab birimi L4'ün saatlik ~1,54 birimiyle hesaplandı; kurulum süresi dahil değil. 1440p'nin ek süresi 1440p taban (79,5 dk) ile karşılaştırılmıştır.</p>
+<figure><img src="../figures/hafta-05/pdf_kaynak/s09_0_X83.jpg"><figcaption>Şekil 5. Soldan: gerçek kare, taban model, pozlama düzeltmeli model (H2). Perde ve duvardaki gri bulutlar düzeltmeyle kayboluyor.</figcaption></figure>
+<ul>
+<li><b>H2 nasıl çalışıyor?</b> Her eğitim karesine ayrı, küçük bir renk-parlaklık dönüşümü (bilateral grid) öğretiliyor; model çizdiği görüntüyü bu dönüşümden geçirip gerçek kareyle karşılaştırıyor. Kareden kareye pozlama farkı sahneye değil dönüşüme yükleniyor, duvar her yerde aynı renkte kalıyor. Dönüşüm .ply'ye girmiyor; Unity'de nötr renk görünüyor.</li>
+<li><b>H2'nin ham PSNR'ı neden düşük?</b> Test karesinin kendi pozlaması bilinmediği için model nötr renk veriyor. Renk farkı giderilince PSNR tabanla aynı düzeyde (−0,35 dB), LPIPS daha iyi.</li>
+<li><b>H2'nin maliyeti.</b> Eğitim 29,5 dakikadan 78,3 dakikaya çıkıyor (2,7×, oda başına ~49 dk ve ~1,2 Colab birimi fazla). Ek kurulum, veri ya da bellek gerekmiyor; Gaussian sayısı ve Unity'deki gösterim yükü değişmiyor. Geometri eksikliğini (az noktalı duvarlar) gidermiyor.</li>
+<li><b>H neden kötü?</b> Kamera pozu ince ayarı eğitim pozlarını kaydırıyor; görüntü test karesine göre kaymış çıkıyor. Kullanılmamalı.</li>
+<li><b>DN neden kötü?</b> Monoküler derinlik (Depth Anything V2) COLMAP noktalarına göre kare başına %9–12 tutarsız ve ölçeği kareden kareye değişiyor; model renk ile derinlik arasında kalıyor. İki test karesinde (0210: 13,2 dB, 0680: 15,1 dB) görüntü tamamen bozuldu. Normal kaybı kurulum sorunu yüzünden kullanılamadı; eğitim 3,8 saat sürdü.</li>
+</ul>
+
+<h2>9 Kamera konumunun hatalı olabileceği bölgeler</h2>
+<p class="lead">LoMa incremental modelinde 1000 kameradan yalnız 6'sı şüpheli ve hepsi aynı sebepten: az sayıda 3B noktaya bağlılar. İzdüşüm hatası yüksek ya da yolunda sıçrama yapan kamera yok.</p>
+<figure><img src="../figures/hafta-05/pdf_kaynak/s10_0_X86.jpg" style="width:80%;margin:auto"><figcaption>Şekil 6. Kat planında her kamera dört ölçüte göre renklendirildi; kırmızı halka şüpheli kamera. Beşi sıra aralarındaki yürüyüşün sol uçlarında (dönüş noktaları), biri alt uzun duvar boyunca sağda.</figcaption></figure>
+<table>
+<tr><th>Ölçüt</th><th>Şüpheli sayılma koşulu</th><th>LoMa incremental</th><th>LoMa hierarchical</th></tr>
+<tr><td>Yeniden izdüşüm hatası</td><td>yüksek hata</td><td>0 (medyan 1,49 px, en yüksek 2,00 px)</td><td>1 (medyan 2,17 px, en yüksek 5,08 px)</td></tr>
+<tr><td>Gözlem sayısı</td><td>az 3B noktaya bağlı</td><td>6 (medyan 1461, en düşük 138)</td><td>9 (medyan 1383, en düşük 142)</td></tr>
+<tr><td>Yörünge sıçraması</td><td>adım, medyanın çok üstünde</td><td>0 (en yüksek 2,6 kat)</td><td>0 (en yüksek 2,8 kat)</td></tr>
+<tr><td>İki yöntem arası konum farkı</td><td>incremental ile hierarchical ayrışıyor</td><td colspan="2">1 (medyan 1,4 cm, en yüksek 19 cm)</td></tr>
+<tr><td><b>Toplam şüpheli</b></td><td></td><td><b>6 / 1000</b></td><td><b>9 / 999</b></td></tr>
+</table>
+<p class="cap">Tablo 10. Kamera güvenilirlik ölçütleri. Uzaklıklar 207,2 cm / birim ölçeğiyle; şüpheli kareler 0413, 0414, 0496, 0923, 0924, 0974.</p>
+<p>Bu noktalarda kamera duvara ya da köşeye yakından bakıyor, görüntüde eşleştirilecek doku az. Konumları çevreleriyle uyumlu, modeli bozmuyorlar. Videonun sonu başının üstüne oturuyor: döngü kapandı, yol kaymadı. Bina çekiminde dönüşleri duvardan uzakta yapmak bu kareleri azaltır.</p>
+
+<h2>10 Dense rekonstrüksiyon</h2>
+<p class="lead">Önerilen modelin 1000 kamerasıyla tam çözünürlükte dense rekonstrüksiyon hatasız tamamlandı: 11,9 milyon noktalı bir bulut ve 72,8 milyon üçgenli bir Poisson yüzeyi. Toplam süre L4'te 9 sa 45 dk; bunun %94'ü PatchMatch.</p>
+<table>
+<tr><th>Aşama</th><th class="n">Süre</th><th class="n">Tepe RAM (GB)</th><th class="n">Tepe VRAM (GB)</th><th>Çıktı</th></tr>
+<tr><td>Bozulma giderme (undistort)</td><td class="n">0,5 dk</td><td class="n">0,4</td><td class="n">—</td><td>1000 düzeltilmiş kare</td></tr>
+<tr><td>PatchMatch, fotometrik geçiş</td><td class="n">~3,5 sa</td><td class="n" rowspan="2">34,5</td><td class="n" rowspan="2">1,3</td><td>1000 derinlik + normal haritası</td></tr>
+<tr><td>PatchMatch, geometrik geçiş</td><td class="n">~5,7 sa</td><td>1000 tutarlılığı denetlenmiş harita</td></tr>
+<tr><td>Fusion</td><td class="n">13,2 dk</td><td class="n">43,5</td><td class="n">—</td><td>11,9 M nokta</td></tr>
+<tr><td>Poisson yüzeyi</td><td class="n">19,2 dk</td><td class="n">29,1</td><td class="n">—</td><td>72,8 M üçgen</td></tr>
+<tr><td><b>Toplam</b></td><td class="n"><b>9 sa 45 dk</b></td><td></td><td></td><td></td></tr>
+</table>
+<p class="cap">Tablo 11. Dense, LoMa incremental pozlarıyla, 1920×1080 tam çözünürlükte, COLMAP 4.2.1 varsayılanları (her kare için 20 komşu kare, geometrik tutarlılık açık). Colab Ubuntu 24.04 / CUDA 13'e geçtiği için pip'teki pycolmap-cuda12 kullanıldı; bu pakette Delaunay yüzeyi yok.</p>
+<figure><img src="../figures/hafta-05/dense_duvar_analizi.png"><figcaption>Şekil 7. Solda dense kat planı (üstten, 2,5 m altındaki noktalar; renkli çizgiler duvar düzlemleri), sağda her duvar boyunca düzlemden sapma. Duvar doğruları, her 25 cm'lik dilimdeki en dış yoğun yüzeyden (duvar yüzü) RANSAC ile oturtuldu; eksenler duvarlara hizalandı (4,65°). Salonun iç ölçüsü 20,62 × 14,35 m.</figcaption></figure>
+<div class="box"><b>Süre neden uzun ve bina ölçeğinde ne yapılmalı?</b>4. haftada 349 kare 1000 piksele küçültülerek 93 dakikada işlenmişti. Burada kare sayısı ~3 kat, kare başına piksel 3,7 kat; iş ~11 kat büyüdü. Geometrik geçiş her karenin komşu haritalarını da okuduğu için fotometrik geçişten ~1,6 kat yavaş. Tam çözünürlükte dense 1000 kare başına L4'te ~9,7 saat sürüyor; bütün binada bu pratik değil. Ölçüm katmanı için 1400–1600 piksel (süre yaklaşık yarıya iner) ya da daha hızlı GPU önerilir.</div>
+
+<h2>11 Eksik ve yanlış geometri</h2>
+<p class="lead">Dense bulut, seyrek bulutta zayıf kalan duvar katmanını büyük ölçüde doldurdu. Zemin, oturaklar ve tavan neredeyse tam dolu; duvar yüzeylerinin %36–60'ında 10 cm'lik çözünürlükte nokta var. Kalan boşluklar pencere camında, kapıda ve ön duvardaki projeksiyon perdesi gibi parlak, dokusuz yüzeylerde. Modelde katlanma ya da çift duvar yok.</p>
+<table>
+<tr><th>Katman</th><th>Bulut</th><th class="n">Salon içi boş hücre (%)</th><th class="n">Az görülen hücre, &lt;5 kamera (%)</th><th class="n">Medyan kamera</th></tr>
+<tr><td rowspan="2">Zemin ve oturaklar</td><td>seyrek</td><td class="n">0,0</td><td class="n">0,5</td><td class="n">60</td></tr>
+<tr><td>dense</td><td class="n">0,8</td><td class="n">26,7</td><td class="n">5,4</td></tr>
+<tr><td rowspan="2">Duvar, kapı, pencere</td><td>seyrek</td><td class="n">3,2</td><td class="n">11,3</td><td class="n">18</td></tr>
+<tr><td>dense</td><td class="n">4,3</td><td class="n">17,9</td><td class="n">6,0</td></tr>
+<tr><td rowspan="2">Tavan</td><td>seyrek</td><td class="n">0,1</td><td class="n">0,3</td><td class="n">90</td></tr>
+<tr><td>dense</td><td class="n">0,2</td><td class="n">4,7</td><td class="n">6,4</td></tr>
+</table>
+<p class="cap">Tablo 12. Kat planı hücreleri (kenar ~50 cm, salon uzunluğunun %2,5'i). Seyrek bulutta "kamera" hücredeki noktaları gören farklı kamera sayısı; dense'te noktanın birleştirildiği derinlik haritası sayısının hücre ortalaması (iki ölçüt doğrudan karşılaştırılamaz, eğilim için verilmiştir). Salon içi hücreler duvarı değil iç alanı ölçer; orta katmanda boş hücre çoğunlukla eşyasız boş alandır. Duvarların kapsamı için Tablo 13'teki yüzey kapsamına bakılmalıdır.</p>
+<figure><img src="../figures/hafta-05/dense_eksik_geometri.png"><figcaption>Şekil 8. Dense kat planında geometri kapsamı: üstte nokta yoğunluğu, altta noktaları gören ortalama kamera sayısı; siyah ve beyaz hücreler boş. Orta katmanda platform önündeki boş alan (x ≈ 6–10 m) eşya olmadığı için boş görünüyor; bu eksik geometri değil, boş mekândır.</figcaption></figure>
+<figure><img src="../figures/hafta-05/pdf_kaynak/s12_0_X93.jpg"><figcaption>Şekil 9. Seyrek bulutta sıra ve tavan ızgarası çizgileri düz ve paralel: sıra çizgilerinin medyan sapması salonun %1,1'i, en büyük açı farkı 0,8°. Bir sıra aralığının iki ucu arasındaki %10,6'lık fark tek bozuk bölge. Modelde katlanma ya da çift duvar yok.</figcaption></figure>
+
+<h2>12 Duvarlar arasında geometrik kayma</h2>
+<p class="lead">Duvarlar arasında geometrik kayma yok. Dense bulutta karşılıklı duvarlar birbirine 0,02° ve 0,28° içinde paralel, komşu duvarlar 0,28° içinde dik; duvarların düşeyliği 0,5°'den iyi, zemin 20 m boyunca 0,6 cm eğiliyor. Seyrek bulutta alt uzun duvarda görülen 7°'lik sapma, o duvarın yalnız %25'inde nokta bulunmasından kaynaklanıyordu.</p>
+<table>
+<tr><th>Duvar</th><th class="n">Uzunluk (m)</th><th class="n">Boyunca kapsam (%)</th><th class="n">Yüzey kapsamı (%)</th><th class="n">RMS (cm)</th><th class="n">Kayma (cm)</th><th class="n">Düşeylik (°)</th></tr>
+<tr><td>Üst uzun (pencereli)</td><td class="n">19,7</td><td class="n">38</td><td class="n">57</td><td class="n">1,6</td><td class="n">4,0</td><td class="n">0,5</td></tr>
+<tr><td>Alt uzun</td><td class="n">19,7</td><td class="n">53</td><td class="n">44</td><td class="n">1,4</td><td class="n">2,4</td><td class="n">0,4</td></tr>
+<tr><td>Sol kısa</td><td class="n">13,0</td><td class="n">81</td><td class="n">60</td><td class="n">1,3</td><td class="n">3,8</td><td class="n">0,2</td></tr>
+<tr><td>Sağ kısa (ön, perde)</td><td class="n">13,0</td><td class="n">45</td><td class="n">36</td><td class="n">1,9</td><td class="n">4,4</td><td class="n">0,3</td></tr>
+</table>
+<p class="cap">Tablo 13. Duvar düzlemleri, dense bulut (1 cm voksel, 1–3 m yükseklik bandı). Uzunluk: incelenen bölüm (kamera yolunun boyu). RMS: dilim yüzlerinin düzlemden ortalama sapması. Düşeylik: düzlemin düşeyden sapması. Boyunca kapsam: duvar yüzü düzleme 3 cm içinde oturan 25 cm'lik dilimlerin oranı (pencere girintileri ve kapılar dışarıda kalır). Yüzey kapsamı: 10 cm'lik hücrelerden nokta içerenlerin oranı. Kayma: dilim yüzlerinin düzlemden sapmasının duvar boyunca en büyük farkı; pencere pervazı ve kolonlar dahil.</p>
+<table>
+<tr><th>İlişki</th><th class="n">Seyrek bulut (°)</th><th class="n">Dense bulut (°)</th></tr>
+<tr><td>Üst uzun – sol / sağ kısa (diklikten sapma)</td><td class="n">1,0 / 0,2</td><td class="n">0,00 / 0,28</td></tr>
+<tr><td>Alt uzun – sol / sağ kısa (diklikten sapma)</td><td class="n">7,6 / 6,9</td><td class="n">0,02 / 0,26</td></tr>
+<tr><td>Kısa duvarlar, paralellikten sapma</td><td class="n">2,2</td><td class="n">0,28</td></tr>
+<tr><td>Uzun duvarlar, paralellikten sapma</td><td class="n">7,2</td><td class="n">0,02</td></tr>
+<tr><td>Zemin eğilmesi, uzun / kısa eksen (cm)</td><td class="n">1,3 / 0,7</td><td class="n">0,6 / 1,2</td></tr>
+</table>
+<p class="cap">Tablo 14. Duvarlar ve zemin arasındaki açılar. Seyrek sütun önceki analizden; zemin yüzdeleri salon uzunluğuyla (kamera yolu, 20,2 m) cm'ye çevrildi. Dense'te eksenler önce duvarlara hizalandı; açılar eksen seçiminden bağımsızdır.</p>
+
+<h2>13 Ölçek kalibrasyonu, doğrulama ve hata analizi</h2>
+<p class="lead">Model 3 şerit metre ölçüsüyle gerçek ölçeğe getirildi: 207,2 cm / model birimi. Dört doğrulama ölçüsünün hepsi modelde gerçeğinden kısa çıktı: kapı kanatları ~%2 (ölçü belirsizliği içinde), kapının toplam genişliği ve platform %6–7. Hata yönü sistematik; kaynağı modelin geometrisi değil, kalibrasyon ölçüleri.</p>
+<p>Her ölçünün uç noktaları 2–3 karede elle işaretlendi, komşu karelerde eşlendi ve bilinen SfM pozlarıyla üçgenlendi (yeniden izdüşüm hatası 0–3 px).</p>
+<table>
+<tr><th>Kod</th><th>Nesne</th><th class="n">Ölçülen (cm)</th><th class="n">Model (birim)</th><th class="n">Tek başına ölçek (cm/birim)</th><th class="n">Ölçekli model (cm)</th><th class="n">Sapma (cm)</th></tr>
+<tr><td>M1</td><td>Öğretmen masası, ön üst kenar</td><td class="n">120</td><td class="n">0,603</td><td class="n">199</td><td class="n">124,9</td><td class="n">+4,9</td></tr>
+<tr><td>K1</td><td>Kürsü üst tablası</td><td class="n">70</td><td class="n">0,396</td><td class="n">177</td><td class="n">82,1</td><td class="n">+12,1</td></tr>
+<tr><td>D1</td><td>Kapı, iki kanat, kasanın dış kenarları arası</td><td class="n">155</td><td class="n">0,694</td><td class="n">223</td><td class="n">143,8</td><td class="n">−11,2</td></tr>
+<tr><td colspan="4"><b>En küçük kareler ölçeği</b></td><td class="n"><b>207,2</b></td><td colspan="2"></td></tr>
+</table>
+<p class="cap">Tablo 15. Kalibrasyon ölçüleri (şerit metre, ±1,5–2 cm). Tek tek ölçeklerin yayılımı ±%12.</p>
+<table>
+<tr><th>Kod</th><th>Nesne</th><th class="n">Ölçülen (cm)</th><th class="n">Model (cm)</th><th class="n">Sapma (cm)</th><th class="n">Sapma (%)</th></tr>
+<tr><td>D2a</td><td>Kapı sol kanat</td><td class="n">70–75</td><td class="n">71,1</td><td class="n">−1,4</td><td class="n">−1,9</td></tr>
+<tr><td>D2b</td><td>Kapı sağ kanat</td><td class="n">70–75</td><td class="n">71,4</td><td class="n">−1,1</td><td class="n">−1,5</td></tr>
+<tr><td>D3</td><td>Kapı toplam genişlik, ayrı işaretleme (iç köşeler)</td><td class="n">155</td><td class="n">145,2</td><td class="n">−9,8</td><td class="n">−6,3</td></tr>
+<tr><td>B1</td><td>Öğretmen platformu yüksekliği</td><td class="n">43,5</td><td class="n">40,6</td><td class="n">−2,9</td><td class="n">−6,7</td></tr>
+<tr><td colspan="4"><b>RMS</b></td><td class="n"><b>5,2</b></td><td></td></tr>
+</table>
+<p class="cap">Tablo 16. Doğrulama ölçüleri, 207,2 cm/birim ile. Kanat genişliği yalnız 70–75 cm aralığıyla biliniyor; sapma aralığın ortasına (72,5 cm) göre verildi ve ±2,5 cm belirsizlik taşıyor. D3, kalibrasyondaki D1 ile aynı kapıdır (ayrı işaretleme). Sıra tablası eni (30 cm), iki ucu hiçbir karede birlikte görünmediği için ölçülemedi.</p>
+<figure><img src="../figures/hafta-05/kapi_onden_dense.png" style="width:62%;margin:auto"><figcaption>Şekil 10. Kapı, dense buluttan tam önden (ortografik, perspektifsiz) görünüş; halkalar üçgenlenen kasa köşeleri. Ölçü kapı düzleminde, 3B noktalar arasında alınır. Koyu ve dokusuz kanat yüzeylerinde dense nokta seyrek; kasa, orta kayıt ve kol net.</figcaption></figure>
+<h3>Hata analizi</h3>
+<ul>
+<li><b>Yön sistematik.</b> Dört doğrulamanın dördü de aynı yönde (kısa). Rastgele işaretleme hatası olsaydı işaretler karışık çıkardı. Büyüklük ise ikiye ayrılıyor: kanatlar ölçü belirsizliği içinde, kapı toplamı ve platform %6–7 kısa.</li>
+<li><b>Tekrarlanabilirlik iyi.</b> Kapının toplam genişliği iki ayrı işaretlemeyle 143,8 ve 145,2 cm çıktı (fark 1,4 cm). Kanat genişlikleri 3 farklı karede 0,2 cm içinde tutarlı.</li>
+<li><b>Kaynak: kalibrasyon ölçüleri.</b> Masa ve kürsü modelde ölçülenden uzun (%4, %17), kapı kısa (%7). Masa ve kürsü yuvarlak kenarlı ve uç noktaları belirsiz; en küçük kareler bu üçünün arasını bulduğu için ölçek biraz küçük kalmış. Yalnız kapıyla ölçeklense (222,9 cm/birim) platform 43,7 cm çıkar (ölçülen 43,5), ama masa 134 cm, kürsü 88 cm olur.</li>
+<li><b>SfM kayması yok.</b> Masa, kürsü ve kapı birbirine yakın; zemin ve tavan düz (bölüm 12). Sapma modelin geometrisinden değil, ölçek için kullanılan ölçülerden geliyor.</li>
+</ul>
+<table>
+<tr><th>Büyüklük (207,2 cm/birim ile)</th><th class="n">Model</th><th class="n">Beklenen</th><th>Durum</th></tr>
+<tr><td>Masa üst yüzeyi, platformdan</td><td class="n">0,74 m</td><td class="n">~0,75 m</td><td>standart masa</td></tr>
+<tr><td>Kürsü üst tablası, platformdan</td><td class="n">1,09–1,14 m</td><td class="n">~1,1 m</td><td>standart kürsü</td></tr>
+<tr><td>Kapı kasası üst köşesi, zeminden</td><td class="n">2,05–2,09 m</td><td class="n">~2,1 m</td><td>standart kapı</td></tr>
+<tr><td>Kamera yüksekliği (medyan)</td><td class="n">1,28 m</td><td class="n">elde çekim</td><td>gerçekçi</td></tr>
+<tr><td>Oda boyu × eni (dense, duvar düzlemleri arası)</td><td class="n">20,62 × 14,35 m</td><td class="n">ölçülmedi</td><td>gerçek ölçü yok</td></tr>
+<tr><td>Oda yüksekliği, zemin–tavan (dense)</td><td class="n">4,13 m (ızgara) · 3,32 m (asma lamba)</td><td class="n">ölçülmedi</td><td>gerçek ölçü yok</td></tr>
+</table>
+<p class="cap">Tablo 17. Bağımsız denetim: standart yüksekliklerle karşılaştırma ve dense'ten çıkarılan oda boyutları. Pencere ve oda eni/boyu gibi büyük ölçüler çekimde şerit metreyle alınamadı; oda boyutları bu yüzden doğrulanamıyor.</p>
+<div class="box"><b>Kapı genişliği güvenilir ölçülebiliyor mu?</b>Göreli olarak evet: model aynı kapıyı tekrar tekrar 1–2 cm içinde ölçüyor. Mutlak olarak yaklaşık ±%6 hatayla. Rota kararı için yeterli: tek kanat 71–77 cm (ölçek seçimine göre), tekerlekli sandalye için genellikle 80 cm ve üzeri net genişlik istendiği için "tek kanat yetersiz" sonucu bu hatadan etkilenmiyor. 80 cm'ye yakın kapılarda daha iyi bir ölçek gerekir.</div>
+
+<h2>14 Unity ve VR</h2>
+<p class="lead">Model metre ölçeğinde, Y ekseni yukarı ve zemini y = 0 olacak şekilde Unity'ye aktarıldı; çarpışma kutuları ve birinci şahıs kontrol betikleri hazır. Unity'de gezerken görüntü keskin ve hatasız değildi; bu yüzden VR gözlük testi ertelendi.</p>
+<ul>
+<li><b>Gözlem.</b> Çekim yolundan bakınca model düzgün. Yoldan ayrılan açılarda, örneğin sıra aralarında ilerlerken sağa ya da sola dönüp sıralara bakınca, Gaussian'lar dağınık görünüyor: ince uzun "iğne" Gaussian'lar ve yarı saydam bulutlar.</li>
+<li><b>Neden.</b> 3DGS yalnız eğitimde gördüğü açıları doğru göstermeyi öğreniyor; çekimde sıralara yandan hiç bakılmadı. Test kareleri de aynı yürüyüş yolundan seçildiği için PSNR bu sorunu göstermiyor.</li>
+<li><b>VR.</b> VR'da baş hareketi bu açıları sürekli gösterdiği için rahatsızlık daha belirgin olacaktır; test, görüntü düzeltildikten sonra PC'ye bağlı gözlükle yapılacak. Bu bir VR ölçümü değil, Unity gözlemine dayalı bir karardır.</li>
+</ul>
+<table>
+<tr><th>Çözüm yolu</th><th>Ne yapar</th><th>Beklenen etki</th><th>Durum</th></tr>
+<tr><td>Çekimde yan bakışlar</td><td>Sıra aralarında sağa-sola bakış, üç yükseklik, ortadan geçiş</td><td>En etkili; model görmediği açıyı uyduramaz</td><td>Sonraki çekim</td></tr>
+<tr><td>Eğitim ayarları</td><td>Ölçek düzenlemesi, MCMC ve Gaussian sınırı</td><td>İğne Gaussian'ları ve bulutları azaltır</td><td>Colab'da ~1 sa deneme</td></tr>
+<tr><td>Geometri öncülleri</td><td>Derinlik / normal / düzlem bilgisi</td><td>Literatürde duvar hatası 2–3 kat düşüyor</td><td>Monoküler derinlikle denendi, kötüleşti (bölüm 8); LiDAR derinliğiyle umut verici</td></tr>
+<tr><td>Üretken düzeltici (Difix3D+, NVIDIA)</td><td>Görülmemiş açılardan çizilen görüntüleri düzeltip modeli yeniden eğitir</td><td>Görsel olarak en güçlü; görüntü uydurabilir</td><td>Ücretsiz, ticari olmayan lisans; ~3–5 sa deneme. Yalnız görsel katman için, ölçüm için değil</td></tr>
+</table>
+<p class="cap">Tablo 18. Çekilmeyen açılardaki dağınıklık için çözüm yolları.</p>
+<p><b>Nesneleri tek tek konumlandırma.</b> 3DGS modelinde nesneler ayrı değil; önce ayrılmaları gerekiyor. Kısa vadede bir nesne SuperSplat ya da Unity eklentisinin kesme aracıyla ayrı .ply olarak kesilip Unity'de ayrı obje olarak taşınabilir. Otomatik yol SAM maskelerini 3B'ye taşıyan bölütleme yöntemleri (Gaussian Grouping, SAGA). Rota planlama için asıl gereken nesneyi taşımak değil, yerini ve kapladığı alanı bilmek: bu, dense nokta bulutundan nesne kutuları çıkarılıp Unity'de çarpışma kutusu olarak yerleştirilerek yapılabilir. Taşınan nesnenin arkasında ve altında, kamera orayı görmediği için boşluk kalır.</p>
+
+<h2>15 Çalıştırılabilir COLMAP yapılandırması</h2>
+<p>Derslik 4'te kullanılan bütün COLMAP ayarları tek bir dosyada toplandı: <code>scripts/hafta05/colmap_yapilandirma.sh</code>. Aynı sonuç aynı ayarlarla tek komutla yeniden üretilebilir; yeni odalar da aynı dosyayla işlenir.</p>
+<pre># önerilen hat: LoMa + sequential + loop + incremental
+bash colmap_yapilandirma.sh frames_1080 sfm loma
+# üç yöntem birden (incremental, hierarchical, SIFT exhaustive)
+bash colmap_yapilandirma.sh frames_1080 sfm hepsi
+# önerilen hat + tam çözünürlükte dense
+bash colmap_yapilandirma.sh frames_1080 sfm loma dense</pre>
+<table>
+<tr><th>Ayar</th><th>Değer</th><th>Ne işe yarar</th></tr>
+<tr><td>Kamera modeli</td><td>OPENCV, tek kamera</td><td>Bütün kareler aynı telefondan; mercek bozulması da çözülür</td></tr>
+<tr><td>Özellik çıkarma ve eşleştirme</td><td>LOMA_B</td><td>Öğrenme tabanlı LoMa; beyaz duvarda SIFT'ten güçlü</td></tr>
+<tr><td>Sözlük ağacı</td><td>8.192 görsel kelime, 400.000 tanımlayıcı</td><td>Döngü tespiti için; bu çekimin LoMa tanımlayıcılarından kurulur</td></tr>
+<tr><td>Sequential eşleştirme + döngü</td><td>her 10 karede bir, 50 aday kare</td><td>Videonun sonunda başa dönülen bölüm ilk karelere bağlanır</td></tr>
+<tr><td>SfM</td><td>incremental (mapper)</td><td>En doğru; 1000/1000 kare</td></tr>
+<tr><td>Hierarchical (isteğe bağlı)</td><td>alt model başına en çok 250 kare</td><td>Daha hızlı; birleşme yerinde kayma riski</td></tr>
+<tr><td>SIFT (isteğe bağlı)</td><td>exhaustive, SIFT_BRUTEFORCE</td><td>Karşılaştırma için; 1000 karede ~7 sa eşleştirme</td></tr>
+<tr><td>Dense (isteğe bağlı)</td><td>tam çözünürlük, geometrik tutarlılık</td><td>Ölçüm katmanı; 1000 karede L4'te ~9,7 sa</td></tr>
+<tr><td>Rastgelelik tohumu</td><td>1</td><td>Aynı girdiyle aynı sonuç</td></tr>
+</table>
+<p class="cap">Tablo 19. Yapılandırmadaki ayarlar.</p>
+<div class="box"><b>Önkoşul</b>COLMAP 4.2.1, CUDA ve ONNX ile derlenmiş olmalı ve sözlük ağacı komutu LoMa'nın 256 boyutlu tanımlayıcısı için yamalı olmalı (<code>src/colmap/exe/vocab_tree.cc</code>, tek satır). Drive'daki hazır derleme (<code>kurulum/colmap_4.2.1_l4.tgz</code>) eski Colab görüntüsü (Ubuntu 22.04, CUDA 12) ve L4 içindir. Colab Ubuntu 24.04 / CUDA 13'e geçtiği için SfM adımları bu ortamda kaynaktan yeniden derleme gerektirir; dense için pip'teki <code>pycolmap-cuda12==4.2.1</code> yeterlidir. pip'teki pycolmap LoMa'yı çalıştırmaz (ONNX yok).</div>
+
+<h2>16 Bina ölçeği için öneriler</h2>
+<table>
+<tr><th>Karar</th><th>Öneri</th><th>Dayanak</th></tr>
+<tr><td>SfM yöntemi</td><td>LoMa + sequential + loop + incremental, kat başına bir SfM</td><td>Hafta 4 ve 5'te en doğru; süre kare sayısıyla doğrusal; oda ile koridor aynı koordinatta</td></tr>
+<tr><td>3DGS</td><td>Oda / koridor parçaları hâlinde, 1440p + pozlama düzeltmesi; VR bütçesi zorlarsa 1080p</td><td>Bölüm 7, 8; tek parça kat ~6 M Gaussian eder</td></tr>
+<tr><td>Ölçüm katmanı</td><td>Dense, 1400–1600 piksel</td><td>Tam çözünürlük 1000 karede ~9,7 sa (bölüm 10)</td></tr>
+<tr><td>Kaçınılacak</td><td>SIFT exhaustive (karesel süre), hierarchical (birleşimde kayma), kamera pozu ince ayarı, monoküler derinlik</td><td>Bölüm 4, 5, 8</td></tr>
+</table>
+<p class="cap">Tablo 20. Yöntem kararları.</p>
+<table>
+<tr><th>Konu</th><th>Uygulama</th></tr>
+<tr><td>Kamera ayarları</td><td>Manuel kontrollü uygulama; pozlama, ISO, beyaz dengesi ve odak kilitli; enstantane en az 1/250 s; 4K 60 fps; HDR ve görüntü sabitleme kapalı; bütün çekimde tek lens</td></tr>
+<tr><td>Genel rota</td><td>Başlangıç noktasına dönerek döngüyü kapat; dönüşleri duvardan uzakta yap; yerinde dönme; beyaz duvara yakından bakma, kadrajda köşe, kapı ya da pano olsun</td></tr>
+<tr><td>Derslik</td><td>Köşeden başla; duvar boyunca içe bakan iki tur ve bir orta geçiş; ~0,8 / 1,5 / 2 m üç yükseklik; sıra aralarında sağa ve sola bakış</td></tr>
+<tr><td>Koridor</td><td>İki yönde yürü, kamera duvara 30–45° dönük; her kapıyı hem koridordan hem odadan çek (parçalar orada birleşir); kapı numarası ve panolar kadrajda</td></tr>
+<tr><td>Merdiven</td><td>Yavaş; üst ve alt sahanlıktan boyuna, basamaklara yandan; iki katı bağlayan tek kesintisiz çekim</td></tr>
+<tr><td>Dış cephe</td><td>Ayrı SfM; binaya bakan yay, iki mesafe; bulutlu gün (cam yansıması); girişler içten ve dıştan çekilir, iç ve dış model orada hizalanır</td></tr>
+<tr><td>Ölçek ve doğrulama</td><td>Keskin köşeli büyük nesneler (kapı, pencere, koridor boyu); kat başına en az 3 kalibrasyon ve 5 farklı nesneden doğrulama; uç noktalar fotoğraflanır; oda eni/boyu ve pencereler de ölçülür; mümkünse bilinen boyutta basılı hedefler. LiDAR'lı bir iPhone ile paralel kayıt ölçeği ve duvar geometrisini birlikte iyileştirir</td></tr>
+</table>
+<p class="cap">Tablo 21. Bina çekim protokolü.</p>
+
+<h2>17 Sınırlamalar ve sonraki adımlar</h2>
+<ul>
+<li>Doğrulama 4 ölçüyle yapıldı; bunların 3'ü aynı kapıya ait, bağımsız nesne sayısı 2. Kanat genişliği yalnız 70–75 cm aralığıyla biliniyor. Pencere ve oda eni/boyu ölçülmediği için dense'ten çıkan oda boyutları doğrulanamıyor.</li>
+<li>Test kareleri çekim yolu üzerinde; PSNR yoldan uzak açılardaki kaliteyi göstermiyor.</li>
+<li>VR gözlük testi yapılmadı.</li>
+<li>Sonraki adımlar: (1) bir katın pilot çekimi (iki koridor, iki derslik, merdiven) yeni protokolle ve büyük ölçülerle; (2) ölçek düzenlemesi + MCMC eğitimi, ardından Difix3D+ denemesi; (3) PC'ye bağlı gözlükle VR testi; (4) dense'ten kapı ve koridor genişliklerinin otomatik çıkarılması.</li>
+</ul>
+
+<h2>18 Kod ve veri</h2>
+<table>
+<tr><th>Yer</th><th>İçerik</th></tr>
+<tr><td>GitHub</td><td><code>yunisyns2506/accessible-route-planning</code>, dal <code>test/3dgs-pilot-runs</code>: betikler <code>scripts/hafta05/</code>, analizler ve ölçüm <code>experiments/hafta-05_derslik-04/</code> (dense analizi <code>analiz/adim4_dense_inc/</code>)</td></tr>
+<tr><td>Drive <code>hafta5_derslik4/</code></td><td><code>sfm/</code> COLMAP modelleri · <code>runs/</code> eğitim çıktıları ve .ply · <code>dense/loma_inc/</code> dense bulut, Poisson yüzeyi, süre ve bellek kayıtları · <code>unity/</code> Unity'ye hazır .ply · <code>betikler/</code></td></tr>
+<tr><td>Unity modelleri</td><td>Hepsi metre, Y yukarı, zemin y = 0: <code>derslik4_1440_big_H2_unity.ply</code>, <code>derslik4_H2_unity.ply</code>, <code>derslik4_1440big_unity.ply</code></td></tr>
+</table>
+
+</body>
+</html>

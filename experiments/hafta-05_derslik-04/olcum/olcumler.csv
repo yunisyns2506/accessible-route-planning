@@ -1,5 +1,5 @@
 kod,nesne,olcu,deger_cm,belirsizlik_cm,kullanim,fotograf,not
-D1,kapi,cift kanat aciklik (kasa ici; kullanici emin degil),155,2,kalibrasyon,o3_kapi.jpg,cetvel; yaklasik
+D1,kapi,cift kanat genislik (kasanin dis kenarlari arasi; 2026-11-02 dogrulandi),155,2,kalibrasyon,o3_kapi.jpg,cetvel; yaklasik
 M1,ogretmen masasi,on ust kenar eni,120,2,kalibrasyon,o1_masa.jpg,cetvel; yaklasik
 K1,kursu,ust tabla eni,70,1.5,kalibrasyon,o2_kursu.jpg,cetvel; yaklasik
 D2,kapi,tek kanat eni,72.5,2.5,dogrulama,o3_kapi.jpg,cetvel; 70-75 araligi

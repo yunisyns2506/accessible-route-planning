@@ -1,0 +1,88 @@
+{
+  "dense_nokta": 11892397,
+  "voksel_cm": 1.0,
+  "analiz_noktasi": 8369589,
+  "cm_per_birim": 207.2,
+  "eksen_hizalama_derece": 4.65,
+  "oda_m": {
+    "boy (kısa duvarlar arası)": 20.618,
+    "en (uzun duvarlar arası)": 14.352,
+    "yukseklik (zemin–tavan)": 4.128,
+    "asma katman (en yoğun)": 3.32
+  },
+  "paralellik_uzun_duvarlar_derece": 0.02,
+  "paralellik_kisa_duvarlar_derece": 0.28,
+  "diklik_sapmasi_derece": {
+    "sol kısa duvar – alt uzun duvar": 0.02,
+    "sol kısa duvar – üst uzun duvar": 0.0,
+    "sağ kısa duvar – alt uzun duvar": 0.26,
+    "sağ kısa duvar – üst uzun duvar": 0.28
+  },
+  "duvarlar": {
+    "sol kısa duvar": {
+      "nokta": 35698,
+      "aday": 93113,
+      "incelenen_uzunluk_m": 13.04,
+      "boy_kapsam_yuzde": 81.1,
+      "yuzey_kapsam_yuzde": 60.2,
+      "rms_cm": 1.28,
+      "kayma_cm": 3.82,
+      "duseylik_sapma_derece": 0.22
+    },
+    "sağ kısa duvar": {
+      "nokta": 41099,
+      "aday": 174962,
+      "incelenen_uzunluk_m": 13.04,
+      "boy_kapsam_yuzde": 45.3,
+      "yuzey_kapsam_yuzde": 35.9,
+      "rms_cm": 1.87,
+      "kayma_cm": 4.38,
+      "duseylik_sapma_derece": 0.3
+    },
+    "alt uzun duvar": {
+      "nokta": 71474,
+      "aday": 186130,
+      "incelenen_uzunluk_m": 19.73,
+      "boy_kapsam_yuzde": 53.2,
+      "yuzey_kapsam_yuzde": 43.5,
+      "rms_cm": 1.35,
+      "kayma_cm": 2.37,
+      "duseylik_sapma_derece": 0.37
+    },
+    "üst uzun duvar": {
+      "nokta": 85766,
+      "aday": 560675,
+      "incelenen_uzunluk_m": 19.73,
+      "boy_kapsam_yuzde": 38.0,
+      "yuzey_kapsam_yuzde": 57.0,
+      "rms_cm": 1.64,
+      "kayma_cm": 3.98,
+      "duseylik_sapma_derece": 0.54
+    }
+  },
+  "zemin_egilme_cm": {
+    "uzun": 0.61,
+    "kısa": 1.22
+  },
+  "zemin_rms_cm": 0.98,
+  "eksik_geometri": {
+    "zemin ve oturaklar": {
+      "nokta_voksel": 2088289,
+      "salon_ici_bos_hucre_yuzde": 0.8,
+      "salon_ici_az_gorus_hucre_yuzde (ort. <5 kamera)": 26.7,
+      "medyan_gorus": 5.4
+    },
+    "orta (duvarlar, kapı, pencere)": {
+      "nokta_voksel": 2550416,
+      "salon_ici_bos_hucre_yuzde": 4.3,
+      "salon_ici_az_gorus_hucre_yuzde (ort. <5 kamera)": 17.9,
+      "medyan_gorus": 6.0
+    },
+    "tavan": {
+      "nokta_voksel": 1110749,
+      "salon_ici_bos_hucre_yuzde": 0.2,
+      "salon_ici_az_gorus_hucre_yuzde (ort. <5 kamera)": 4.7,
+      "medyan_gorus": 6.4
+    }
+  }
+}
