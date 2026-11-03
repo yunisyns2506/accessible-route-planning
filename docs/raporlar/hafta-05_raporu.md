@@ -167,6 +167,8 @@ LoMa incremental hiç kare kaybetmedi. SIFT exhaustive'de 20 kare (%2) 3DGS eği
 
 <sub>Şekil 5. Soldan: gerçek kare, taban model, pozlama düzeltmeli model (H2). Perde ve duvardaki gri bulutlar düzeltmeyle kayboluyor.</sub>
 
+<sub>H, H2 ve DN bu çalışmadaki koşu etiketleridir. Yöntemler ve nerfstudio splatfacto ayarları: H2 = bilateral grid ile pozlama/renk düzeltmesi (Wang ve ark., "Bilateral Guided Radiance Field Processing", SIGGRAPH 2024; `--pipeline.model.use-bilateral-grid True`); H = bilateral grid + kamera pozu optimizasyonu (`--pipeline.model.camera-optimizer.mode SO3xR3`); DN = DN-Splatter (Turkulainen ve ark., WACV 2025), Depth Anything V2 monoküler derinliğiyle.</sub>
+
 - **H2 nasıl çalışıyor?** Her eğitim karesine ayrı, küçük bir renk-parlaklık dönüşümü (bilateral grid) öğretiliyor; model çizdiği görüntüyü bu dönüşümden geçirip gerçek kareyle karşılaştırıyor. Kareden kareye pozlama farkı sahneye değil dönüşüme yükleniyor, duvar her yerde aynı renkte kalıyor. Dönüşüm .ply'ye girmiyor; Unity'de nötr renk görünüyor.
 - **H2'nin ham PSNR'ı neden düşük?** Test karesinin kendi pozlaması bilinmediği için model nötr renk veriyor. Renk farkı giderilince PSNR tabanla aynı düzeyde (−0,35 dB), LPIPS daha iyi.
 - **H2'nin maliyeti.** Eğitim 29,5 dakikadan 78,3 dakikaya çıkıyor (2,7×, oda başına ~49 dk ve ~1,2 Colab birimi fazla). Ek kurulum, veri ya da bellek gerekmiyor; Gaussian sayısı ve Unity'deki gösterim yükü değişmiyor. Geometri eksikliğini (az noktalı duvarlar) gidermiyor.
