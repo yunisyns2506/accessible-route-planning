@@ -1,0 +1,134 @@
+{
+ "olcek_cm_birim": 212.51177550186782,
+ "kalibrasyon": {
+  "n": 3,
+  "MAE_cm": 0.87,
+  "RMSE_cm": 0.88,
+  "ort_cm": 0.2,
+  "en_buyuk_cm": 1.0
+ },
+ "dogrulama": {
+  "n": 6,
+  "MAE_cm": 3.28,
+  "RMSE_cm": 3.55,
+  "ort_cm": -0.88,
+  "en_buyuk_cm": 4.9
+ },
+ "dogrulama_supheli_dahil": {
+  "n": 9,
+  "MAE_cm": 10.66,
+  "RMSE_cm": 15.86,
+  "ort_cm": -5.43,
+  "en_buyuk_cm": 38.0
+ },
+ "satirlar": [
+  {
+   "kod": "K1",
+   "olcu": "Büyük pencere genişliği",
+   "tur": "kalibrasyon",
+   "mezura_cm": 217.5,
+   "model_cm": 216.5,
+   "hata_cm": -1.0,
+   "hata_yuzde": -0.5
+  },
+  {
+   "kod": "K2",
+   "olcu": "Çift kanat kapı, kasa içi (sınıf)",
+   "tur": "kalibrasyon",
+   "mezura_cm": 152.5,
+   "model_cm": 153.4,
+   "hata_cm": 0.9,
+   "hata_yuzde": 0.6
+  },
+  {
+   "kod": "K3",
+   "olcu": "Küçük pencere genişliği",
+   "tur": "kalibrasyon",
+   "mezura_cm": 115.7,
+   "model_cm": 116.4,
+   "hata_cm": 0.7,
+   "hata_yuzde": 0.6
+  },
+  {
+   "kod": "D1",
+   "olcu": "Sınıf kısa kenarı (duvar düzlemleri)",
+   "tur": "doğrulama",
+   "mezura_cm": 1480.0,
+   "model_cm": 1475.6,
+   "hata_cm": -4.4,
+   "hata_yuzde": -0.3
+  },
+  {
+   "kod": "D2",
+   "olcu": "Sahne yüksekliği (düzlemler)",
+   "tur": "doğrulama",
+   "mezura_cm": 46.0,
+   "model_cm": 46.6,
+   "hata_cm": 0.6,
+   "hata_yuzde": 1.2
+  },
+  {
+   "kod": "D3",
+   "olcu": "K3 kapısı, kasa içi (koridor modeli)",
+   "tur": "doğrulama",
+   "mezura_cm": 152.5,
+   "model_cm": 155.7,
+   "hata_cm": 3.2,
+   "hata_yuzde": 2.1
+  },
+  {
+   "kod": "D4",
+   "olcu": "K3 tek kanat net açıklık (koridor modeli)",
+   "tur": "doğrulama",
+   "mezura_cm": 74.5,
+   "model_cm": 77.9,
+   "hata_cm": 3.4,
+   "hata_yuzde": 4.5
+  },
+  {
+   "kod": "D5",
+   "olcu": "Öğretmen masası genişliği",
+   "tur": "doğrulama",
+   "mezura_cm": 130.0,
+   "model_cm": 125.1,
+   "hata_cm": -4.9,
+   "hata_yuzde": -3.7
+  },
+  {
+   "kod": "D6",
+   "olcu": "Askı yüksekliği",
+   "tur": "doğrulama",
+   "mezura_cm": 34.0,
+   "model_cm": 30.8,
+   "hata_cm": -3.2,
+   "hata_yuzde": -9.3
+  },
+  {
+   "kod": "S1",
+   "olcu": "Askı genişliği",
+   "tur": "şüpheli",
+   "mezura_cm": 200.0,
+   "model_cm": 162.0,
+   "hata_cm": -38.0,
+   "hata_yuzde": -19.0
+  },
+  {
+   "kod": "S2",
+   "olcu": "Radyatör genişliği",
+   "tur": "şüpheli",
+   "mezura_cm": 100.0,
+   "model_cm": 78.1,
+   "hata_cm": -21.9,
+   "hata_yuzde": -21.9
+  },
+  {
+   "kod": "S3",
+   "olcu": "Kürsü üst levha genişliği",
+   "tur": "şüpheli",
+   "mezura_cm": 69.0,
+   "model_cm": 85.3,
+   "hata_cm": 16.3,
+   "hata_yuzde": 23.6
+  }
+ ]
+}
