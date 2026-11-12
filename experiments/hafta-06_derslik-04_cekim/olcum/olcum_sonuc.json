@@ -1,5 +1,5 @@
 {
- "olcek_cm_birim": 212.51177550186782,
+ "olcek_cm_birim": 212.51177550186776,
  "kalibrasyon": {
   "n": 3,
   "MAE_cm": 0.87,
@@ -8,18 +8,11 @@
   "en_buyuk_cm": 1.0
  },
  "dogrulama": {
-  "n": 6,
-  "MAE_cm": 3.28,
-  "RMSE_cm": 3.55,
-  "ort_cm": -0.88,
-  "en_buyuk_cm": 4.9
- },
- "dogrulama_supheli_dahil": {
   "n": 9,
-  "MAE_cm": 10.66,
-  "RMSE_cm": 15.86,
-  "ort_cm": -5.43,
-  "en_buyuk_cm": 38.0
+  "MAE_cm": 3.09,
+  "RMSE_cm": 3.45,
+  "ort_cm": -1.49,
+  "en_buyuk_cm": 5.2
  },
  "satirlar": [
   {
@@ -104,31 +97,31 @@
    "hata_yuzde": -9.3
   },
   {
-   "kod": "S1",
-   "olcu": "Askı genişliği",
-   "tur": "şüpheli",
-   "mezura_cm": 200.0,
-   "model_cm": 162.0,
-   "hata_cm": -38.0,
-   "hata_yuzde": -19.0
-  },
-  {
-   "kod": "S2",
-   "olcu": "Radyatör genişliği",
-   "tur": "şüpheli",
-   "mezura_cm": 100.0,
-   "model_cm": 78.1,
-   "hata_cm": -21.9,
-   "hata_yuzde": -21.9
-  },
-  {
-   "kod": "S3",
-   "olcu": "Kürsü üst levha genişliği",
-   "tur": "şüpheli",
+   "kod": "D7",
+   "olcu": "Kürsü üst levha, ön kenar genişliği",
+   "tur": "doğrulama",
    "mezura_cm": 69.0,
-   "model_cm": 85.3,
-   "hata_cm": 16.3,
-   "hata_yuzde": 23.6
+   "model_cm": 67.7,
+   "hata_cm": -1.3,
+   "hata_yuzde": -1.9
+  },
+  {
+   "kod": "D8",
+   "olcu": "Askı genişliği (K3 yanındaki uzun askı, alt kenar)",
+   "tur": "doğrulama",
+   "mezura_cm": 200.0,
+   "model_cm": 194.8,
+   "hata_cm": -5.2,
+   "hata_yuzde": -2.6
+  },
+  {
+   "kod": "D9",
+   "olcu": "Radyatör genişliği (pencere altı, üst kenar)",
+   "tur": "doğrulama",
+   "mezura_cm": 100.0,
+   "model_cm": 98.4,
+   "hata_cm": -1.6,
+   "hata_yuzde": -1.6
   }
  ]
 }

@@ -9,6 +9,42 @@ simülasyon sistemi.
 
 ---
 
+## Hafta 6 Raporu — Derslik 4 ve koridor
+
+**PDF:** [`docs/raporlar/hafta-06_raporu.pdf`](docs/raporlar/hafta-06_raporu.pdf) · kaynak: [`docs/raporlar/hafta-06/`](docs/raporlar/hafta-06/) (`python pdf_olustur.py`)
+
+Derslik 4 sınıfı yeni bir rotayla yeniden çekildi, asansörden sınıf kapısına (K3) giden koridor ayrıca çekildi ve iki model tek, metre ölçekli bir 3DGS modelinde birleştirildi.
+
+| Konu | Sonuç |
+| :--- | :--- |
+| SfM | Sınıf 1500/1500, koridor 422/422 kare kayıtlı (LoMa + sequential/döngü + incremental) |
+| 3DGS | Sınıf 1080p H2 r.d. PSNR 25,84 dB; 1440p büyük model görselde çok az daha keskin, ölçütlerde fark yok |
+| Birleştirme | Ortak karelerle hizalama, artık hata ~1,5 cm; Unity'de tek PLY |
+| Beyaz yüzeyler | Duvar lekeleri pozlama düzeltmeli eğitimle (H2) azaldı; zemin dalgaları gerçek karelerden üretilen düz zemin katmanıyla kalktı |
+| Ölçek | 212,51 cm/birim; 9 doğrulama ölçüsünde RMSE 3,45 cm |
+| Algılama | Kapı/merdiven/asansör, kendi karelerimizle ince ayarlı YOLOv8n-seg test F1 0,78 |
+
+**Kod ve sonuçlar (GitHub)**
+
+| İçerik | Yer |
+| :--- | :--- |
+| SfM, 3DGS, sürdürmeli eğitim, birleştirme, zemin, ölçüm betikleri | [`scripts/hafta06/`](scripts/hafta06/) |
+| Algılama betikleri ve Colab defteri | [`scripts/hafta06/algilama/`](scripts/hafta06/algilama/) |
+| Çarpışma kutuları (birleşik model) | [`scripts/hafta06/unity_carpisma.py`](scripts/hafta06/unity_carpisma.py) |
+| Sonuç notları, ölçüm verisi, çekim planı | [`experiments/hafta-06_derslik-04_cekim/`](experiments/hafta-06_derslik-04_cekim/) |
+| Algılama sonuçları | [`experiments/hafta-06_algilama/`](experiments/hafta-06_algilama/) |
+
+**Büyük dosyalar (Drive)** — ayrıntı: [`docs/hafta06_drive_linkleri.md`](docs/hafta06_drive_linkleri.md)
+
+| Klasör | İçerik |
+| :--- | :--- |
+| [Hafta 6 Çalışmaları](https://drive.google.com/drive/folders/1Hkk_QyFrLYI_px_V4fCt5bWtQR3GMEIj) | Ham videolar, kareler, COLMAP ve 3DGS çıktıları, son Unity modelleri (`birlesik/`), COLMAP 4.2.1 derlemesi (`kurulum/`) |
+| [Hafta 6 Algılama](https://drive.google.com/drive/folders/1IO76-JB92Q5mGnD8MJS7cL-znsZ-HRJU) | Etiketlenen kareler, CVAT etiketleri, eğitilen modeller, çarpışma kutusu çıktıları |
+
+Son Unity modeli: `birlesik/birlesik_sinif1440_koridor_gercek_zemin_unity.ply` (daha hafif: `..._sinif1080_...`).
+
+---
+
 ## Hafta 5 Raporu — Rektörlük Derslik 4
 
 **PDF:** [`docs/raporlar/hafta-05_raporu.pdf`](docs/raporlar/hafta-05_raporu.pdf)

@@ -17,17 +17,22 @@ Uç noktalar 1920×1080 video karelerinde işaretlendi, SfM pozlarıyla üçgenl
 | D4 | K3 tek kanat net açıklık (koridor modeli) | Doğrulama | 74,5 | 77,9 | +3,4 | +4,5 |
 | D5 | Öğretmen masası genişliği | Doğrulama | 130,0 | 125,1 | −4,9 | −3,7 |
 | D6 | Askı yüksekliği | Doğrulama | 34,0 | 30,8 | −3,2 | −9,3 |
-| S1 | Askı genişliği | Şüpheli | 200,0 | 162,0 | −38,0 | −19,0 |
-| S2 | Radyatör genişliği | Şüpheli | 100,0 | 78,1 | −21,9 | −21,9 |
-| S3 | Kürsü üst levha genişliği | Şüpheli | 69,0 | 85,3 | +16,3 | +23,6 |
+| D7 | Kürsü üst levha, ön kenar genişliği | Doğrulama | 69,0 | 67,7 | −1,3 | −1,9 |
+| D8 | Askı genişliği (K3 yanındaki uzun askı, alt kenar) | Doğrulama | 200,0 | 194,8 | −5,2 | −2,6 |
+| D9 | Radyatör genişliği (pencere altı, üst kenar) | Doğrulama | 100,0 | 98,4 | −1,6 | −1,6 |
 
 | Küme | Ölçü | MAE (cm) | RMSE (cm) | En büyük (cm) |
 | :--- | ---: | ---: | ---: | ---: |
 | Kalibrasyon | 3 | 0,87 | 0,88 | 1,0 |
-| Doğrulama | 6 | 3,28 | 3,55 | 4,9 |
-| Doğrulama + şüpheli | 9 | 10,66 | 15,86 | 38,0 |
+| Doğrulama | 9 | 3,09 | 3,45 | 5,2 |
 
-Kalibrasyon kümesi sonradan değiştirildi. İlk seçim (büyük pencere, askı, masa) 229,2 cm/birim verdi; askı diğer ölçülerle tutarsız çıktı. Pencere, kapı, kısa kenar ve sahne 208–214 cm/birimde toplandı. Şüpheli üç ölçü silinmedi: sınıfta aynı tipte birden çok askı ve farklı boyda radyatör var, fotoğraftaki nesnenin hangisi olduğu videoda doğrulanamadı. Kürsüde ise doğru nesne işaretlendi ama sonuç 16 cm farklı; sebep bulunamadı. Bu üçü mezura fotoğrafının çekildiği yer netleşirse yeniden hesaplanmalı.
+Kalibrasyon kümesi sonradan değiştirildi. İlk seçim (büyük pencere, askı, masa) 229,2 cm/birim verdi; askı diğer ölçülerle tutarsız çıktı. Pencere, kapı, kısa kenar ve sahne 208–214 cm/birimde toplandı.
+
+**Düzeltme (11.11.2026):** İlk turda askı (−38,0 cm), radyatör (−21,9 cm) ve kürsü (+16,3 cm) şüpheli bırakılmıştı. Nesneler mezura fotoğraflarıyla eşleştirildi (görseller `kontrol/`):
+- Askı: kapının yanındaki kısa askı ölçülmüştü; mezura K3'e en yakın uzun askıdan alınmış. Uzun askı 0708, 0192, 0634, 0636 karelerinde, alt kenar 194,8 cm (izdüşüm hatası ≤ 2,2 px, üçlü kombinasyonlar 193–199 cm).
+- Radyatör: başka bir radyatör ölçülmüştü. Doğru radyatör (kullanıcının gösterdiği görüntü 1296 numaralı kareyle eşleşti) 1290, 1292, 1296, 1300, 1302 karelerinde, üst kenar 98,4 cm (izdüşüm hatası ≤ 6,7 px, üçlüler 85–125 cm). Aynı radyatörü uzaktan gören 1100, 1210, 1213, 1215 kareleri 49–85 cm arası tutarsız sonuç verdi ve kullanılmadı.
+- Kürsü: bir uç levhanın arka köşesine düşmüştü. Ön üst köşeler 1145, 0965, 1055'te, 67,7 cm.
+Bu karelerin bir kısmı `kareler/` klasöründe yok (Drive `derslik4_cekim2/frames_1080/`); `olcum_hesap.py` bunlarda işareti inceltmeden kullanır.
 
 ## Geometri (LoMa seyrek noktaları, 210 cm/birim çerçevesinde)
 

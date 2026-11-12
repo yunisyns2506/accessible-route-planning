@@ -15,7 +15,8 @@ olc = [('K1', 'Büyük pencere genişliği', L('pen_b_sol', 'pen_b_sag'), 217.5,
        ('D1', 'Sınıf kısa kenarı (duvar düzlemleri)', Z_U, 1480.0, 'doğrulama'), ('D2', 'Sahne yüksekliği (düzlemler)', PLAT_U, 46.0, 'doğrulama'),
        ('D3', 'K3 kapısı, kasa içi (koridor modeli)', L('kor_kapi_sol', 'kor_kapi_sag'), 152.5, 'doğrulama'), ('D4', 'K3 tek kanat net açıklık (koridor modeli)', L('kor_kapi_sol', 'kor_kanat_sol'), 74.5, 'doğrulama'),
        ('D5', 'Öğretmen masası genişliği', L('masa_sol', 'masa_sag'), 130.0, 'doğrulama'), ('D6', 'Askı yüksekliği', L('aski_P_alt', 'aski_P_ust'), 34.0, 'doğrulama'),
-       ('S1', 'Askı genişliği', L('aski_P_alt', 'aski_B_alt'), 200.0, 'şüpheli'), ('S2', 'Radyatör genişliği', L('rad_sol', 'rad_sag'), 100.0, 'şüpheli'), ('S3', 'Kürsü üst levha genişliği', L('kursu_sol', 'kursu_sag'), 69.0, 'şüpheli')]
+       ('D7', 'Kürsü üst levha, ön kenar genişliği', L('kursu_sol', 'kursu_sag'), 69.0, 'doğrulama'),
+       ('D8', 'Askı genişliği (K3 yanındaki uzun askı, alt kenar)', L('aski_uzun_sol', 'aski_uzun_sag'), 200.0, 'doğrulama'), ('D9', 'Radyatör genişliği (pencere altı, üst kenar)', L('rad_sol', 'rad_sag'), 100.0, 'doğrulama')]
 c = [o for o in olc if o[4] == 'kalibrasyon']; u = np.array([o[2] for o in c]); m = np.array([o[3] for o in c]); s = float(u @ m / (u @ u))
 print(f'ölçek {s:.2f} cm/birim (önceki tahmin {K_ESKI}; fark {100 * (s - K_ESKI) / K_ESKI:+.2f}%)')
 rows = []
@@ -24,8 +25,8 @@ for k, ad, un, tp, t in olc:
     print(f'{k:3s} {ad:42s} {tp:7.1f} {md:7.1f} {md - tp:+6.1f} cm {100 * (md - tp) / tp:+5.1f}%  [{t}]')
 def ozet(R): e = np.array([r['hata_cm'] for r in R]); return dict(n=len(R), MAE_cm=round(float(np.abs(e).mean()), 2), RMSE_cm=round(float(np.sqrt((e ** 2).mean())), 2), ort_cm=round(float(e.mean()), 2), en_buyuk_cm=round(float(np.abs(e).max()), 2))
 kal, dog, sup = [[r for r in rows if r['tur'] == t] for t in ('kalibrasyon', 'doğrulama', 'şüpheli')]
-print('kalibrasyon', ozet(kal)); print('doğrulama', ozet(dog)); print('doğrulama + şüpheli', ozet(dog + sup))
+print('kalibrasyon', ozet(kal)); print('doğrulama', ozet(dog))
 for n, R in (('kisa kenar haric', [r for r in dog if r['kod'] != 'D1']),): print(n, ozet(R))
 with open(d / 'olcum_tablo.csv', 'w', newline='', encoding='utf-8-sig') as f:
     w = csv.DictWriter(f, fieldnames=list(rows[0])); w.writeheader(); w.writerows(rows)
-(d / 'olcum_sonuc.json').write_text(json.dumps({'olcek_cm_birim': s, 'kalibrasyon': ozet(kal), 'dogrulama': ozet(dog), 'dogrulama_supheli_dahil': ozet(dog + sup), 'satirlar': rows}, ensure_ascii=False, indent=1), encoding='utf-8')
+(d / 'olcum_sonuc.json').write_text(json.dumps({'olcek_cm_birim': s, 'kalibrasyon': ozet(kal), 'dogrulama': ozet(dog), 'satirlar': rows}, ensure_ascii=False, indent=1), encoding='utf-8')

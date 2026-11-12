@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Hafta 6 Raporu</title>
+<link rel="stylesheet" href="stil.css">
+</head>
+<body>
+
+<!-- 1 ÖZET -->
+<h2><span class="no">1</span>Özet</h2>
+<p class="lead">Derslik 4 sınıfı yeni bir rotayla yeniden çekildi, asansörden sınıf kapısına (K3) giden koridor ayrıca çekildi ve iki model <b>tek, metre ölçekli ve Unity'de açılan bir 3DGS modelinde</b> birleştirildi. Beyaz duvardaki lekeler pozlama düzeltmeli eğitimle (H2), zemindeki dalgalar gerçek karelerden üretilen düz zemin katmanıyla giderildi. Ölçek mezurayla <b>212,51 cm/birim</b> olarak kalibre edildi; dokuz doğrulama ölçüsünde RMSE <b>3,45 cm</b>. Genel netlik, 1440p ve büyük model denenmesine rağmen belirgin artmadı. Kapı, merdiven ve asansör algılamasında kendi karelerimizle eğitilen <b>YOLOv8n-seg</b> test kümesinde <b>F1 0,78</b>'e ulaştı. Gözlükle VR testi bu haftaya yetişmedi.</p>
+
+<div class="kpis">
+  <div class="kpi"><div class="v">1500 + 422</div><div class="t">Sınıf + koridor karesi; hepsi SfM'e kaydoldu</div></div>
+  <div class="kpi"><div class="v">3,45 cm</div><div class="t">9 doğrulama ölçüsünde RMSE (MAE 3,09 cm)</div></div>
+  <div class="kpi"><div class="v">1,39 M</div><div class="t">Son birleşik modelde Gaussian (344 MB)</div></div>
+  <div class="kpi"><div class="v">F1 0,78</div><div class="t">Kapı / merdiven / asansör algılama (YOLOv8n-seg, test)</div></div>
+</div>
+
+<table>
+<thead><tr><th style="width:24%">Konu</th><th>Sonuç</th></tr></thead>
+<tr><td>Sınıf yeniden çekimi</td><td>06.11 çekimi (0,5× lens, yeni rota): 1500/1500 kare kayıtlı, PSNR 25,53 dB. 05.11 çekimi (1× lens) pozları bozuk olduğu için kullanılmadı</td></tr>
+<tr><td>Koridor</td><td>422/422 kare kayıtlı; birleşik modelde kullanılan 1440p büyük model + H2, renk düzeltmeli PSNR 26,09 dB (H2'siz 27,49 dB)</td></tr>
+<tr><td>Birleştirme</td><td>Ortak karelerle hizalama, artık hata ~1,5 cm, yönelim farkı ~0,1°; K3 kapısı açık hâliyle koridordan alındı</td></tr>
+<tr><td>Beyaz duvar lekeleri</td><td>H2 (bilateral grid) ile büyük ölçüde azaldı</td></tr>
+<tr><td>Zemin dalgaları</td><td>Çekim ve eğitim ayarlarıyla giderilemedi; gerçek karelerden 5 cm ızgaralı düz zemin ile Unity'de kalktı. Görüntü için kullanılıyor, ölçüm için kullanılmıyor</td></tr>
+<tr><td>Netlik</td><td>Kaynak kareler Hafta 5'ten keskin; 1440p ve büyük model görselde çok az keskinleştirdi, ölçütlerde fark yok</td></tr>
+<tr><td>Ölçek ve doğrulama</td><td>212,51 cm/birim; kalibrasyon RMSE 0,88 cm, 9 doğrulama ölçüsünde RMSE 3,45 cm</td></tr>
+<tr><td>Algılama</td><td>234 kare etiketlendi (180 nesne); YOLOv8n-seg test F1 0,78, mAP@0,5 0,902; eğitimsiz modeller F1 ≤ 0,25</td></tr>
+<tr><td>Eksik kalanlar</td><td>Gözlükle VR testi</td></tr>
+</table>
+<div class="cap"><b>Tablo 1.</b> Haftanın sonuçları.</div>
+
+<!-- 2 ÇEKİM -->
+<h2><span class="no">2</span>Çekim</h2>
+<h3>2.1 Neden yeniden çekim?</h3>
+<p>Hafta 5 modelinde üç sorun vardı: beyaz yüzeylerde gri lekeler, sıraların yan yüzlerinin hiç görülmemesi ve Unity'de yoldan uzak açılarda dağılma. 05.11'de 1× lens ve sıra aralarında 90° yana bakışla çekim yapıldı; bu çekimde 387–731. kareler arasında SfM pozları bozuldu (106 kamera elendi, PSNR 20,18 dB). 06.11'de 0,5× lens ile Hafta 5'in düz geçişleri korunup <b>45° çapraz</b>, alçak, zemin ve tavan geçişleri eklendi.</p>
+<figure><img src="gorseller/rota_sinif.jpg" alt="" style="width:88%;margin:0 auto"><figcaption><b>Şekil 1.</b> 06.11 sınıf çekim rotası: düz geçişler, ters yön, 45° çapraz geçiş, kürsü, zemin ve tavan bölümleri.</figcaption></figure>
+
+<table>
+<thead><tr><th></th><th class="n">Hafta 5</th><th class="n">05.11 çekimi</th><th class="n">06.11 sınıf</th><th class="n">06.11 koridor</th></tr></thead>
+<tr><td>Lens</td><td class="n">0,5×</td><td class="n">1×</td><td class="n">0,5× (13 mm)</td><td class="n">0,5×</td></tr>
+<tr><td>Video süresi (dk)</td><td class="n">10,3</td><td class="n">20,9</td><td class="n">19,9</td><td class="n">2,8</td></tr>
+<tr><td>Kare hızı (fps, 4K)</td><td class="n">30</td><td class="n">59,94</td><td class="n">30</td><td class="n">30</td></tr>
+<tr><td>Seçilen kare</td><td class="n">1000</td><td class="n">1500</td><td class="n">1500</td><td class="n">422</td></tr>
+<tr><td>Kare aralığı (sn)</td><td class="n">0,62</td><td class="n">0,84</td><td class="n">0,80</td><td class="n">0,40</td></tr>
+<tr><td>Hareket eşiği (px/kare)</td><td class="n">15</td><td class="n">7,5</td><td class="n">15</td><td class="n">15</td></tr>
+<tr><td>Kamera ayarları</td><td class="n">otomatik</td><td class="n">manuel</td><td class="n">manuel (Blackmagic Camera)</td><td class="n">manuel</td></tr>
+</table>
+<div class="cap"><b>Tablo 2.</b> Çekimler. Koridorda ileri yürürken görüş hızlı değiştiği için kareler sınıftakinin iki katı sık alındı. Sınıf videosu iki parça (17 dk 15 sn + 2 dk 42 sn); birleşme noktasında poz sıçraması yok.</div>
+
+
+
+<!-- 3 SfM ve 3DGS -->
+<h2><span class="no">3</span>SfM ve 3DGS sonuçları</h2>
+<p><b>Hat:</b> video → hareketi düşük en net kare seçimi → LoMa + sequential ve döngü eşleştirme → COLMAP 4.2.1 incremental → nerfstudio 1.1.5 splatfacto (veya splatfacto-big), 30.000 adım → Unity PLY. Her 10. kare test karesi.</p>
+<table>
+<thead><tr><th>Veri</th><th class="n">Seçilen kare</th><th class="n">Kayıtlı kare</th><th class="n">Doğrulanan çift (%)</th><th class="n">Seyrek nokta</th><th class="n">İz uzunluğu (kare)</th><th class="n">Yeniden izdüşüm (px)</th><th class="n">SfM süresi (dk)</th></tr></thead>
+<tr><td>Hafta 5 sınıf</td><td class="n">1000</td><td class="n">1000</td><td class="n">88</td><td class="n">246.479</td><td class="n">5,75</td><td class="n">1,32</td><td class="n">101,6</td></tr>
+<tr><td>05.11 sınıf (kullanılmadı)</td><td class="n">1500</td><td class="n">1486</td><td class="n">61</td><td class="n">301.737</td><td class="n">4,63</td><td class="n">1,18</td><td class="n">281,7</td></tr>
+<tr><td>06.11 sınıf</td><td class="n">1500</td><td class="n">1500</td><td class="n">83</td><td class="n">351.709</td><td class="n">5,35</td><td class="n">1,30</td><td class="n">277,5</td></tr>
+<tr><td>06.11 koridor</td><td class="n">422</td><td class="n">422</td><td class="n">—</td><td class="n">87.602</td><td class="n">6,87</td><td class="n">1,38</td><td class="n">49,0</td></tr>
+</table>
+<div class="cap"><b>Tablo 3.</b> SfM. Süre; özellik çıkarma, sözlük ağacı, eşleştirme ve incremental mapper toplamıdır (06.11 sınıfta mapper tek başına 203,7 dk). 06.11 sınıf çekiminde sıra araları dahil her bölümde kare başına 1.168–1.478 3B nokta var (05.11'in bozuk bölümünde 226); 45° çapraz geçiş SfM'i bozmadı.</div>
+
+<table>
+<thead><tr><th>Model</th><th class="n">Ham PSNR (dB)</th><th class="n">R.d. PSNR (dB)</th><th class="n">R.d. SSIM</th><th class="n">R.d. LPIPS</th><th class="n">Gaussian (M)</th><th class="n">Eğitim (dk)</th></tr></thead>
+<tr><td>Sınıf 1080p</td><td class="n">25,53</td><td class="n">26,10</td><td class="n">0,882</td><td class="n">0,301</td><td class="n">0,41</td><td class="n">30</td></tr>
+<tr class="vurgu"><td>Sınıf 1080p H2</td><td class="n">24,09</td><td class="n">25,84</td><td class="n">0,882</td><td class="n">0,293</td><td class="n">0,39</td><td class="n">103</td></tr>
+<tr class="vurgu"><td>Sınıf 1440p big H2</td><td class="n">22,22</td><td class="n">25,63</td><td class="n">0,880</td><td class="n">0,321</td><td class="n">1,11</td><td class="n">153</td></tr>
+<tr><td>Koridor 1440p big</td><td class="n">27,12</td><td class="n">27,49</td><td class="n">0,891</td><td class="n">0,310</td><td class="n">1,43</td><td class="n">78</td></tr>
+<tr class="vurgu"><td>Koridor 1440p big H2</td><td class="n">22,02</td><td class="n">26,09</td><td class="n">0,893</td><td class="n">0,300</td><td class="n">1,37</td><td class="n">113</td></tr>
+</table>
+<div class="cap"><b>Tablo 4.</b> 3DGS modelleri. "R.d." renk düzeltmeli ölçümdür: H2 her kareye ayrı pozlama öğrendiği için test karesinde nötr renk verir ve ham PSNR yanıltıcı derecede düşük çıkar. Sınıf 1440p'nin LPIPS'i 1440p karelerde ölçüldüğü için 1080p ile doğrudan karşılaştırılamaz. Vurgulu modeller birleşik modelde kullanıldı.</div>
+
+<h3>3.1 H2 pozlama düzeltmeli eğitim</h3>
+<p>Unity'de beyaz duvarlarda leke görülünce aynı poz ve karelerle yalnız <code>--pipeline.model.use-bilateral-grid True</code> eklenerek yeniden eğitildi. Ölçümler neredeyse aynı (r.d. PSNR 0,26 dB geride, LPIPS 0,008 daha iyi), ama duvarı en çok gösteren test karelerinde lekeler ve dalgalanma büyük ölçüde kayboldu. Bedeli: eğitim süresi 3,4 kat, RAM 49,8 GB (L4 sınırı 52 GB).</p>
+<figure><img src="gorseller/h2_pano.jpg" alt="" style="width:52%;margin:0 auto"><figcaption><b>Şekil 2.</b> Gerçek kare / önceki model / H2. Beyaz duvardaki leke ve dalgalanma H2'de belirgin azalıyor.</figcaption></figure>
+
+<h3>3.2 Netlik: kaynak mı, model mi?</h3>
+<p>H2 modeli de Unity'de Hafta 5'ten yumuşak görününce önce kaynak karelerin bulanıklığı ölçüldü. 06.11 kareleri dört ölçütün dördünde de Hafta 5'ten daha keskin; yani modelin yumuşaklığı bulanık kaynaktan gelmiyor.</p>
+<table>
+<thead><tr><th>Ölçüt (medyan)</th><th class="n">Hafta 5</th><th class="n">06.11 sınıf</th><th>İyi yön</th></tr></thead>
+<tr><td>Laplace varyansı</td><td class="n">117</td><td class="n">160</td><td>yüksek</td></tr>
+<tr><td>Bulanıklık etkisi (0–1)</td><td class="n">0,416</td><td class="n">0,347</td><td>düşük</td></tr>
+<tr><td>Kenar gücü, 99. yüzdelik</td><td class="n">326</td><td class="n">349</td><td>yüksek</td></tr>
+<tr><td>Sandalye kenarı, 95. yüzdelik</td><td class="n">252</td><td class="n">308</td><td>yüksek</td></tr>
+</table>
+<div class="cap"><b>Tablo 5.</b> Kaynak kare keskinliği (bütün 1080p eğitim kareleri).</div>
+<figure><img src="gorseller/bulaniklik.jpg" alt="" style="width:66%;margin:0 auto"><figcaption><b>Şekil 3.</b> En keskin %10, orta ve en bulanık %10'dan örnek kareler (üst Hafta 5, alt 06.11).</figcaption></figure>
+<p>Ardından sınıf modeli 1440p ve splatfacto-big (1,11 M Gaussian) ile eğitildi. Karşılaştırma panosunda 1440p big H2, 1080p H2'ye göre çok az daha keskin; ön plandaki sandalyeler ve tel sepetler ikisinde de bulanık. Ölçütlerde fark yok (r.d. PSNR 25,63 ve 25,84 dB). İki model gözlükte karşılaştırılacak; fark VR'da daha iyi anlaşılabilir. Belirgin bir netlik artışı olmadığı için sınırın girdide (hareket bulanıklığı, 0,5× lens, video sıkıştırması), kare seçiminde ya da pozlarda olduğu düşünülüyor; bu ayrı bir deneyle henüz kanıtlanmadı.</p>
+
+
+<!-- 4 BİRLEŞTİRME -->
+<h2><span class="no">4</span>Sınıf ve koridorun birleştirilmesi</h2>
+<table>
+<thead><tr><th style="width:17%">Adım</th><th>Yöntem</th><th style="width:30%">Sonuç</th></tr></thead>
+<tr><td>Ortak kareler</td><td>1500 sınıf karesi ve koridorun 130–300 arası 86 karesiyle küçük SIFT SfM (68 + 86 kare, 67 + 74 kayıtlı)</td><td>İki çekimi bağlayan ortak çerçeve</td></tr>
+<tr><td>Dönüşüm</td><td>Kamera merkezlerinden RANSAC + Umeyama</td><td>Artık hata sınıf ~1,5 cm, koridor ~1,6 cm; yönelim farkı ~0,1°</td></tr>
+<tr><td>Yatay düzeltme</td><td>İki model aynı dönüşümle yatay yapıldı, koridor zemini y = 0</td><td>Sınıf modelindeki 1,45° eğim giderildi</td></tr>
+<tr><td>K3 kapısı</td><td>Kapı kutusunun içi koridor modelinden alındı</td><td>Kapı açık görünüyor (sınıf çekiminde kapalıydı)</td></tr>
+<tr><td>Temizlik ve tek PLY</td><td>Opaklık &lt; 0,05, en uzun eksen &gt; 1 m, iğne biçimli, yalnız kalan ve koridorda kamera yolundan 15 m'den uzak Gaussian'lar silindi</td><td>Unity'de iki nesnenin iç içe sıralama sorunu tek dosyayla çözüldü</td></tr>
+</table>
+<div class="cap"><b>Tablo 6.</b> Birleştirme adımları.</div>
+<figure><img src="gorseller/hizalama.jpg" alt="" style="width:62%;margin:0 auto"><figcaption><b>Şekil 4.</b> Üstten hizalama: sınıf (mavi) ve koridor (turuncu) seyrek noktaları ve kamera yolları.</figcaption></figure>
+<figure><img src="gorseller/kapi.jpg" alt=""><figcaption><b>Şekil 5.</b> K3 kapısı: sınıf tarafı, koridor tarafı ve üstten görünüm.</figcaption></figure>
+
+<!-- 5 ZEMİN -->
+<h2><span class="no">5</span>Beyaz zemin: tanı, denemeler ve karar</h2>
+<p class="lead">Zemindeki dalgalar yeni çekim, H2 ve 1440p eğitimle giderilemedi. Sonunda zemin, gerçek karelerden üretilen düz bir katmanla değiştirildi. Bu katman nihai modelde <b>görüntü için kullanılıyor, ölçüm için kullanılmıyor</b>.</p>
+<p><b>Tanı.</b> Sınıfın beyaz, parlak ve dokusuz zemininde Unity'de renk dalgaları ve bulut benzeri lekeler vardı. Zemin 10 cm ızgaraya bölünüp 1.500 karede aynı noktaların rengi karşılaştırıldı (4,37 milyon örnek). Gerçek yansıma etkisi yalnız %5–6; buna karşılık modeldeki zemin ağırlığının büyük kısmı gerçek zeminin altına yerleşmiş. Model, dokusuz ve parlak yüzeyin görünümünü yüzeyin kendisine değil, altına koyduğu Gaussian'lara öğreniyor.</p>
+<table>
+<thead><tr><th>Model</th><th class="n">Zeminin 8 cm altında (%)</th><th class="n">Düzlemde ±8 cm (%)</th></tr></thead>
+<tr><td>1080p, H2'siz</td><td class="n">88,2</td><td class="n">10,1</td></tr>
+<tr><td>1080p, H2</td><td class="n">53,8</td><td class="n">43,9</td></tr>
+<tr><td>1440p big, H2</td><td class="n">63,2</td><td class="n">35,3</td></tr>
+</table>
+<div class="cap"><b>Tablo 7.</b> Zemin Gaussian'larının konumu (ağırlık: opaklık × alan). Seyrek noktalara göre gerçek zemin düzlemi RMS 0,75 cm.</div>
+
+<table>
+<thead><tr><th style="width:3%">#</th><th style="width:20%">Deneme</th><th>Yöntem</th><th style="width:27%">Sonuç</th></tr></thead>
+<tr><td>1</td><td>Yeni çekim</td><td>06.11 rotasına zemine yaklaşık 50° aşağı bakan ayrı bir geçiş eklendi</td><td class="kot">Dalgalar Unity'de sürdü</td></tr>
+<tr><td>2</td><td>H2 eğitimi</td><td>Pozlama düzeltmesi; zemin altı ağırlık %88,2'den %53,8'e indi</td><td class="kot">Azaldı, leke sürdü</td></tr>
+<tr><td>3</td><td>1440p big + H2</td><td>Daha yüksek çözünürlük ve kapasite; zemin altı ağırlık %63,2</td><td class="kot">Fayda yok</td></tr>
+<tr><td>4</td><td>Zemin altını düzleme indirme</td><td>y &lt; −3 cm olan Gaussian'lar zemin düzlemine taşındı, yeniden eğitim yok</td><td class="kot">Kötüleşti: lekeler daha sert ve uzun çizgiler hâlinde</td></tr>
+<tr><td>5</td><td>Gerçek karelerden düz zemin</td><td>Ana zemin (19,0 × 14,9 m) 5 cm ızgaraya bölündü; her hücre onu gören karelere izdüşürüldü, sandalye pikselleri elendi, kare parlaklık farkı düzeltildi, hücre rengi medyandan alındı; sandalye altı (%38,2) komşu zeminle dolduruldu. Eski zemin Gaussian'ları silinip hücre başına bir yassı Gaussian kondu</td><td class="ok">Dalga ve lekeler Unity'de kalktı; ~3 dk, GPU'suz, eğitim yok</td></tr>
+</table>
+<div class="cap"><b>Tablo 8.</b> Zemin için sırayla denenenler. 4. denemenin başarısız olması, zeminin görünümünü zemin altındaki Gaussian'ların taşıdığını gösterdi; bu yüzden çözüm geometriyi taşımak yerine görünümü gerçek karelerden yeniden üretmek oldu.</div>
+
+<div class="iki">
+  <figure><div class="bas">Önce</div><img src="gorseller/zemin_once.jpg" alt=""></figure>
+  <figure><div class="bas">Sonra: gerçek karelerden düz zemin</div><img src="gorseller/zemin_sonra.jpg" alt=""></figure>
+</div>
+<figcaption><b>Şekil 6.</b> Unity'de aynı bakış açısından zemin.</figcaption>
+
+<table>
+<thead><tr><th style="width:50%">Artılar</th><th>Eksiler</th></tr></thead>
+<tr><td>Renk gerçek karelerden; eğitimin tahmini değil</td><td>Zeminin gerçek parlaklığı ve yansıması kayboldu, mat görünüyor</td></tr>
+<tr><td>Her açıdan aynı görünüm; eğitim yolundan uzak bakışta bozulmuyor</td><td>Çözünürlük 5–10 cm; karo derzi ve ince izler görünmüyor</td></tr>
+<tr><td>Zemin tek düzlemde (y ≈ −1,5 cm); çarpışma zeminiyle örtüşüyor, zemin altı Gaussian kalmadı</td><td>Sandalye altı (%38,2) gözlem değil tahmin; üstten bakışta tırtıklı ton farkları var</td></tr>
+<tr><td>Yeniden eğitim yok, ~3 dk; özgün PLY dosyaları değişmeden saklanıyor</td><td>Temas gölgeleri silindi; sandalyeler hafif yüzüyor gibi görünebilir</td></tr>
+<tr><td>Kareler arası pozlama farkı (std %6,7) her kare için düzeltiliyor</td><td>Tek düzlem varsayımı: eşik, rampa ve küçük kot farkı katmanda yok. Platform ve koridor zemini eski hâlinde. Sayısal (PSNR) karşılaştırma yapılmadı</td></tr>
+</table>
+<div class="cap"><b>Tablo 9.</b> Gerçek karelerden düz zeminin artıları ve eksileri.</div>
+
+<div class="kutu"><div class="bas">Nihai üründe kullanılmalı mı?</div>
+<ul>
+<li><b>Görüntü ve VR için evet:</b> nihai Unity modeli <code>birlesik_*_gercek_zemin_unity.ply</code>. Yürüyen kullanıcının en çok baktığı yüzeydeki dalgalar bu yöntemle kalkıyor, eğitim maliyeti yok.</li>
+<li><b>Ölçüm ve rota kararı için hayır:</b> eşik, eğim ve seviye farkı bu katmandan okunmaz; mezura ve özgün geometri kullanılır. Özgün dosyalar (<code>birlesik_*_koridor_unity.ply</code>) bu yüzden saklanıyor.</li>
+<li><b>Bina ölçeğinde koşullu:</b> düz, tek seviyeli ve çok açıdan görülmüş zeminlerde (sınıf, koridor, lobi) kullanılabilir. Merdiven, rampa, çok seviyeli veya eşyayla kapalı alanlarda kullanılmaz; her yeni alanda önce dalga sorunu olup olmadığına bakılır.</li>
+</ul></div>
+
+<!-- 6 ÖLÇEK -->
+<h2><span class="no">6</span>Ölçek ve mezura doğrulaması</h2>
+<p>Uç noktalar 1920×1080 karelerde işaretlendi ve SfM pozlarıyla üçgenlendi. Ölçek üç kalibrasyon ölçüsünden en küçük kareler yöntemiyle <b>212,51 cm/birim</b> bulundu (önceki tahmin 210; fark %1,2). Koridor aynı ölçeğe hizalama dönüşümüyle bağlı.</p>
+<table>
+<thead><tr><th>Kod</th><th>Ölçü</th><th>Tür</th><th class="n">Mezura (cm)</th><th class="n">Model (cm)</th><th class="n">Hata (cm)</th><th class="n">Hata (%)</th></tr></thead>
+<tr><td>K1</td><td>Büyük pencere genişliği</td><td>Kalibrasyon</td><td class="n">217,5</td><td class="n">216,5</td><td class="n">−1,0</td><td class="n">−0,5</td></tr>
+<tr><td>K2</td><td>Çift kanat kapı, kasa içi</td><td>Kalibrasyon</td><td class="n">152,5</td><td class="n">153,4</td><td class="n">+0,9</td><td class="n">+0,6</td></tr>
+<tr><td>K3</td><td>Küçük pencere genişliği</td><td>Kalibrasyon</td><td class="n">115,7</td><td class="n">116,4</td><td class="n">+0,7</td><td class="n">+0,6</td></tr>
+<tr><td>D1</td><td>Sınıf kısa kenarı</td><td>Doğrulama</td><td class="n">1480,0</td><td class="n">1475,6</td><td class="n">−4,4</td><td class="n">−0,3</td></tr>
+<tr><td>D2</td><td>Sahne yüksekliği</td><td>Doğrulama</td><td class="n">46,0</td><td class="n">46,6</td><td class="n">+0,6</td><td class="n">+1,2</td></tr>
+<tr><td>D3</td><td>Sınıf kapısı, kasa içi (koridor modeli)</td><td>Doğrulama</td><td class="n">152,5</td><td class="n">155,7</td><td class="n">+3,2</td><td class="n">+2,1</td></tr>
+<tr><td>D4</td><td>Sınıf kapısı tek kanat net açıklık (koridor modeli)</td><td>Doğrulama</td><td class="n">74,5</td><td class="n">77,9</td><td class="n">+3,4</td><td class="n">+4,5</td></tr>
+<tr><td>D5</td><td>Öğretmen masası genişliği</td><td>Doğrulama</td><td class="n">130,0</td><td class="n">125,1</td><td class="n">−4,9</td><td class="n">−3,7</td></tr>
+<tr><td>D6</td><td>Askı yüksekliği</td><td>Doğrulama</td><td class="n">34,0</td><td class="n">30,8</td><td class="n">−3,2</td><td class="n">−9,3</td></tr>
+<tr><td>D7</td><td>Kürsü üst levha, ön kenar genişliği</td><td>Doğrulama</td><td class="n">69,0</td><td class="n">67,7</td><td class="n">−1,3</td><td class="n">−1,9</td></tr>
+<tr><td>D8</td><td>Askı genişliği (K3 yanındaki uzun askı)</td><td>Doğrulama</td><td class="n">200,0</td><td class="n">194,8</td><td class="n">−5,2</td><td class="n">−2,6</td></tr>
+<tr><td>D9</td><td>Radyatör genişliği (pencere altı)</td><td>Doğrulama</td><td class="n">100,0</td><td class="n">98,4</td><td class="n">−1,6</td><td class="n">−1,6</td></tr>
+</table>
+<div class="cap"><b>Tablo 10.</b> Mezura ve model ölçüleri. Kalibrasyon kümesi ilk seçimde (pencere, askı, masa) 229,2 cm/birim verdi; askı diğer ölçülerle tutarsız çıktığı için küme pencere, kapı ve küçük pencere olarak yenilendi.</div>
+
+<table>
+<thead><tr><th>Küme</th><th class="n">Ölçü sayısı</th><th class="n">MAE (cm)</th><th class="n">RMSE (cm)</th><th class="n">En büyük hata (cm)</th></tr></thead>
+<tr><td>Kalibrasyon</td><td class="n">3</td><td class="n">0,87</td><td class="n">0,88</td><td class="n">1,0</td></tr>
+<tr><td>Doğrulama</td><td class="n">9</td><td class="n">3,09</td><td class="n">3,45</td><td class="n">5,2</td></tr>
+</table>
+<div class="cap"><b>Tablo 11.</b> Hata özeti.</div>
+
+
+
+<table>
+<thead><tr><th>Geometri ölçütü (seyrek noktalar)</th><th>Sonuç</th></tr></thead>
+<tr><td>Karşılıklı duvarların paralelliği (°)</td><td>1,23 (x), 0,79 (z)</td></tr>
+<tr><td>Komşu duvar açıları (°)</td><td>89,6 · 89,9 · 88,4 · 88,9</td></tr>
+<tr><td>Duvar düzlemine uyum, RMS (cm)</td><td>0,9–1,1</td></tr>
+<tr><td>Zemin düzlemine uyum, RMS (cm)</td><td>0,75</td></tr>
+<tr><td>Yatay düzeltme sonrası zemin kotu (cm)</td><td>Sınıf −7 ile −1; koridor −3 ile +1</td></tr>
+</table>
+<div class="cap"><b>Tablo 12.</b> Geometri: belirgin duvar kayması yok.</div>
+
+<!-- 7 UNITY -->
+<h2><span class="no">7</span>Unity</h2>
+<p>Son model <code>birlesik_sinif1440_koridor_gercek_zemin_unity.ply</code> (1.387.985 Gaussian, 344,2 MB) Unity 6.1'de UnityGaussianSplatting eklentisiyle açılıyor; ölçek uygulanmış olduğu için Scale 1 ile metre cinsinden. FPS sorunu olursa daha hafif <code>birlesik_sinif1080_koridor_gercek_zemin_unity.ply</code> (1.059.235 Gaussian, 262,7 MB) kullanılabilir. Zemin dalgaları kalktı; koridorda eğitim yolundan uzak açılarda iğne biçimli Gaussian'lar temizlikle azaldı ama tamamen gitmedi.</p>
+<table>
+<thead><tr><th>Dosya (Drive <code style="background:none;color:#fff">birlesik/</code>)</th><th class="n">Sınıf</th><th class="n">Koridor</th><th class="n">Zemin katmanı</th><th class="n">Toplam</th><th class="n">Boyut (MB)</th></tr></thead>
+<tr><td>birlesik_sinif1080_koridor_gercek_zemin_unity.ply</td><td class="n">330.984</td><td class="n">644.186</td><td class="n">113.538</td><td class="n">1.059.235</td><td class="n">262,7</td></tr>
+<tr><td>birlesik_sinif1440_koridor_gercek_zemin_unity.ply</td><td class="n">666.104</td><td class="n">644.186</td><td class="n">113.538</td><td class="n">1.387.985</td><td class="n">344,2</td></tr>
+</table>
+<div class="cap"><b>Tablo 13.</b> Unity dosyaları (Gaussian sayıları). Toplamlar, zemin bölgesinde silinen eski Gaussian'lar (1080: 29.473; 1440: 35.843) düşülmüş hâldir.</div>
+<p>Çarpışma kutuları birleşik model için yeniden üretildi: 768 engel kutusu (duvar, sıra, kürsü), 495 boşluk kutusu (model dışı alanlar), zemin ve platform (x −11,96 ile −9,81 arası, 0,46 m). Sınıf ve koridor K3 kapısından bağlı tek yürünebilir bölge oluşturuyor (443,5 m²). Kutular 20 cm hücrelidir; yürümeyi sınırlamak içindir, geçiş genişliği kararında kullanılmaz.</p>
+<p><b>Gözlükle VR testi bu hafta yapılmadı;</b> model yalnız Unity'nin masaüstü görünümünde kontrol edildi. Test için PC'ye bağlı bir gözlük (ör. Quest Link), Windows'ta D3D12 veya Vulkan ve OpenXR kurulumu gerekiyor; eklentinin mevcut sürümü korunmalı.</p>
+
+<!-- 8 ALGILAMA -->
+<h2><span class="no">8</span>Kapı, merdiven ve asansör algılama</h2>
+<p class="lead">Modelin kapı, merdiven ve asansörü görüntüde bulup bulamadığı, kendi çekimlerimizden etiketlenen karelerle ölçüldü. Kendi verimizle ince ayar yapılan modeller test kümesinde <b>ortalama F1 0,72–0,78</b>'e ulaştı; eğitimsiz (açık sözlüklü) modeller 0,06–0,25'te kaldı. En iyi model <b>YOLOv8n-seg</b>: F1 0,78, mAP@0,5 0,902, kare başına 6,8 ms.</p>
+<h3>8.1 Veri ve etiketleme</h3>
+<p>06.11 sınıf çekiminin 1.500 karesinden her 10.'su (150) ve koridorun 422 karesinden her 5.'i (84) seçildi; toplam 234 kare CVAT'ta <b>çokgen</b> ile etiketlendi. Sınıflar <code>kapi</code>, <code>merdiven</code>, <code>asansor</code>; öznitelikler kapı durumu (kapalı / tek kanat açık / iki kanat açık), cam ve kesik (bir kısmı kadraj dışında veya önünde nesne var).</p>
+<table>
+<thead><tr><th style="width:20%">Kural</th><th>Uygulama</th></tr></thead>
+<tr><td>Kapı</td><td>Çokgen kasanın iç açıklığına; açılmış kanat çokgene katılmaz. Çift kanatlı kapı tek nesne, hangi kanadın açık olduğu öznitelikte</td></tr>
+<tr><td>Merdiven</td><td>Basamakların dış çevresi tek nesne; sınıf platformunun basamakları dahil. Platformun basamaksız dik kenarı (46 cm) etiketlenmez</td></tr>
+<tr><td>Asansör</td><td>Asansör kapısı; düğme paneli etiketlenmez</td></tr>
+<tr><td>Etiketlenmeyenler</td><td>Elektrik panosu, servis kapağı, pencere, tabela; yarısından azı görünen nesneler</td></tr>
+</table>
+<div class="cap"><b>Tablo 14.</b> Etiketleme kuralları.</div>
+<table>
+<thead><tr><th>Sınıf</th><th class="n">Nesne</th><th class="n">Kapalı</th><th class="n">Tek kanat açık</th><th class="n">Cam</th><th class="n">Kesik</th></tr></thead>
+<tr><td>kapı</td><td class="n">136</td><td class="n">107</td><td class="n">29</td><td class="n">8</td><td class="n">104</td></tr>
+<tr><td>merdiven</td><td class="n">31</td><td class="n">—</td><td class="n">—</td><td class="n">—</td><td class="n">15</td></tr>
+<tr><td>asansör</td><td class="n">13</td><td class="n">13</td><td class="n">0</td><td class="n">—</td><td class="n">8</td></tr>
+<tr class="toplam"><td>Toplam</td><td class="n">180</td><td class="n"></td><td class="n"></td><td class="n"></td><td class="n">127</td></tr>
+</table>
+<div class="cap"><b>Tablo 15.</b> Etiket sayıları. 129 karede en az bir nesne var, 105 kare nesnesiz (negatif örnek). Sınıftaki kapıların çoğu karşı duvarda, sıraların arkasında kaldığı için "kesik".</div>
+
+<h3>8.2 Eğitim / doğrulama / test bölmesi</h3>
+<p>Ardışık kareler birbirine çok benzediği için kareler tek tek değil, zaman sırasındaki <b>15 karelik bloklar</b> hâlinde bölündü; farklı kümelere giden komşu blokların sınırındaki birer kare (toplam 16) atıldı. Asansör yalnız koridor videosunun başında (4 kare) ve sonunda (5 kare) göründüğü için iki bloğa düştü: biri eğitime, biri teste gitti; doğrulama kümesinde asansör yok.</p>
+<table>
+<thead><tr><th>Küme</th><th class="n">Kare</th><th class="n">kapı</th><th class="n">merdiven</th><th class="n">asansör</th></tr></thead>
+<tr><td>Eğitim</td><td class="n">157</td><td class="n">91</td><td class="n">20</td><td class="n">7</td></tr>
+<tr><td>Doğrulama</td><td class="n">27</td><td class="n">18</td><td class="n">2</td><td class="n">0</td></tr>
+<tr><td>Test</td><td class="n">34</td><td class="n">10</td><td class="n">3</td><td class="n">6</td></tr>
+</table>
+<div class="cap"><b>Tablo 16.</b> Kümeler ve nesne sayıları.</div>
+
+<h3>8.3 Modeller ve değerlendirme</h3>
+<p>Beş model aynı ayarlarla ince ayar yapıldı (COCO ön eğitimli ağırlık, 960 px, en çok 100 epok, 30 epok iyileşme yoksa erken durdurma, tohum 0): kutu algılama için YOLOv8n, YOLO11n, YOLO26n; maske (segmentasyon) için YOLOv8n-seg, YOLO26n-seg. Eğitimsiz karşılaştırma için YOLO-World (yolov8s-worldv2) ve YOLOE-26s; istemler "door", "glass door", "stairs", "staircase", "elevator door", "elevator". Güven eşiği yalnız doğrulama kümesinde, sınıf ortalaması F1'i en yüksek yapan değer olarak seçildi; test kümesine bu eşikle bir kez bakıldı. Tespit, aynı sınıftan bir etiketle kutu IoU ≥ 0,5 ise doğru sayıldı.</p>
+<table>
+<thead><tr><th>Model</th><th class="n">Eşik</th><th class="n">Kapı F1</th><th class="n">Merdiven F1</th><th class="n">Asansör F1</th><th class="n">Ort. F1</th><th class="n">mAP@0,5</th><th class="n">Süre (ms/kare)</th></tr></thead>
+<tr><td>YOLO-World</td><td class="n">0,05</td><td class="n">0</td><td class="n">0</td><td class="n">0,19</td><td class="n">0,06</td><td class="n">—</td><td class="n">9,4</td></tr>
+<tr><td>YOLOE-26s</td><td class="n">0,05</td><td class="n">0,48</td><td class="n">0</td><td class="n">0,27</td><td class="n">0,25</td><td class="n">—</td><td class="n">11,9</td></tr>
+<tr><td>YOLO11n</td><td class="n">0,05</td><td class="n">0,19</td><td class="n">0,50</td><td class="n">0,36</td><td class="n">0,35</td><td class="n">0,634</td><td class="n">5,9</td></tr>
+<tr><td>YOLO26n-seg</td><td class="n">0,20</td><td class="n">0,62</td><td class="n">0,50</td><td class="n">0,50</td><td class="n">0,54</td><td class="n">0,814</td><td class="n">7,6</td></tr>
+<tr><td>YOLO26n</td><td class="n">0,55</td><td class="n">0,89</td><td class="n">0,50</td><td class="n">0,67</td><td class="n">0,69</td><td class="n">0,835</td><td class="n">5,6</td></tr>
+<tr><td>YOLOv8n</td><td class="n">0,50</td><td class="n">0,78</td><td class="n">0,80</td><td class="n">0,57</td><td class="n">0,72</td><td class="n">0,823</td><td class="n">5,7</td></tr>
+<tr class="vurgu"><td>YOLOv8n-seg</td><td class="n">0,45</td><td class="n">0,78</td><td class="n">0,80</td><td class="n">0,77</td><td class="n">0,78</td><td class="n">0,902</td><td class="n">6,8</td></tr>
+</table>
+<div class="cap"><b>Tablo 17.</b> Test kümesi sonuçları (kapı n = 10, merdiven n = 3, asansör n = 6). mAP@0,5 kutu değeridir; segmentasyon modellerinde maske mAP@0,5 de aynı çıktı (0,814 ve 0,902). Eğitim model başına 2,5–4,2 dk sürdü (L4).</div>
+
+<table>
+<thead><tr><th>YOLOv8n-seg, sınıf</th><th class="n">Test nesnesi</th><th class="n">Kesinlik (P)</th><th class="n">Duyarlılık (R)</th><th class="n">F1</th></tr></thead>
+<tr><td>kapı</td><td class="n">10</td><td class="n">0,69</td><td class="n">0,90</td><td class="n">0,78</td></tr>
+<tr><td>merdiven</td><td class="n">3</td><td class="n">1,00</td><td class="n">0,67</td><td class="n">0,80</td></tr>
+<tr><td>asansör</td><td class="n">6</td><td class="n">0,71</td><td class="n">0,83</td><td class="n">0,77</td></tr>
+</table>
+<div class="cap"><b>Tablo 18.</b> En iyi modelin sınıf bazında kesinlik ve duyarlılığı. Diğer modellerin P ve R değerleri <code>sonuclar.csv</code> dosyasında.</div>
+<figure><img src="gorseller/algilama.jpg" alt="" style="width:60%;margin:0 auto"><figcaption><b>Şekil 7.</b> YOLOv8n-seg'in doğrulama karelerindeki tespitleri (güven skoruyla). Sıraların arkasındaki kapılar ve platform basamakları bulunuyor.</figcaption></figure>
+
+<h3>8.4 Yorum</h3>
+<p><b>Kendi verimizle eğitim şart.</b> Eğitimsiz modeller kapı ve merdiveni neredeyse hiç bulamadı; YOLO-World hiç kapı bulamadı, asansörde 36 tespitin 32'si yanlıştı. 157 karelik ince ayar ortalama F1'i 0,06–0,25'ten 0,72–0,78'e çıkardı. Genel modellerin bu binadaki kapı ve merdivenlere doğrudan aktarılmadığı görülüyor.</p>
+<p><b>En dengeli model YOLOv8n-seg.</b> Üç sınıfta da en yüksek veya ona eşit F1 ve en yüksek mAP; ayrıca maske verdiği için kapı genişliği ölçümüne doğrudan uygun.</p>
+<p><b>Hız yeterli.</b> Kare başına 5,6–7,6 ms (L4).</p>
+<p><b>YOLO11n'in düşük skoru eşikten.</b> Doğrulamada eşik 0,05 seçildi ve testte kapıda 87 yanlış alarm verdi; doğrulama kümesinin küçüklüğü eşik seçimini oynak yapıyor.</p>
+<p><b>Kesik nesneler.</b> YOLOv8n-seg testteki 10 kesik kapının 9'unu, 3 kesik asansörün 3'ünü buldu; kısmen görünen nesnelerde belirgin bir düşüş görülmedi.</p>
+<div class="kutu"><div class="bas">Sınırlar</div>Test kümesi çok küçük (10 kapı, 3 merdiven, 6 asansör): tek bir nesne F1'i 0,1–0,3 oynatıyor, modeller arasındaki farklar eğilim olarak okunmalı. Bütün kareler aynı binadan ve aynı günden; test aynı çekimin farklı bloklarından geldiği için başka bir binaya genellemeyi göstermez. Asansör tek bir asansör grubundan, 13 örnek; doğrulamada asansör yok. Testteki kapıların hepsi kapalı ve camsız olduğu için açık ve cam kapılardaki başarı ölçülemedi. Merdivende en iyi model bile 3 merdivenin 2'sini buldu; sandalye kullanıcısı için kaçırılan merdiven en riskli hata olduğundan bu sınıf daha fazla örnek gerektiriyor. Basamaksız seviye farkı (platform kenarı) algılama sınıfı değil, 3B modelden ve mezuradan alınıyor.</div>
+
+<!-- 9 SORUNLAR -->
+<h2><span class="no">9</span>Karşılaşılan sorunlar ve çözümler</h2>
+<table>
+<thead><tr><th style="width:19%">Sorun</th><th style="width:30%">Sebep veya etki</th><th>Çözüm</th><th style="width:10%">Durum</th></tr></thead>
+<tr><td>05.11 çekiminde bozuk pozlar</td><td>Sıra aralarında 90° yan çekim, 1× lens; tekrar eden doku + az örtüşme</td><td>0,5× lens ve 45° çapraz bakışlı yeni rota ile 06.11 çekimi</td><td class="ok">Çözüldü</td></tr>
+<tr><td>Kamera süzgeci açığı</td><td>Küme hâlindeki bozuk kameralar nerfstudio ölçeğini bozdu, PSNR 12,14 dB</td><td>Merkez uzaklığı kuralı (medyanın 10 katı)</td><td class="ok">Çözüldü</td></tr>
+<tr><td>Beyaz duvar lekeleri</td><td>Kareler arası pozlama farkı (std %6,7)</td><td>H2 (bilateral grid)</td><td>Kısmen</td></tr>
+<tr><td>Beyaz zeminde dalga ve leke</td><td>Zemin Gaussian ağırlığının %54–88'i zeminin 8 cm altında</td><td>Çekim, H2, 1440p ve düzleştirme çözmedi; gerçek karelerden düz zemin katmanı (bölüm 5)</td><td class="ok">Çözüldü (görsel)</td></tr>
+<tr><td>1440p koşusu %46'da kayboldu</td><td>Colab sanal makinesi değişti; sonuçlar yalnız sonda Drive'a kopyalanıyordu</td><td>1000 adımda bir kontrol noktası, 10 dk'da bir Drive yedeği, kaldığı yerden sürdürme</td><td class="ok">Çözüldü</td></tr>
+<tr><td>Sürdürmede optimizer yüklenemedi</td><td>nerfstudio <code>trainer.py</code> sırası</td><td>Yüklemeden önce <code>setup_optimizers()</code> yaması</td><td class="ok">Çözüldü</td></tr>
+<tr><td>torch.load hatası</td><td><code>weights_only</code> varsayılanı</td><td><code>weights_only=False</code></td><td class="ok">Çözüldü</td></tr>
+<tr><td>1440p'de RAM sınırı</td><td>H2 1080p RAM 49,8 GB (L4 sınırı 52 GB)</td><td><code>pin_memory</code> kapalı, <code>MALLOC_ARENA_MAX=2</code></td><td>Çözüldü, sınırda</td></tr>
+<tr><td>Hazır COLMAP paketi açılmadı</td><td>Eksik kütüphaneler (libGLEW; hizalamada libboost)</td><td>Kaynaktan derlendi, yeni paket Drive'a yedeklendi</td><td class="ok">Çözüldü</td></tr>
+<tr><td>K3 kapısı çekimlerde farklı</td><td>Sınıfta kapalı, koridorda açık</td><td>Kapı kutusu koridor modelinden alındı</td><td class="ok">Çözüldü</td></tr>
+<tr><td>Unity'de iki model iç içe</td><td>Eklenti nesneleri ayrı sıralıyor</td><td>Tek PLY</td><td class="ok">Çözüldü</td></tr>
+<tr><td>Tahmini ölçek ve eğim</td><td>Kamera yüksekliği varsayımı 263,5 cm/birim verdi; sınıf 1,45° eğikti</td><td>Mezura kalibrasyonu, yatay düzeltme</td><td class="ok">Çözüldü</td></tr>
+<tr><td>İlk kalibrasyon tutarsız</td><td>Pencere + askı + masa 229,2 cm/birim verdi</td><td>Büyük pencere, kapı, küçük pencere ile yenilendi</td><td class="ok">Çözüldü</td></tr>
+<tr><td>Colab Drive yazma kaybı</td><td>Oturum hemen kapatılınca yükleme yarım kalabiliyor</td><td>Önce <code>drive.flush_and_unmount()</code>, sonra oturumu kapatmak</td><td class="ok">Çözüldü</td></tr>
+<tr><td>Algılama: eğitimde asansör yoktu</td><td>Asansör yalnız iki blokta; bölme kuralı yalnız doğrulama ve testi gözetiyordu</td><td>Öncelik eğitim &gt; test &gt; doğrulama; bir blok eğitime, biri teste</td><td class="ok">Çözüldü</td></tr>
+<tr><td>Algılama: eski bölmenin kareleri kalabiliyordu</td><td>Yerel veri seti kurulumu klasörü temizlemiyordu</td><td>Kurulumdan önce klasör siliniyor</td><td class="ok">Çözüldü</td></tr>
+<tr><td>Etiketleme: açık kanat çokgene katılmış</td><td>Sınıf kapısının göründüğü 7 karede (koridor)</td><td>Kanat noktaları silindi, durum "tek kanat açık" yapıldı</td><td class="ok">Çözüldü</td></tr>
+<tr><td>Çarpışma kutuları yeni modele uymuyordu</td><td>603 kutu Hafta 5 modeline göreydi; dış duvar K3'ü kapatıyordu, koridor yoktu</td><td>Betik birleşik model için yeniden yazıldı; 3 denemede platform, zemin ve kapı düzeltildi (Tablo 22)</td><td class="ok">Çözüldü</td></tr>
+<tr><td>Genel netlik</td><td>1440p ve büyük model çok az fark yarattı; girdi, kare seçimi veya poz kısıtı olabilir</td><td>Kaynak keskinliği ölçüldü, H2 ve 1440p denendi; kare seçimi deneyi sürüyor</td><td class="kot">Açık</td></tr>
+<tr><td>İğne biçimli Gaussian'lar</td><td>Eğitim yolundan uzak açılarda, özellikle koridorda</td><td>Temizlik azalttı</td><td class="kot">Açık</td></tr>
+<tr><td>Şüpheli pozlar</td><td>1000 ve 481–483 numaralı karelerde 2,3–7 birim sıçrama; test kareleri 1000, 1470, 50: 12,9–13,7 dB</td><td>—</td><td class="kot">Açık</td></tr>
+
+</table>
+<div class="cap"><b>Tablo 19.</b> Haftanın sorunları.</div>
+
+<!-- 10 DERSLER -->
+<h2><span class="no">10</span>Yapılmaması gerekenler ve nedenleri</h2>
+<p>Bu haftanın hatalarından çıkan dersler; Tablo 19'da çözümü verilen altyapı sorunları burada tekrarlanmadı. Amaç aynı hatanın sonraki çekim ve deneylerde tekrarlanmaması.</p>
+<h3>10.1 Çekim, ölçüm ve 3B model</h3>
+<table>
+<thead><tr><th style="width:24%">Yapılan yanlış</th><th>Neden yapılmamalı</th><th style="width:32%">Doğrusu</th></tr></thead>
+<tr><td>Lensi (0,5× → 1×) ve rotayı (sıra aralarında 90° yana bakış) aynı çekimde birlikte değiştirmek</td><td>Görüş açısı daralıp kareler arası kayma %17'ye çıktı, SfM'de 106 kamera elendi, PSNR 20,18 dB'e düştü. İki şey birden değiştiği için hangisinin bozduğu ayrılamadı; çekim tamamen tekrarlandı (10,8 birim)</td><td>Bir seferde tek değişken değiştirmek. Geniş lens (0,5×) korunup yan yüzler için 45° çapraz bakış eklendi; SfM bozulmadı</td></tr>
+<tr><td>Ölçeği kamera yüksekliği varsayımıyla tahmin etmek</td><td>1,3 m varsayımı 263,5 cm/birim verdi, tavan 5,4 m çıktı (gerçek ~4,3 m); varsayım %24 hata üretti</td><td>Ölçeği her zaman mezura ölçüleriyle kalibre etmek; kalibrasyon ve doğrulama ölçülerini ayrı tutmak</td></tr>
+<tr><td>Kalibrasyonda sınıfta birden çok örneği olan nesneyi (askı) kullanmak</td><td>Fotoğraftaki askı ile videoda işaretlenen askının aynı olduğu doğrulanamadı; ölçek 229,2 cm/birim çıktı, diğer ölçülerle tutarsızdı</td><td>Kalibrasyonda tek ve benzersiz nesneler (büyük pencere, kapı) kullanmak; mezura fotoğrafında nesnenin yerini de kaydetmek. Aynı sebeple doğrulamada üç ölçü yanlış nesneye işaretlenmişti</td></tr>
+<tr><td>Eşik ve küçük kot farkını modelden ölçmeye çalışmak</td><td>Model hatası santimetre mertebesinde (doğrulama RMSE 3,45 cm); 1,3 cm'lik eşik bu hatanın içinde kalır, sonuç anlamsız olur</td><td>Eşik ve hafif eğim gibi küçük ölçüler doğrudan mezurayla alınır</td></tr>
+<tr><td>Çözünürlük ve model büyüklüğü artırılınca netliğin artacağını varsaymak</td><td>1440p splatfacto-big 153 dk sürdü, 1080p H2'nin yaklaşık 2,8 katı Gaussian üretti, netlik çok az arttı</td><td>Önce sebebi ölçmek: kaynak karelerin bulanıklığı ölçüldü ve sorunun kaynakta olmadığı görüldü. Pahalı denemeden önce ucuz tanı</td></tr>
+<tr><td>H2 modelini ham PSNR ile değerlendirmek</td><td>H2 her kareye ayrı pozlama öğrenir, test karesinde nötr renk verir; ham PSNR 1,44 dB düşük çıkar ve iyi modeli kötü gösterir</td><td>Renk düzeltmeli PSNR/SSIM/LPIPS ile karşılaştırmak ve görsel panoya bakmak</td></tr>
+</table>
+<div class="cap"><b>Tablo 20.</b> Çekim, ölçüm ve 3B model için dersler. Zemin için denenen yollar bölüm 5'te.</div>
+
+<h3>10.2 Algılama deneyi</h3>
+<table>
+<thead><tr><th style="width:24%">Yapılan yanlış (veya kaçınılan)</th><th>Neden yapılmamalı</th><th style="width:32%">Doğrusu</th></tr></thead>
+<tr><td>Eğitimsiz (açık sözlüklü) modelin yeterli olacağını varsaymak</td><td>YOLO-World ve YOLOE-26 testte ortalama F1 0,06 ve 0,25'te kaldı; YOLO-World hiç kapı bulamadı</td><td>Hedef binadan etiketli veriyle ince ayar; 157 kareyle F1 0,72–0,78</td></tr>
+<tr><td>Kareleri rastgele eğitim ve teste bölmek (kaçınıldı)</td><td>Ardışık kareler neredeyse aynı; aynı görüntü iki kümeye düşer, test skoru yapay olarak yükselir</td><td>15 karelik zaman blokları, küme sınırlarında birer kare atmak</td></tr>
+<tr><td>Bölme kuralında yalnız doğrulama ve testin dolu olmasını gözetmek</td><td>Asansör iki bloğa sığdığı için ikisi de doğrulama ve teste gitti; eğitimde hiç asansör kalmadı, model asansörü öğrenemeyecekti</td><td>Öncelik sırası eğitim &gt; test &gt; doğrulama; az örnekli sınıfın her kümedeki sayısını eğitimden önce kontrol etmek</td></tr>
+<tr><td>Güven eşiğini test kümesinde seçmek (kaçınıldı)</td><td>Test verisi seçime karışır, sonuç iyimser çıkar</td><td>Eşik doğrulamada seçilir, teste bir kez bakılır</td></tr>
+<tr><td>Açılmış kapı kanadını kapı çokgenine katmak</td><td>Kapının açıklığı ile kanat karışır; model ve sonraki genişlik ölçümü yanlış öğrenir. 7 karede yapılmış, düzeltildi</td><td>Çokgen yalnız kasanın iç açıklığına; kapı durumu öznitelikte</td></tr>
+<tr><td>Rotada kullanılmayacak nesneleri etiketlememek</td><td>Model görünen bir asansörü bulunca "yanlış" sayılır ve eğitimde cezalandırılır; kesinlik haksız düşer</td><td>Karede görünen her kapı, merdiven ve asansör etiketlenir; rotadaki rolüne sonra graf aşamasında karar verilir</td></tr>
+<tr><td>Platformun basamaksız kenarını "merdiven" diye etiketlemek (kaçınıldı)</td><td>Model düz kenarı merdiven sanmayı öğrenir, gerçek merdivenleri karıştırır</td><td>Seviye farkı 3B modelden ve mezuradan alınır; algılama sınıfı yapılmaz</td></tr>
+<tr><td>Çok küçük test kümesinden kesin model sıralaması çıkarmak</td><td>10 kapı, 3 merdiven, 6 asansörde tek nesne F1'i 0,1–0,3 oynatıyor</td><td>Farkları eğilim olarak raporlamak; nesne sayısını her sonuçla birlikte vermek</td></tr>
+</table>
+<div class="cap"><b>Tablo 21.</b> Algılama deneyi için dersler.</div>
+
+<h3>10.3 Unity çarpışma kutuları</h3>
+<table>
+<thead><tr><th style="width:24%">Yapılan yanlış</th><th>Neden yapılmamalı</th><th style="width:32%">Doğrusu</th></tr></thead>
+<tr><td>Salonun çevresine otomatik "güvenlik duvarı" koymak</td><td>Birleşik modelde bu duvar K3 kapısını kapattı; sınıftan koridora geçilemiyordu</td><td>Dış duvar yerine yürünebilir alan: zemin olan hücrelerin bağlı bölgesi; gerisi boşluk kutusu</td></tr>
+<tr><td>Zemin katmanını "ince ve opak Gaussian" diye tanımak</td><td>Koridordaki doğal düz Gaussian'lar da bu tanıma uydu; platform koridorda (x ≈ 27) bulundu</td><td>Katman, betiğin yazdığı tam değerlerle (opaklık, σ) tanınır: 113.538 Gaussian</td></tr>
+<tr><td>Platformun arka ucunu 46 cm yükseklikteki noktalardan bulmak</td><td>Koridordaki aynı yükseklikteki eşyalar karıştı; platform 14 m derinlikte çıktı</td><td>Arka ucu sınıfın arka duvarından bulmak (platform derinliği 2,15 m)</td></tr>
+<tr><td>Zemin kanıtında yalnız opak Gaussian'lara bakmak ve yalnız en büyük bölgeyi yürünebilir saymak</td><td>Parlak koridor zemini yarı saydam Gaussian'larla temsil ediliyor; koridor zeminsiz göründü, sınıfla bağlantısı koptu</td><td>Yarı saydam Gaussian'lar da zemin kanıtı; 15 m²'den büyük her bölge yürünebilir; kapı bölgesi elle açık tutulur. Sonuç: tek bölge, 443,5 m²</td></tr>
+</table>
+<div class="cap"><b>Tablo 22.</b> Çarpışma kutuları için dersler. Her denemenin plan görüntüsü kontrol edilerek ilerlendi; sonuç kabul edilmeden önce platform konumu ve bölge sayısı sayısal olarak doğrulandı.</div>
+
+<!-- 11 SONUÇ -->
+<h2><span class="no">11</span>Sonuç ve çıkarımlar</h2>
+<p class="lead">Bu haftanın ana sonucu: çekimi değiştirmek, kare sayısını artırmak ve model kapasitesini büyütmek genel netliği belirgin artırmadı. Net olarak çözülen sorunlar ölçek, birleştirme, beyaz duvar ve zemin oldu. Netlik için sıradaki deney kare seçim yöntemi.</p>
+<table>
+<thead><tr><th style="width:28%">Bulgu</th><th>Dayanak</th><th style="width:30%">Çıkarım</th></tr></thead>
+<tr><td>Yeni rota ve daha fazla kare netliği belirgin artırmadı</td><td>Hafta 5 (1000 kare) ile 06.11 (1500 kare): PSNR 25,23 → 25,53 dB; SSIM 0,907 → 0,881 ve LPIPS 0,200 → 0,303 kötüleşti. Test kareleri aynı değil, karşılaştırma yaklaşık</td><td>Kare sayısını artırmak tek başına yeterli değil; ince ayrıntı ölçütleri düştü</td></tr>
+<tr><td>Çözünürlük ve model büyüklüğü netliği çok az artırdı</td><td>Panoda 1440p big H2 çok az daha keskin; ölçütlerde fark yok (r.d. PSNR 25,63 ve 25,84 dB). Bedeli 153 dk eğitim ve 2,8 kat Gaussian</td><td>Fark gözlükte iki model karşılaştırılarak değerlendirilecek; bina ölçeğinde maliyet belirleyici</td></tr>
+<tr><td>Kaynak kareler bulanık değil</td><td>06.11 kareleri dört keskinlik ölçütünün dördünde Hafta 5'ten keskin</td><td>Sınır videoda değil, kare seçiminde, pozlarda veya eğitimde aranmalı</td></tr>
+<tr><td>Kare seçimi sahneyi eşit kapsamıyor</td><td>Seçim zamana göre eşit pencerelerden en net kareyi alıyor; bir bölgeyi kaç karenin ve hangi açıdan gördüğüne bakılmıyor</td><td>Kare seçimini kapsam ve açı çeşitliliğine göre yapmak ilk denenecek iyileştirme</td></tr>
+<tr><td>Pozlama düzeltmesi (H2) beyaz duvarlarda etkili</td><td>Ölçütler neredeyse aynı, duvar lekeleri panoda belirgin azaldı</td><td>VR görünümü için H2 kullanılmalı; karar ölçütlerle değil görsel kontrolle verilmeli</td></tr>
+<tr><td>Parlak, dokusuz zemin eğitimle düzelmedi</td><td>Yeni çekim, H2 ve 1440p denendi; zemin ağırlığının %54–88'i zeminin altında kaldı. Gerçek karelerden üretilen düz zemin dalgaları kaldırdı</td><td>Görsel modelde düz zemin katmanı kullanılır, ölçüm ve rota kararı için kullanılmaz</td></tr>
+<tr><td>Ölçek mezurayla güvenilir</td><td>3 kalibrasyon ve 9 doğrulama ölçüsünde RMSE 3,45 cm, en büyük hata 5,2 cm</td><td>Mezura fotoğrafında nesnenin yeri ve ölçülen kenar kaydedilmeli; cm altı ölçüler (eşik) doğrudan mezurayla alınmalı</td></tr>
+<tr><td>Ayrı çekimler birleştirilebiliyor</td><td>Sınıf ve koridor ortak karelerle ~1,5 cm artık hatayla hizalandı; Unity'de tek PLY sıralama sorununu çözdü</td><td>Bina parça parça çekilip birleştirilebilir; her parça arasında ortak görüş alanı bırakılmalı</td></tr>
+<tr><td>Algılama için kendi veri şart</td><td>Eğitimsiz modeller F1 0,06–0,25; 157 karelik ince ayarla YOLOv8n-seg F1 0,78</td><td>Hedef binadan etiketli veri gerekli; test kümesi küçük, sonuçlar eğilim</td></tr>
+</table>
+<div class="cap"><b>Tablo 23.</b> Haftanın bulguları ve çıkarımlar.</div>
+<div class="kutu"><div class="bas">Sıradaki adımlar</div>
+<ul>
+<li><b>Kare seçimi:</b> Modeli netleştirmek için videodan kare seçimi üzerine literatür tarandı. İncelenen yaklaşımlar: örtüşme ve paralaksa göre anahtar kare seçimi, 3DGS için netlik öncelikli ve örtüşme kısıtlı seçim, görünürlük eşiğine göre yeni kare alma, kareleri güvenilirliğe göre ağırlıklandırma ve bilgi kazancına göre görüş seçimi. İlk üçü birleştirilerek aynı kare sayısıyla sahnenin her bölgesini en az üç farklı açıdan, netliğe öncelik vererek kapsayan bir seçim yöntemi deneniyor. Eğitim ve test ayarları aynı tutuluyor, böylece fark yalnız kare seçiminden geliyor. Sonuç gelecek raporda.</li>
+<li><b>Gözlükle VR testi:</b> Henüz yapılmadı; görüntü konforu, kare hızı ve 1080p ile 1440p modellerin netlik farkı gözlükte değerlendirilecek.</li>
+
+<li><b>Algılama:</b> Başka kat ve binalardan kare eklenerek merdiven ve asansör örnekleri artırılacak.</li>
+</ul></div>
+
+<!-- 12 COLAB -->
+<h2><span class="no">12</span>Colab birimleri</h2>
+<table>
+<thead><tr><th>İş (L4, 1,54 birim/sa)</th><th class="n">Birim</th></tr></thead>
+<tr><td>Meeting room karşılaştırması</td><td class="n">4,68</td></tr>
+<tr><td>Sınıf, 05.11 çekimi (kullanılmadı)</td><td class="n">10,8</td></tr>
+<tr><td>Sınıf, 06.11 çekimi</td><td class="n">10,8</td></tr>
+<tr><td>Sınıf H2</td><td class="n">3,1</td></tr>
+<tr><td>Bulanıklık ölçümü</td><td class="n">0,6</td></tr>
+<tr><td>Kaybolan 1440p koşusu</td><td class="n">2,6–4,8</td></tr>
+<tr><td>Koridor + sınıf 1440p zinciri (07.11)</td><td class="n">12,4</td></tr>
+<tr><td>Hizalama ve kapı</td><td class="n">1,6</td></tr>
+<tr><td>Algılama: eğitim ve değerlendirme (L4, 1,4 sa)</td><td class="n">2,2</td></tr>
+<tr class="toplam"><td>Kaydı tutulan toplam</td><td class="n">48,8–51,0</td></tr>
+</table>
+<div class="cap"><b>Tablo 24.</b> Colab birimleri. 05.11 koridor denemesi ile 08.11 ölçüm, temizlik ve zemin oturumlarının birimi ayrı kaydedilmedi; gerçek toplam bundan biraz yüksektir.</div>
+
+<!-- 12 ARŞİV -->
+<h2><span class="no">13</span>Arşiv</h2>
+<p>Kod ve sonuç notları GitHub deposunda (<a href="https://github.com/yunisyns2506/accessible-route-planning">yunisyns2506/accessible-route-planning</a>), büyük dosyalar Drive'da. Sonraki çalışmalar aynı mekânı yeniden çekip işleyebilsin diye çekim planı, sınıf rotası, kroki ve betikler saklandı. Koridorun rota çizimi çekilen yolla örtüşmediği için rapora alınmadı.</p>
+<table>
+<thead><tr><th style="width:26%">İçerik</th><th>Yer</th></tr></thead>
+<tr><td>Çekim planı ve rota çizimi</td><td>GitHub <code>experiments/hafta-06_derslik-04_cekim/</code>: <code>cekim_plani.md</code>, <code>rota_derslik4.png</code></td></tr>
+<tr><td>Sınıf krokisi</td><td>Aynı klasörde <code>kroki_taban.png</code></td></tr>
+<tr><td>Sonuç notları</td><td><code>sonuclar_sinif_cekim2.md</code>, <code>sonuclar_koridor.md</code>, <code>sonuclar_zemin.md</code>, <code>gercek_zemin_notu.md</code>, <code>olcum/sonuclar_olcum.md</code></td></tr>
+<tr><td>Ölçüm verisi</td><td><code>olcum/</code>: işaret koordinatları, ölçü tablosu, pozlar, işaretlenen kareler</td></tr>
+<tr><td>Betikler</td><td>GitHub <code>scripts/hafta06/</code> (algılama: <code>scripts/hafta06/algilama/</code>, çarpışma kutuları: <code>scripts/hafta06/unity_carpisma.py</code>)</td></tr>
+<tr><td>Modeller ve Colab çıktıları</td><td><a href="https://drive.google.com/drive/folders/1Hkk_QyFrLYI_px_V4fCt5bWtQR3GMEIj">Drive Hafta 6 Çalışmaları</a>: <code>birlesik/</code>, <code>derslik4_cekim2/</code>, <code>derslik4_koridor/</code>, <code>kurulum/</code> (COLMAP 4.2.1 derlemesi)</td></tr>
+<tr><td>Ham videolar</td><td><code>derslik4_çekim2_part1.mov</code>, <code>derslik4_çekim2_part2.mov</code>, <code>derslik4_koridor.mov</code></td></tr>
+<tr><td>Algılama deneyi</td><td><a href="https://drive.google.com/drive/folders/1IO76-JB92Q5mGnD8MJS7cL-znsZ-HRJU">Drive Hafta 6 Algılama</a>: <code>betikler/</code>, <code>etiket/</code> (seçilen kareler, manifest), <code>cvat_export.zip</code> (etiketler), <code>kosular/</code> (modeller), <code>sonuclar/</code> (<code>sonuclar.json</code>, <code>sonuclar.csv</code>, <code>sonuclar.md</code>)</td></tr>
+</table>
+<div class="cap"><b>Tablo 25.</b> Arşiv. Drive'daki <code>derslik4/</code> ve <code>koridor/</code> klasörleri 05.11 denemeleridir ve kullanılmamıştır.</div>
+
+</body>
+</html>

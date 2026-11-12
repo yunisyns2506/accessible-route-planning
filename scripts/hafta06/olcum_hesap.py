@@ -4,6 +4,7 @@ Girdi: olcum/isaretler.json {"nokta": {"model": "sinif|koridor", "goz": {"kare":
        olcum/poz_sinif.json, poz_koridor.json (cam_from_world 3x4, OPENCV iç parametreleri), kareler/
 Çıktı: olcum/noktalar.json (3B nokta, yeniden izdüşüm hatası), olcum/isaret_kontrol.jpg (yakın kırpımlar).
 Her işaret cv2.cornerSubPix ile en fazla 4 px inceltilir; işaretin gerçek bir köşe olması gerekir.
+kareler/ klasöründe olmayan karelerde (yalnız Drive'daki frames_1080'de bulunanlar) işaret inceltilmeden kullanılır.
 
 Kullanım: python olcum_hesap.py <olcum_klasoru> [--kontrol]
 """
@@ -41,7 +42,8 @@ def main(d):
     isaret = json.loads((d / 'isaretler.json').read_text(encoding='utf-8'))
     gri = {}
     def g(n):
-        if n not in gri: gri[n] = cv2.cvtColor(cv2.imread(str(d / 'kareler' / f'{n}.jpg')), cv2.COLOR_BGR2GRAY)
+        if n not in gri:
+            im = cv2.imread(str(d / 'kareler' / f'{n}.jpg')); gri[n] = None if im is None else cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
         return gri[n]
     ic = {a: yukle(d, a) for a in {v['model'] for v in isaret.values()}}
     sonuc = {}; satirlar = []
@@ -50,6 +52,7 @@ def main(d):
         goz = {}
         for k, uv in v['goz'].items():
             c = np.array([[uv]], np.float32)
+            if g(on + k) is None: goz[k] = list(map(float, uv)); continue
             inc = cv2.cornerSubPix(g(on + k), c.copy(), (5, 5), (-1, -1), (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 40, .01))[0, 0]
             goz[k] = inc.tolist() if np.linalg.norm(inc - uv) < 4 else list(map(float, uv))
         X = ucgenle(goz, A, dist, poz)
@@ -58,7 +61,9 @@ def main(d):
         print(f'{ad:12s} ' + ' '.join(f'{k}:{e:.1f}' for k, e in hata.items()))
         tiles = []
         for k, uv in goz.items():
-            im = cv2.imread(str(d / 'kareler' / f'{on + k}.jpg')); u, v_ = int(round(uv[0])), int(round(uv[1])); r = 40
+            im = cv2.imread(str(d / 'kareler' / f'{on + k}.jpg'))
+            if im is None: continue
+            u, v_ = int(round(uv[0])), int(round(uv[1])); r = 40
             a = np.full((2 * r, 2 * r, 3), 40, np.uint8); y0, x0 = max(0, v_ - r), max(0, u - r); kes = im[y0:v_ + r, x0:u + r]
             a[y0 - (v_ - r):y0 - (v_ - r) + kes.shape[0], x0 - (u - r):x0 - (u - r) + kes.shape[1]] = kes
             a = cv2.resize(a, (240, 240), interpolation=cv2.INTER_NEAREST); cv2.drawMarker(a, (120, 120), (0, 255, 0), cv2.MARKER_CROSS, 40, 1)
