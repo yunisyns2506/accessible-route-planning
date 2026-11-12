@@ -1,0 +1,56 @@
+// Derslik 4 sınıf + koridor çarpışma kutuları (birleşik Hafta 6 modeli). unity_carpisma.py tarafından üretildi; elle düzenlemeyin.
+// Kullanım: Gaussian Splat Renderer olan GameObject'e ekleyin. Oyun başlayınca o nesnenin çocuğu olarak
+// "Carpisma" altında BoxCollider'lar kurulur (splat'ın konum/dönüş/ölçeğiyle birlikte hareket eder).
+// Sahnede FPSKontrol yoksa göz hizasında bir oyuncu da oluşturulur.
+using UnityEngine;
+
+public class DerslikCarpisma : MonoBehaviour
+{
+    [Tooltip("Sahnede oyuncu yoksa FPSKontrol'lü bir oyuncu oluştur")]
+    public bool oyuncuOlustur = true;
+    [Tooltip("Oyuncunun başlangıç noktası (splat'ın yerel koordinatı, m): platform ile sıralar arasındaki boşluk")]
+    public Vector3 baslangic = new Vector3(-8f, 0.05f, -1f);  // VR'da XR Origin kullanılıyorsa oyuncuOlustur kapalı olmalı
+    [Tooltip("Başlangıçta bakılan yön (yerel): -X tahta ve kürsü tarafı")]
+    public Vector3 bakis = new Vector3(-1f, 0f, 0f);
+    [Tooltip("Sahne görünümünde kutuları çiz")]
+    public bool kutulariGoster = true;
+
+    // merkez x, y, z, boyut x, y, z (m, yerel). İlk /*OZEL*/: zemin ve platform; sonra engel ve boşluk kutuları. Adet: /*ADET*/
+    const int OZEL = /*OZEL*/;
+    static readonly float[] K = {
+/*KUTULAR*/
+    };
+
+    void Awake()
+    {
+        var kok = transform.Find("Carpisma");
+        if (kok == null)
+        {
+            kok = new GameObject("Carpisma").transform;
+            kok.SetParent(transform, false);
+            for (int i = 0; i < K.Length; i += 6)
+            {
+                var b = kok.gameObject.AddComponent<BoxCollider>();
+                b.center = new Vector3(K[i], K[i + 1], K[i + 2]);
+                b.size = new Vector3(K[i + 3], K[i + 4], K[i + 5]);
+            }
+        }
+        if (oyuncuOlustur && FindAnyObjectByType<FPSKontrol>() == null)
+        {
+            var o = new GameObject("Oyuncu");
+            o.transform.position = transform.TransformPoint(baslangic);
+            var yon = transform.TransformDirection(bakis); yon.y = 0f;
+            o.transform.rotation = Quaternion.LookRotation(yon.normalized, Vector3.up);
+            o.AddComponent<FPSKontrol>();
+        }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        if (!kutulariGoster) return;
+        Gizmos.matrix = transform.localToWorldMatrix;
+        Gizmos.color = new Color(1f, 0.2f, 0.2f, 0.8f);
+        for (int i = OZEL * 6; i < K.Length; i += 6)
+            Gizmos.DrawWireCube(new Vector3(K[i], K[i + 1], K[i + 2]), new Vector3(K[i + 3], K[i + 4], K[i + 5]));
+    }
+}

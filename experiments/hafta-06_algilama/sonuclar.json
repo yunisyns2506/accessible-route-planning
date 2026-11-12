@@ -1,0 +1,336 @@
+{
+  "yolo-world-s": {
+    "esik_val": 0.05,
+    "val_ort_f1": 0.0,
+    "test": {
+      "kapi": {
+        "nesne": 10,
+        "tp": 0,
+        "fp": 0,
+        "fn": 10,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "merdiven": {
+        "nesne": 3,
+        "tp": 0,
+        "fp": 0,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "asansor": {
+        "nesne": 6,
+        "tp": 4,
+        "fp": 32,
+        "fn": 2,
+        "precision": 0.111,
+        "recall": 0.667,
+        "f1": 0.19
+      }
+    },
+    "test_ort_f1": 0.063,
+    "recall_kirilim": {
+      "asansor.durum=kapali": "4/6",
+      "asansor.kesik=evet": "3/3",
+      "asansor.kesik=hayir": "1/3",
+      "kapi.cam=hayir": "0/10",
+      "kapi.durum=kapali": "0/10",
+      "kapi.kesik=evet": "0/10",
+      "merdiven.kesik=evet": "0/1",
+      "merdiven.kesik=hayir": "0/2"
+    },
+    "ms_kare": 9.40570720585503,
+    "sifir_atis": true
+  },
+  "yoloe-26s": {
+    "esik_val": 0.05,
+    "val_ort_f1": 0.368,
+    "test": {
+      "kapi": {
+        "nesne": 10,
+        "tp": 8,
+        "fp": 15,
+        "fn": 2,
+        "precision": 0.348,
+        "recall": 0.8,
+        "f1": 0.485
+      },
+      "merdiven": {
+        "nesne": 3,
+        "tp": 0,
+        "fp": 0,
+        "fn": 3,
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0
+      },
+      "asansor": {
+        "nesne": 6,
+        "tp": 3,
+        "fp": 13,
+        "fn": 3,
+        "precision": 0.188,
+        "recall": 0.5,
+        "f1": 0.273
+      }
+    },
+    "test_ort_f1": 0.253,
+    "recall_kirilim": {
+      "asansor.durum=kapali": "3/6",
+      "asansor.kesik=evet": "2/3",
+      "asansor.kesik=hayir": "1/3",
+      "kapi.cam=hayir": "8/10",
+      "kapi.durum=kapali": "8/10",
+      "kapi.kesik=evet": "8/10",
+      "merdiven.kesik=evet": "0/1",
+      "merdiven.kesik=hayir": "0/2"
+    },
+    "ms_kare": 11.853956000001798,
+    "sifir_atis": true
+  },
+  "yolo11n": {
+    "esik_val": 0.05,
+    "val_ort_f1": 0.757,
+    "test": {
+      "kapi": {
+        "nesne": 10,
+        "tp": 10,
+        "fp": 87,
+        "fn": 0,
+        "precision": 0.103,
+        "recall": 1.0,
+        "f1": 0.187
+      },
+      "merdiven": {
+        "nesne": 3,
+        "tp": 1,
+        "fp": 0,
+        "fn": 2,
+        "precision": 1.0,
+        "recall": 0.333,
+        "f1": 0.5
+      },
+      "asansor": {
+        "nesne": 6,
+        "tp": 2,
+        "fp": 3,
+        "fn": 4,
+        "precision": 0.4,
+        "recall": 0.333,
+        "f1": 0.364
+      }
+    },
+    "test_ort_f1": 0.35,
+    "recall_kirilim": {
+      "asansor.durum=kapali": "2/6",
+      "asansor.kesik=evet": "2/3",
+      "asansor.kesik=hayir": "0/3",
+      "kapi.cam=hayir": "10/10",
+      "kapi.durum=kapali": "10/10",
+      "kapi.kesik=evet": "10/10",
+      "merdiven.kesik=evet": "0/1",
+      "merdiven.kesik=hayir": "1/2"
+    },
+    "ms_kare": 5.8817357647004584,
+    "sifir_atis": false,
+    "kutu_map50": 0.6342718976929503,
+    "egitim_dk": 2.5
+  },
+  "yolo26n": {
+    "esik_val": 0.55,
+    "val_ort_f1": 0.936,
+    "test": {
+      "kapi": {
+        "nesne": 10,
+        "tp": 8,
+        "fp": 0,
+        "fn": 2,
+        "precision": 1.0,
+        "recall": 0.8,
+        "f1": 0.889
+      },
+      "merdiven": {
+        "nesne": 3,
+        "tp": 1,
+        "fp": 0,
+        "fn": 2,
+        "precision": 1.0,
+        "recall": 0.333,
+        "f1": 0.5
+      },
+      "asansor": {
+        "nesne": 6,
+        "tp": 4,
+        "fp": 2,
+        "fn": 2,
+        "precision": 0.667,
+        "recall": 0.667,
+        "f1": 0.667
+      }
+    },
+    "test_ort_f1": 0.685,
+    "recall_kirilim": {
+      "asansor.durum=kapali": "4/6",
+      "asansor.kesik=evet": "3/3",
+      "asansor.kesik=hayir": "1/3",
+      "kapi.cam=hayir": "8/10",
+      "kapi.durum=kapali": "8/10",
+      "kapi.kesik=evet": "8/10",
+      "merdiven.kesik=evet": "1/1",
+      "merdiven.kesik=hayir": "0/2"
+    },
+    "ms_kare": 5.567019088229084,
+    "sifir_atis": false,
+    "kutu_map50": 0.8347582417582418,
+    "egitim_dk": 3.0
+  },
+  "yolo26n-seg": {
+    "esik_val": 0.2,
+    "val_ort_f1": 0.909,
+    "test": {
+      "kapi": {
+        "nesne": 10,
+        "tp": 9,
+        "fp": 10,
+        "fn": 1,
+        "precision": 0.474,
+        "recall": 0.9,
+        "f1": 0.621
+      },
+      "merdiven": {
+        "nesne": 3,
+        "tp": 1,
+        "fp": 0,
+        "fn": 2,
+        "precision": 1.0,
+        "recall": 0.333,
+        "f1": 0.5
+      },
+      "asansor": {
+        "nesne": 6,
+        "tp": 3,
+        "fp": 3,
+        "fn": 3,
+        "precision": 0.5,
+        "recall": 0.5,
+        "f1": 0.5
+      }
+    },
+    "test_ort_f1": 0.54,
+    "recall_kirilim": {
+      "asansor.durum=kapali": "3/6",
+      "asansor.kesik=evet": "2/3",
+      "asansor.kesik=hayir": "1/3",
+      "kapi.cam=hayir": "9/10",
+      "kapi.durum=kapali": "9/10",
+      "kapi.kesik=evet": "9/10",
+      "merdiven.kesik=evet": "0/1",
+      "merdiven.kesik=hayir": "1/2"
+    },
+    "ms_kare": 7.613550088241455,
+    "sifir_atis": false,
+    "kutu_map50": 0.8144181057038199,
+    "maske_map50": 0.8144181057038199,
+    "egitim_dk": 3.3
+  },
+  "yolov8n": {
+    "esik_val": 0.5,
+    "val_ort_f1": 0.825,
+    "test": {
+      "kapi": {
+        "nesne": 10,
+        "tp": 9,
+        "fp": 4,
+        "fn": 1,
+        "precision": 0.692,
+        "recall": 0.9,
+        "f1": 0.783
+      },
+      "merdiven": {
+        "nesne": 3,
+        "tp": 2,
+        "fp": 0,
+        "fn": 1,
+        "precision": 1.0,
+        "recall": 0.667,
+        "f1": 0.8
+      },
+      "asansor": {
+        "nesne": 6,
+        "tp": 4,
+        "fp": 4,
+        "fn": 2,
+        "precision": 0.5,
+        "recall": 0.667,
+        "f1": 0.571
+      }
+    },
+    "test_ort_f1": 0.718,
+    "recall_kirilim": {
+      "asansor.durum=kapali": "4/6",
+      "asansor.kesik=evet": "3/3",
+      "asansor.kesik=hayir": "1/3",
+      "kapi.cam=hayir": "9/10",
+      "kapi.durum=kapali": "9/10",
+      "kapi.kesik=evet": "9/10",
+      "merdiven.kesik=evet": "1/1",
+      "merdiven.kesik=hayir": "1/2"
+    },
+    "ms_kare": 5.666680117669517,
+    "sifir_atis": false,
+    "kutu_map50": 0.8227930402930402,
+    "egitim_dk": 2.5
+  },
+  "yolov8n-seg": {
+    "esik_val": 0.45,
+    "val_ort_f1": 0.819,
+    "test": {
+      "kapi": {
+        "nesne": 10,
+        "tp": 9,
+        "fp": 4,
+        "fn": 1,
+        "precision": 0.692,
+        "recall": 0.9,
+        "f1": 0.783
+      },
+      "merdiven": {
+        "nesne": 3,
+        "tp": 2,
+        "fp": 0,
+        "fn": 1,
+        "precision": 1.0,
+        "recall": 0.667,
+        "f1": 0.8
+      },
+      "asansor": {
+        "nesne": 6,
+        "tp": 5,
+        "fp": 2,
+        "fn": 1,
+        "precision": 0.714,
+        "recall": 0.833,
+        "f1": 0.769
+      }
+    },
+    "test_ort_f1": 0.784,
+    "recall_kirilim": {
+      "asansor.durum=kapali": "5/6",
+      "asansor.kesik=evet": "3/3",
+      "asansor.kesik=hayir": "2/3",
+      "kapi.cam=hayir": "9/10",
+      "kapi.durum=kapali": "9/10",
+      "kapi.kesik=evet": "9/10",
+      "merdiven.kesik=evet": "1/1",
+      "merdiven.kesik=hayir": "1/2"
+    },
+    "ms_kare": 6.798282499991782,
+    "sifir_atis": false,
+    "kutu_map50": 0.9023015873015874,
+    "maske_map50": 0.9023015873015874,
+    "egitim_dk": 4.2
+  }
+}
