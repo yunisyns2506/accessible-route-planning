@@ -9,7 +9,7 @@
 
 <!-- 1 ÖZET -->
 <h2><span class="no">1</span>Özet</h2>
-<p class="lead">Derslik 4 sınıfı yeni bir rotayla yeniden çekildi, asansörden sınıf kapısına (K3) giden koridor ayrıca çekildi ve iki model <b>tek, metre ölçekli ve Unity'de açılan bir 3DGS modelinde</b> birleştirildi. Beyaz duvardaki lekeler pozlama düzeltmeli eğitimle (H2), zemindeki dalgalar gerçek karelerden üretilen düz zemin katmanıyla giderildi. Ölçek mezurayla <b>212,51 cm/birim</b> olarak kalibre edildi; dokuz doğrulama ölçüsünde RMSE <b>3,45 cm</b>. Genel netlik, 1440p ve büyük model denenmesine rağmen belirgin artmadı. Kapı, merdiven ve asansör algılamasında kendi karelerimizle eğitilen <b>YOLOv8n-seg</b> test kümesinde <b>F1 0,78</b>'e ulaştı. Gözlükle VR testi bu haftaya yetişmedi.</p>
+<p class="lead">Derslik 4 sınıfı yeni bir rotayla yeniden çekildi, asansörden sınıf kapısına (K3) giden koridor ayrıca çekildi ve iki model <b>tek, metre ölçekli ve Unity'de açılan bir 3DGS modelinde</b> birleştirildi. Beyaz duvardaki lekeler pozlama düzeltmeli eğitimle (H2), zemindeki dalgalar gerçek karelerden üretilen düz zemin katmanıyla giderildi. Ölçek mezurayla <b>212,51 cm/birim</b> olarak kalibre edildi; dokuz doğrulama ölçüsünde RMSE <b>3,45 cm</b>. Genel netlik, 1440p ve büyük model denenmesine rağmen belirgin artmadı. Kapı, merdiven ve asansör algılamasında kendi karelerimizle eğitilen <b>YOLOv8n-seg</b> test kümesinde <b>F1 0,78</b>'e ulaştı. Gözlükle VR testinde (Meta Quest 2, Link kablosu) model 17–39 FPS ile çalıştı.</p>
 
 <div class="kpis">
   <div class="kpi"><div class="v">1500 + 422</div><div class="t">Sınıf + koridor karesi; hepsi SfM'e kaydoldu</div></div>
@@ -28,7 +28,7 @@
 <tr><td>Netlik</td><td>Kaynak kareler Hafta 5'ten keskin; 1440p ve büyük model görselde çok az keskinleştirdi, ölçütlerde fark yok</td></tr>
 <tr><td>Ölçek ve doğrulama</td><td>212,51 cm/birim; kalibrasyon RMSE 0,88 cm, 9 doğrulama ölçüsünde RMSE 3,45 cm</td></tr>
 <tr><td>Algılama</td><td>234 kare etiketlendi (180 nesne); YOLOv8n-seg test F1 0,78, mAP@0,5 0,902; eğitimsiz modeller F1 ≤ 0,25</td></tr>
-<tr><td>Eksik kalanlar</td><td>Gözlükle VR testi</td></tr>
+<tr><td>VR testi</td><td>Meta Quest 2 + Link kablosu: 17–39 FPS; iki göz doğru çiziliyor, duvar ve sıra çarpışmaları çalışıyor (Ek A)</td></tr>
 </table>
 <div class="cap"><b>Tablo 1.</b> Haftanın sonuçları.</div>
 
@@ -200,7 +200,7 @@
 </table>
 <div class="cap"><b>Tablo 13.</b> Unity dosyaları (Gaussian sayıları). Toplamlar, zemin bölgesinde silinen eski Gaussian'lar (1080: 29.473; 1440: 35.843) düşülmüş hâldir.</div>
 <p>Çarpışma kutuları birleşik model için yeniden üretildi: 768 engel kutusu (duvar, sıra, kürsü), 495 boşluk kutusu (model dışı alanlar), zemin ve platform (x −11,96 ile −9,81 arası, 0,46 m). Sınıf ve koridor K3 kapısından bağlı tek yürünebilir bölge oluşturuyor (443,5 m²). Kutular 20 cm hücrelidir; yürümeyi sınırlamak içindir, geçiş genişliği kararında kullanılmaz.</p>
-<p><b>Gözlükle VR testi bu hafta yapılmadı;</b> model yalnız Unity'nin masaüstü görünümünde kontrol edildi. Test için PC'ye bağlı bir gözlük (ör. Quest Link), Windows'ta D3D12 veya Vulkan ve OpenXR kurulumu gerekiyor; eklentinin mevcut sürümü korunmalı.</p>
+<p><b>Gözlükle VR testi yapıldı:</b> Meta Quest 2, Link kablosuyla RTX 2060'lı dizüstüne bağlandı; iki model de 17–39 FPS ile çalıştı ve duvar ile sıra çarpışmaları tuttu. Kurulum, karşılaşılan sorunlar ve dersler Ek A'da.</p>
 
 <!-- 8 ALGILAMA -->
 <h2><span class="no">8</span>Kapı, merdiven ve asansör algılama</h2>
@@ -352,7 +352,7 @@
 <div class="kutu"><div class="bas">Sıradaki adımlar</div>
 <ul>
 <li><b>Kare seçimi:</b> Modeli netleştirmek için videodan kare seçimi üzerine literatür tarandı. İncelenen yaklaşımlar: örtüşme ve paralaksa göre anahtar kare seçimi, 3DGS için netlik öncelikli ve örtüşme kısıtlı seçim, görünürlük eşiğine göre yeni kare alma, kareleri güvenilirliğe göre ağırlıklandırma ve bilgi kazancına göre görüş seçimi. İlk üçü birleştirilerek aynı kare sayısıyla sahnenin her bölgesini en az üç farklı açıdan, netliğe öncelik vererek kapsayan bir seçim yöntemi deneniyor. Eğitim ve test ayarları aynı tutuluyor, böylece fark yalnız kare seçiminden geliyor. Sonuç gelecek raporda.</li>
-<li><b>Gözlükle VR testi:</b> Henüz yapılmadı; görüntü konforu, kare hızı ve 1080p ile 1440p modellerin netlik farkı gözlükte değerlendirilecek.</li>
+<li><b>Gözlükle VR testi:</b> İlk test yapıldı (Ek A). Sırada kare hızını gözlüğün 72 Hz'ine yaklaştırmak ve 1080p ile 1440p modelleri gözlükte karşılaştırmak var.</li>
 
 <li><b>Algılama:</b> Başka kat ve binalardan kare eklenerek merdiven ve asansör örnekleri artırılacak.</li>
 </ul></div>
@@ -389,6 +389,54 @@
 <tr><td>Algılama deneyi</td><td><a href="https://drive.google.com/drive/folders/1IO76-JB92Q5mGnD8MJS7cL-znsZ-HRJU">Drive Hafta 6 Algılama</a>: <code>betikler/</code>, <code>etiket/</code> (seçilen kareler, manifest), <code>cvat_export.zip</code> (etiketler), <code>kosular/</code> (modeller), <code>sonuclar/</code> (<code>sonuclar.json</code>, <code>sonuclar.csv</code>, <code>sonuclar.md</code>)</td></tr>
 </table>
 <div class="cap"><b>Tablo 25.</b> Arşiv. Drive'daki <code>derslik4/</code> ve <code>koridor/</code> klasörleri 05.11 denemeleridir ve kullanılmamıştır.</div>
+
+<!-- EK A VR -->
+<h2><span class="no">A</span>Gözlükle VR testi</h2>
+<p class="lead">Birleşik model ve hafif sınıf modeli 12 Kasım'da Meta Quest 2 gözlükle, Link kablosu üzerinden Unity'nin Play modunda test edildi. İki model de gözlükte iki gözde doğru çizildi ve <b>17–39 FPS</b> ile çalıştı; duvar ve sıra çarpışmaları tuttu. Kare hızı gözlüğün beklediği 72–90 Hz'in altında kaldığı için yana harekette görüntü yırtılıyor. İlk denemede görülen üç engel (donma, sağ gözde boş görüntü, bağlantı kopması) çözüldü.</p>
+
+<div class="kpis">
+  <div class="kpi"><div class="v">17–39</div><div class="t">FPS, Unity Stats (iki model)</div></div>
+  <div class="kpi"><div class="v">Quest 2</div><div class="t">Link kablosu, USB 3.0</div></div>
+  <div class="kpi"><div class="v">RTX 2060</div><div class="t">6 GB, dizüstü (Dell G5 15)</div></div>
+  <div class="kpi"><div class="v">1265</div><div class="t">çarpışma kutusu (birleşik model)</div></div>
+</div>
+
+<h3>A.1 Kurulum</h3>
+<table>
+<thead><tr><th style="width:22%">Bileşen</th><th>Seçim ve gerekçe</th></tr></thead>
+<tr><td>Gözlük ve bağlantı</td><td>Meta Quest 2, Meta Horizon Link (kablo, USB 3.0). Görüntüyü bilgisayar çiziyor; gözlüğün kendi işlemcisi 1 milyonun üzerindeki Gaussian için yetersiz</td></tr>
+<tr><td>Bilgisayar</td><td>Dell G5 15 dizüstü, NVIDIA RTX 2060 6 GB, Windows 11, NVIDIA sürücüsü 591.86</td></tr>
+<tr><td>Unity</td><td>Unity 6.6 (6000.6.5f1), Built-in render hattı, grafik API'si Direct3D12 (eklenti DX11'de çalışmıyor)</td></tr>
+<tr><td>Gaussian eklentisi</td><td>UnityGaussianSplatting 1.1.2, sürüm etiketiyle (<code>#v1.1.2</code>). 2.0 sürümünün VR yolu geliştiricisi tarafından test edilmediği için kullanılmadı</td></tr>
+<tr><td>XR</td><td>OpenXR (Oculus Touch ve Meta Quest Touch Plus profilleri), render modu Multi-pass; XR Interaction Toolkit 3.6.1 Starter Assets ile XR Origin (sol kol yürüme, sağ kol 45° adımlı dönüş)</td></tr>
+<tr><td>Sahne</td><td><code>birlesik_sinif1440_koridor_gercek_zemin_unity.ply</code> (1,39 M Gaussian) ve <code>derslik4_cekim2_unity.ply</code> (0,39 M); <code>DerslikCarpisma.cs</code> ile 1265 kutu. Başlangıç: platform ile sıralar arası, tahtaya bakış</td></tr>
+</table>
+<div class="cap"><b>Tablo A1.</b> VR test kurulumu. Proje Sabri'nin Mac projesinden bağımsız olarak Windows'ta sıfırdan kuruldu.</div>
+
+<h3>A.2 Karşılaşılan sorunlar ve çözümler</h3>
+<table>
+<thead><tr><th style="width:22%">Sorun</th><th>Sebep</th><th>Çözüm</th><th style="width:9%">Durum</th></tr></thead>
+<tr><td>Birkaç saniye sonra görüntü donuyor, bakılan yer dışı kararıyor, kontrol kayboluyor</td><td>NVIDIA 595.71 ve sonrası sürücülerde bilinen Link donma hatası; kurulu sürüm 616.56'ydı</td><td>Meta'nın önerdiği dizüstü sürücüsü 591.86 temiz kurulumla yüklendi</td><td class="ok">Çözüldü</td></tr>
+<tr><td>Model yalnız sol gözde, sağ gözde boş görüntü</td><td>Eklenti 1.1.2, OpenXR'ın varsayılan Single Pass Instanced modunda sağ göze çizmiyor</td><td>Render modu Multi-pass yapıldı; iki göz ayrı çiziliyor</td><td class="ok">Çözüldü</td></tr>
+<tr><td>Unity'den başlatılan sahne gözlükte açılmıyor</td><td>Uygulama Meta mağazasından değil; Link bilinmeyen kaynakları engelliyor</td><td>Link ayarlarında Bilinmeyen Kaynaklar açıldı</td><td class="ok">Çözüldü</td></tr>
+<tr><td>Link bağlantısı kopuyor, bağlantı testi başlamıyor</td><td>Kablonun tekrar tekrar takılıp çıkarılması Link servisini kilitledi; Windows USB güç tasarrufu açıktı</td><td>USB güç tasarrufu kapatıldı, bilgisayar yeniden başlatıldı; sıra: gözlük → kablo → Link → Unity</td><td class="ok">Çözüldü</td></tr>
+<tr><td>Yana harekette yırtılma ve bükülme</td><td>17–39 FPS; gözlük 72–90 Hz bekliyor, Link eksik kareleri tahminle dolduruyor (ASW). Yana kaymada tahmin tutmuyor</td><td>Sırasıyla: SH Order 3 → 1, gözlüğü 72 Hz'e almak, hafif model</td><td class="kot">Açık</td></tr>
+<tr><td>Gözlükte görüntü bulanık</td><td>Gözlüğün kendi menüsü de bulanık, yani kaynak model değil; muhtemel sebep lens aralığı (IPD) ve gözlüğün yüzdeki yeri</td><td>Lens aralığı üç kademeden en net olana alınmalı, gözlük net noktada sabitlenmeli</td><td class="kot">Açık</td></tr>
+</table>
+<div class="cap"><b>Tablo A2.</b> VR testinde karşılaşılan sorunlar.</div>
+
+<h3>A.3 Yapılmaması gerekenler ve nedenleri</h3>
+<table>
+<thead><tr><th style="width:28%">Yapılan yanlış (veya kaçınılan)</th><th>Neden yapılmamalı</th><th style="width:32%">Doğrusu</th></tr></thead>
+<tr><td>Eklentinin en yeni sürümünü (2.0) kurmak</td><td>Geliştiricisi VR yolunu test etmediğini belirtiyor; kılavuzdaki asset adımı da değişmiş</td><td>VR düzeltmeleri olan 1.1.2'yi sürüm etiketiyle kurmak</td></tr>
+<tr><td>Ekran kartı sürücüsünü Link uyarısına bakmadan güncellemek</td><td>616.56 sürücüsü Link'i birkaç saniye içinde donduruyor; test yapılamıyor</td><td>Link uygulamasındaki sürücü uyarısını kontrol etmek; test bilgisayarında otomatik sürücü güncellemesini kapatmak</td></tr>
+<tr><td>Link bağlıyken kabloyu takıp çıkarmak</td><td>Link servisi kilitlendi, yeniden başlatma düğmesi tepki vermedi; bilgisayar yeniden başlatıldı</td><td>Bağlantı kurulduktan sonra kabloya dokunmamak; sorun olursa önce gözlüğü yeniden başlatmak</td></tr>
+<tr><td>Unity açıkken sürücü kurmak</td><td>Ekran kartı kısa süre kapandığı için editör çöktü, kaydedilmemiş sahne değişikliği kayboldu</td><td>Önce sahneyi kaydedip Unity'yi kapatmak</td></tr>
+<tr><td>Gözlük testinde XR Device Simulator'ı açık bırakmak (kaçınıldı)</td><td>Simülatör gerçek gözlüğü devre dışı bırakıyor</td><td>Simülatörü yalnız gözlüksüz denemede açık tutmak</td></tr>
+<tr><td>Unity projesini OneDrive klasöründe kurmak (kaçınıldı)</td><td>Eşitleme binlerce ara dosyayı kilitler ve yavaşlatır</td><td>Projeyi eşitlenmeyen bir klasörde tutmak (<code>C:\UnityProjeler</code>)</td></tr>
+<tr><td>Hafif modeli çarpışma kutularını kontrol etmeden kullanmak</td><td>Kutular birleşik modelin koordinatlarına göre üretildi; başka modelde duvarlarla örtüşmeyebilir</td><td>Model değişince Scene görünümünde kutuların duvarlarla örtüştüğünü kontrol etmek; örtüşmüyorsa kutuları o model için yeniden üretmek</td></tr>
+</table>
+<div class="cap"><b>Tablo A3.</b> VR testinden çıkan dersler.</div>
 
 </body>
 </html>
